@@ -1,6 +1,7 @@
 body {
     font-size: 14px;
     max-width: 100%;
+    position: relative;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
