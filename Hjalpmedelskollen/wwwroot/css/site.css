@@ -20,8 +20,8 @@ body {
     opacity: 0.8;
 }
 
-/*INDEX / LOG IN*/
-.index-container {
+/*START / LOG IN*/
+.start-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,22 +33,22 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.index-content {
+.start-content {
     display: flex;
     flex-direction: column;
     margin: 20px;
 }
 
-.index-login {
+.start-login {
     margin-left: 30px;
     flex: 2;
 }
 
-.index-text {
+.start-text {
     flex: 3;
 }
 
-.index-divider {
+.start-divider {
     margin: 0 7px;
     border-right: 2px solid #808080;
     height: 250px;
@@ -58,7 +58,8 @@ body {
 label, input {
     display: block;
     border-radius: 5px;
-    height: 20px;
+    height: 25px;
+    width: 200px;
 }
 
 /*NAV*/
@@ -155,6 +156,8 @@ footer a:hover, nav a:hover {
         display: flex;
         flex-direction: column;
         background-color: #0d0949;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 
     #hamburger-menu-content li {
@@ -168,17 +171,24 @@ footer a:hover, nav a:hover {
         text-decoration: none;
     }
 
-    .index-container {
-        width: 90%;
+    .button-style {
+        width: 200px;
     }
 
-    .index-text, .index-divider {
+    .start-container {
+        width: 90%;
+        margin-top: 20px;
+        font-size: 16px;
+        align-content: center;
+    }
+
+    .start-text, .start-divider {
         display: none;
     }
-    
 
     nav {
         padding: 10px;
+        margin-bottom: 0px;
     }
 
     .nav-brand {
