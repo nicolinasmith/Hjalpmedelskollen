@@ -1,8 +1,26 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Start";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="index-container">
+    <div class="index-content index-text">
+        <h3>Välkommen till Hjälpmedelskollen!</h3>
+        <p>Hjälpmedelskollen är ett invetariestöd som specialiserar sig på att hantera medicintekniska hjälpmedel. 
+            Du kan enkelt och effektivt använda inventariestödet både på dator och i mobil.</p>
+    </div>
+    <div class="index-divider">
+        <span></span>
+    </div>
+    <div class="index-content index-login">
+        <h3>Logga in</h3>
+		<div>
+            <form action="/login" method="post">
+                <label for="username">Användarnamn:</label>
+                <input type="text" id="username" name="username"><br><br>
+                <label for="password">Lösenord:</label>
+                <input type="password" id="password" name="password"><br><br>
+                <input type="submit" value="Logga in" class="button-style">
+            </form>
+        </div>
+    </div>
 </div>

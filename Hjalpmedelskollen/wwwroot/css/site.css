@@ -1,14 +1,75 @@
 body {
     margin-bottom: 60px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-size: 14px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.button-style {
+    background-color: #1c0f4b;
+    width: 100px;
+    height: 35px;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.button-style:hover {
+    opacity: 0.8;
+}
+
+/*INDEX / LOG IN*/
+.index-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+    background-color: #c1dfec;
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.index-content {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.index-login {
+    margin-left: 30px;
+    flex: 2;
+}
+
+.index-text {
+    flex: 3;
+}
+
+.index-divider {
+    margin: 0 7px;
+    border-right: 2px solid #808080;
+    height: 250px;
+    align-self: center;
+}
+
+label, input {
+    display: block;
+    border-radius: 5px;
+    height: 20px;
+}
+
+/*NAV*/
 nav {
     background-color: #a2cfe3;
     color: #000000;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 5px;
+    margin-bottom: 40px;
+    font-size: 16px;
 }
 
 .nav-content {
@@ -48,10 +109,12 @@ nav {
     display: none;
 }
 
+/*FOOTER*/
 footer {
     background-color: #a2cfe3;
     color: #000000;
     padding: 20px;
+    margin-top: 40px;
 }
 
 footer a, nav a, nav li {
@@ -69,7 +132,7 @@ footer a:hover, nav a:hover {
     color: white;
 }
 
-.divider {
+.footer-divider {
     margin: 0 7px;
     border-right: 2px solid #000000;
     height: 20px;
@@ -91,28 +154,41 @@ footer a:hover, nav a:hover {
         list-style-type: none;
         display: flex;
         flex-direction: column;
-        background-color: #c1dfec;
+        background-color: #0d0949;
     }
 
     #hamburger-menu-content li {
-        color: #000000;
+        color: #ffffff;
         text-decoration: none;
         margin: 8px;
     }
-    
+
     #hamburger-menu-content a {
-        color: #000000;
+        color: #ffffff;
         text-decoration: none;
     }
+
+    .index-container {
+        width: 90%;
+    }
+
+    .index-text, .index-divider {
+        display: none;
+    }
+    
 
     nav {
         padding: 10px;
     }
 
+    .nav-brand {
+        margin-left: 0;
+    }
+
     .nav-brand img {
         height: 25px;
         width: auto;
-        margin-right: 18px;
+        margin-right: 8px;
     }
 
     .nav-list {
