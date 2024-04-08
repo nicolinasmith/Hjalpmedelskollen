@@ -5,65 +5,6 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.button-style {
-    background-color: #1c0f4b;
-    width: 100px;
-    height: 35px;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-.button-style:hover {
-    opacity: 0.8;
-}
-
-/*START / LOG IN*/
-.start-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 50px;
-    background-color: #c1dfec;
-    width: 50%;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.start-content {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-}
-
-.start-login {
-    margin-left: 30px;
-    flex: 2;
-}
-
-.start-text {
-    flex: 3;
-}
-
-.start-divider {
-    margin: 0 7px;
-    border-right: 2px solid #808080;
-    height: 250px;
-    align-self: center;
-}
-
-input {
-    display: block;
-    border-radius: 5px;
-    height: 25px;
-    width: 80%;
-    margin-top: 10px;
-}
-
 /*NAV*/
 nav {
     background-color: #a2cfe3;
@@ -175,21 +116,6 @@ footer a:hover, nav a:hover {
     #hamburger-menu-content a {
         color: #ffffff;
         text-decoration: none;
-    }
-
-    .button-style {
-        width: 200px;
-    }
-
-    .start-container {
-        width: 90%;
-        margin-top: 20px;
-        font-size: 16px;
-        align-content: center;
-    }
-
-    .start-text, .start-divider {
-        display: none;
     }
 
     nav {

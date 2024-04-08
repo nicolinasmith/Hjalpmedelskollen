@@ -1,26 +1,3 @@
 ﻿@{
-    ViewData["Title"] = "Start";
+    ViewData["Title"] = "Översikt";
 }
-
-<div class="start-container">
-    <div class="start-content start-text">
-        <h3>Välkommen till Hjälpmedelskollen!</h3>
-        <p>Hjälpmedelskollen är ett invetariestöd som specialiserar sig på att hantera medicintekniska hjälpmedel. 
-            Du kan enkelt och effektivt använda inventariestödet både på dator och i mobil.</p>
-    </div>
-    <div class="start-divider">
-        <span></span>
-    </div>
-    <div class="start-content start-login">
-        <h3>Logga in</h3>
-		<div>
-            <form action="/login" method="post">
-                <label for="username">Användarnamn:</label>
-                <input type="text" id="username" name="username"><br><br>
-                <label for="password">Lösenord:</label>
-                <input type="password" id="password" name="password"><br><br>
-                <input type="submit" value="Logga in" class="button-style" asp-area="" asp-controller="Overview" asp-action="Index">
-            </form>
-        </div>
-    </div>
-</div>
