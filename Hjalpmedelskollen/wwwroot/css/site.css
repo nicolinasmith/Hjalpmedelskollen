@@ -64,11 +64,11 @@ footer {
     background-color: #a2cfe3;
     color: #000000;
     padding: 20px;
-    margin-top: 40px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    max-width: 100%;
 }
 
 footer a, nav a, nav li {
@@ -101,6 +101,10 @@ footer a:hover, nav a:hover {
     margin-top: 15px;
     margin-bottom: 30px;
     width: 100%;
+}
+
+label {
+    margin-left: 10px;
 }
 
 #qr-button {
@@ -160,9 +164,38 @@ button:hover {
     opacity: 0.8;
 }
 
+/*ABOUT*/
+#about {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #a2cfe3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#about img {
+    width: 80px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+#about b {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
 
 
 @media only screen and (max-width: 768px) {
+
+    body {
+        font-size: 18px;
+    }
 
     .hamburger-menu {
         display: block;
@@ -222,5 +255,37 @@ button:hover {
     #aids-overview {
         display: none;
     }
+
+    #about {
+        max-width: 80%;
+        margin-top: 20px;
+    }
+
+    #aids-by-unit {
+        align-items: center;
+    }
+
+    .unit-selection {
+        width: 80%;
+        margin-right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    button {
+        width: 80%;
+        height: 40px;
+    }
+
+    footer {
+        position: relative;
+        margin-top: 40px;
+    }
+
+
+
 }
 

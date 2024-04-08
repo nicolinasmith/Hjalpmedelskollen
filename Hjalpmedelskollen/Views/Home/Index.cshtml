@@ -17,6 +17,7 @@
         <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
         <label for="Category">Kategori:</label>
         <select id="Category" name="Category">
+            <option value="Alla">Alla</option>
             @foreach (var category in Model.Categories)
             {
                 <option value="@category.Name">@category.Name</option>
@@ -42,6 +43,7 @@
                 @foreach (var aid in Model.Aids)
 				{
                     string backgroundColor = "";
+                    string status = aid.Status == true ? "Ledigt" : "Upptaget";
 
                     if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
                     {
@@ -62,7 +64,7 @@
 						<td>@aid.Id</td>
 						<td>@aid.Category</td>
 						<td>@aid.ProductName</td>
-						<td>@aid.Status</td>
+						<td>@status</td>
 						<td>@aid.Location</td>
                         <td style="background-color: @backgroundColor;"> @inspectionDate</td>
 						<td>@aid.Comment</td>
