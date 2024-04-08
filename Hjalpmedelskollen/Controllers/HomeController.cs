@@ -1,5 +1,6 @@
 using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
+using Hjalpmedelskollen.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -20,13 +21,29 @@ namespace Hjalpmedelskollen.Controllers
 
         public IActionResult Index()
         {
+            var viewModel = GetAidsByUnitViewModel(1);
+
+            return View(viewModel);
+        }
+
+        private AidsByUnitViewModel GetAidsByUnitViewModel(int unitId)
+        {
             var aidsByUnit = _context.Aids
-                                    .Where(a => a.UnitId == 1)
+                                    .Where(a => a.UnitId == unitId)
                                     .Include(a => a.UnitModel)
                                     .ToList();
 
-            return View();
+            var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
+
+            var viewModel = new AidsByUnitViewModel()
+            {
+                DisplayedUnit = unit.Name,
+                Aids = aidsByUnit,
+            };
+
+            return viewModel;
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

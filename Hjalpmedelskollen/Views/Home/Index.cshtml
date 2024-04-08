@@ -7,14 +7,14 @@
 <div id="aids-by-unit">
 
     <div class="unit-selection">
-        <p>Vald enhet: [Enhetsnamn]</p>
+        <p>Vald enhet: @Model.DisplayedUnit </p>
         <button>Byt enhet</button>
         <button>Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
     </div>
 
     <div id="aids-overview">
-        <h2>Hjälpmedelsöversikt - [Enhetsnamn]</h2>
+        <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
         <label for="färg">Kategori:</label>
         <select id="färg" name="färg">
             <option value="röd">Alla</option>
@@ -39,7 +39,35 @@
                     <th>Besiktning</th>
                     <th>Kommentar</th>
                 </tr>
+                @foreach (var aid in Model.Aids)
+				{
+                    string backgroundColor = "";
 
+                    if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
+                    {
+                        backgroundColor = "rgba(255, 255, 0, 0.5)";
+                    }
+                    else if (aid.Inspection < DateTime.Now)
+                    {
+                        backgroundColor = "rgba(255, 0, 0, 0.5)";
+                    }
+                    else if (aid.Inspection > DateTime.Now.AddMonths(1))
+                    {
+                        backgroundColor = "rgba(144, 238, 144, 0.7)";
+                    }
+
+                    string inspectionDate = aid.Inspection.ToString("yyyy-MM");
+
+					<tr>
+						<td>@aid.Id</td>
+						<td>@aid.Category</td>
+						<td>@aid.ProductName</td>
+						<td>@aid.Status</td>
+						<td>@aid.Location</td>
+                        <td style="background-color: @backgroundColor;"> @inspectionDate</td>
+						<td>@aid.Comment</td>
+					</tr>
+				}
             </table>
         </div>
     </div>
