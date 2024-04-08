@@ -1,5 +1,7 @@
+using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Hjalpmedelskollen.Controllers
@@ -7,19 +9,22 @@ namespace Hjalpmedelskollen.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
+
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var aidsByUnit = _context.Aids
+                                    .Where(a => a.UnitId == 1)
+                                    .Include(a => a.UnitModel)
+                                    .ToList();
 
-        public IActionResult Privacy()
-        {
             return View();
         }
 
