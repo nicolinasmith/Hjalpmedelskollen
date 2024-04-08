@@ -14,4 +14,5 @@ document.querySelector('.hamburger-menu').addEventListener('click', function () 
         hamburgerMenuContent.classList.toggle('show');
         menuDisplayed = true;
     }
+
 });
