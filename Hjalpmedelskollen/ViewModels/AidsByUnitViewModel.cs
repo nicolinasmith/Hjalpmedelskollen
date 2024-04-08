@@ -8,13 +8,22 @@ namespace Hjalpmedelskollen.ViewModels
 
         public List<AidModel> Aids { get; set; }
 
+        public List<Category> Categories { get; set; }
+
         public AidsByUnitViewModel()
         {
 
 
         }
 
-        
+        public class Category
+        {
+            public string Name { get; set; }
+        }
+
+
+
+
     }
 
 }

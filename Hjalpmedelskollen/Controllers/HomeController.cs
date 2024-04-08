@@ -4,6 +4,7 @@ using Hjalpmedelskollen.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hjalpmedelskollen.Controllers
 {
@@ -35,10 +36,21 @@ namespace Hjalpmedelskollen.Controllers
 
             var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
 
+            var categories = aidsByUnit
+                .Select(a => a.Category)
+                .Distinct()
+                .Select(c => new AidsByUnitViewModel.Category()
+                {
+                    Name = c
+                })
+                .ToList();
+
+
             var viewModel = new AidsByUnitViewModel()
             {
                 DisplayedUnit = unit.Name,
                 Aids = aidsByUnit,
+                Categories = categories
             };
 
             return viewModel;
