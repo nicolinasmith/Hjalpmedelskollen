@@ -14,5 +14,19 @@ document.querySelector('.hamburger-menu').addEventListener('click', function () 
         hamburgerMenuContent.classList.toggle('show');
         menuDisplayed = true;
     }
+});
 
+
+var unitButton = document.getElementById('unit-button');
+var selectUnitButton = document.getElementById('select-unit-button');
+var cancelButton = document.getElementById('cancel-button');
+var unitPopup = document.getElementById('unit-popup');
+
+unitButton.addEventListener('click', function () {
+    unitPopup.style.display = 'block';
+
+});
+
+cancelButton.addEventListener('click', function () {
+    unitPopup.style.display = 'none';
 });
