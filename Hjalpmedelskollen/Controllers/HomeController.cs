@@ -19,12 +19,19 @@ namespace Hjalpmedelskollen.Controllers
             _context = context;
         }
 
+        //TODO: Sortera kod, se vart databasanropen ska ske och hur data lagras tillfälligt
 
         public IActionResult Index()
         {
             var viewModel = GetAidsByUnitViewModel(1);
-
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AidsByUnit(int unitId)
+        {
+            var viewModel = GetAidsByUnitViewModel(unitId);
+            return View("Index", viewModel);
         }
 
         private AidsByUnitViewModel GetAidsByUnitViewModel(int unitId)
@@ -35,6 +42,8 @@ namespace Hjalpmedelskollen.Controllers
                                     .ToList();
 
             var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
+
+            var units = _context.Units.ToList();
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -50,7 +59,8 @@ namespace Hjalpmedelskollen.Controllers
             {
                 DisplayedUnit = unit.Name,
                 Aids = aidsByUnit,
-                Categories = categories
+                Categories = categories,
+                Units = units
             };
 
             return viewModel;

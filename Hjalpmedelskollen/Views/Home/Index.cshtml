@@ -73,8 +73,28 @@
 
     <div class="unit-selection">
         <p>Vald enhet: @Model.DisplayedUnit </p>
-        <button>Byt enhet</button>
+        <button id="unit-button">Byt enhet</button>
         <button>Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
     </div>
+
 </div>
+ 
+<div id="unit-popup">
+    <div class="pop-up">
+        <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
+            <p>Välj enhet:</p>
+            <select id="unit-list" name="unitId" multiple size="5">
+                @foreach (var unit in Model.Units)
+                {
+                    <option value="@unit.Id">@unit.Name</option>
+                }
+            </select>
+            <div>
+                <button type="submit" id="select-unit-button">Välj</button>
+                <button type="button" id="cancel-button">Avbryt</button>
+            </div>
+        </form>
+    </div>
+</div>
+

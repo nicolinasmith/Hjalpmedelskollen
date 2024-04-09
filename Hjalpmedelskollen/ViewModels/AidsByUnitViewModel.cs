@@ -10,6 +10,8 @@ namespace Hjalpmedelskollen.ViewModels
 
         public List<Category> Categories { get; set; }
 
+        public List<UnitModel> Units { get; set; }
+
         public AidsByUnitViewModel()
         {
 
@@ -20,7 +22,6 @@ namespace Hjalpmedelskollen.ViewModels
         {
             public string Name { get; set; }
         }
-
 
 
 
