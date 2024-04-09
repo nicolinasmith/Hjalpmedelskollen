@@ -6,6 +6,7 @@ html, body {
 
 body {
     font-size: 14px;
+    background-color: #e8eced;
     max-width: 100%;
     position: relative;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -95,9 +96,9 @@ footer a:hover, nav a:hover {
 /*AIDS BY UNIT*/
 #aids-by-unit {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-top: 15px;
     margin-bottom: 30px;
     width: 100%;
@@ -107,29 +108,40 @@ label {
     margin-left: 10px;
 }
 
+#aids-overview {
+    width: 75%;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.overview-content {
+    padding: 30px;
+}
+
 #qr-button {
     display: none;
 }
 
-#aids-overview {
-    width: 75%;
-    padding: 20px;
-}
-
 .unit-selection {
-    width: 15%;
-    margin-right: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
 }
 
 .table-style {
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 20px;
     font-size: 14px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 100%;
 }
 
 .table-style th, .table-style td {
@@ -148,15 +160,16 @@ button {
     background-color: #648ea1;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
+    padding: 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     border-radius: 10px;
     margin-top: 10px;
-    width: 180px;
+    width: 170px;
     height: 35px;
+    font-size: 12px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -247,11 +260,6 @@ button:hover {
         display: none;
     }
 
-    #qr-button {
-        display: block;
-        margin-top: 10px;
-    }
-
     #aids-overview {
         display: none;
     }
@@ -265,15 +273,16 @@ button:hover {
         align-items: center;
     }
 
+    #qr-button {
+        display: block;
+    }
+
     .unit-selection {
         width: 80%;
-        margin-right: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
         text-align: center;
+        margin-right: 0;
+        margin-bottom: 20px;
+        margin-left: 0;
     }
 
     button {

@@ -6,72 +6,75 @@
 
 <div id="aids-by-unit">
 
+    <div id="aids-overview">
+        <div class="overview-content">
+                <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
+            <div>
+                <label for="Category">Kategori:</label>
+                <select id="Category" name="Category">
+                    <option value="Alla">Alla</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Name">@category.Name</option>
+                    }
+                </select>
+                <label for="färg">Status:</label>
+                <select id="färg" name="färg">
+                    <option value="röd">Alla</option>
+                    <option value="grön">Ledig</option>
+                    <option value="blå">Upptagen</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table class="table-style">
+                    <tr class="table-header">
+                        <th>Registreringsnummer</th>
+                        <th>Kategori</th>
+                        <th>Produktnamn</th>
+                        <th>Status</th>
+                        <th>Plats</th>
+                        <th>Besiktning</th>
+                        <th>Kommentar</th>
+                    </tr>
+                    @foreach (var aid in Model.Aids)
+				    {
+                        string backgroundColor = "";
+                        string status = aid.Status == true ? "Ledigt" : "Upptaget";
+
+                        if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
+                        {
+                            backgroundColor = "rgba(255, 255, 0, 0.5)";
+                        }
+                        else if (aid.Inspection < DateTime.Now)
+                        {
+                            backgroundColor = "rgba(255, 0, 0, 0.5)";
+                        }
+                        else if (aid.Inspection > DateTime.Now.AddMonths(1))
+                        {
+                            backgroundColor = "rgba(144, 238, 144, 0.7)";
+                        }
+
+                        string inspectionDate = aid.Inspection.ToString("yyyy-MM");
+
+					    <tr>
+						    <td>@aid.Id</td>
+						    <td>@aid.Category</td>
+						    <td>@aid.ProductName</td>
+						    <td>@status</td>
+						    <td>@aid.Location</td>
+                            <td style="background-color: @backgroundColor;"> @inspectionDate</td>
+						    <td>@aid.Comment</td>
+					    </tr>
+				    }
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="unit-selection">
         <p>Vald enhet: @Model.DisplayedUnit </p>
         <button>Byt enhet</button>
         <button>Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
     </div>
-
-    <div id="aids-overview">
-        <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
-        <label for="Category">Kategori:</label>
-        <select id="Category" name="Category">
-            <option value="Alla">Alla</option>
-            @foreach (var category in Model.Categories)
-            {
-                <option value="@category.Name">@category.Name</option>
-            }
-        </select>
-        <label for="färg">Status:</label>
-        <select id="färg" name="färg">
-            <option value="röd">Alla</option>
-            <option value="grön">Ledig</option>
-            <option value="blå">Upptagen</option>
-        </select>
-        <div class="table-container">
-            <table class="table-style">
-                <tr class="table-header">
-                    <th>Registreringsnummer</th>
-                    <th>Kategori</th>
-                    <th>Produktnamn</th>
-                    <th>Status</th>
-                    <th>Plats</th>
-                    <th>Besiktning</th>
-                    <th>Kommentar</th>
-                </tr>
-                @foreach (var aid in Model.Aids)
-				{
-                    string backgroundColor = "";
-                    string status = aid.Status == true ? "Ledigt" : "Upptaget";
-
-                    if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
-                    {
-                        backgroundColor = "rgba(255, 255, 0, 0.5)";
-                    }
-                    else if (aid.Inspection < DateTime.Now)
-                    {
-                        backgroundColor = "rgba(255, 0, 0, 0.5)";
-                    }
-                    else if (aid.Inspection > DateTime.Now.AddMonths(1))
-                    {
-                        backgroundColor = "rgba(144, 238, 144, 0.7)";
-                    }
-
-                    string inspectionDate = aid.Inspection.ToString("yyyy-MM");
-
-					<tr>
-						<td>@aid.Id</td>
-						<td>@aid.Category</td>
-						<td>@aid.ProductName</td>
-						<td>@status</td>
-						<td>@aid.Location</td>
-                        <td style="background-color: @backgroundColor;"> @inspectionDate</td>
-						<td>@aid.Comment</td>
-					</tr>
-				}
-            </table>
-        </div>
-    </div>
-
 </div>
