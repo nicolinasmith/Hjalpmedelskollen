@@ -1,5 +1,12 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-size: 14px;
+    background-color: #e8eced;
     max-width: 100%;
     position: relative;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -58,7 +65,10 @@ footer {
     background-color: #a2cfe3;
     color: #000000;
     padding: 20px;
-    margin-top: 40px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     max-width: 100%;
 }
 
@@ -83,9 +93,122 @@ footer a:hover, nav a:hover {
     height: 20px;
 }
 
+/*AIDS BY UNIT*/
+#aids-by-unit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+label {
+    margin-left: 10px;
+}
+
+#aids-overview {
+    width: 75%;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.overview-content {
+    padding: 30px;
+}
+
+#qr-button {
+    display: none;
+}
+
+.unit-selection {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.table-style {
+    border-collapse: collapse;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.table-style th, .table-style td {
+    border: 1px solid #b5bcbd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-style th {
+    background-color: #ced6d6;
+    color: black;
+    padding: 8px;
+}
+
+button {
+    background-color: #648ea1;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 170px;
+    height: 35px;
+    font-size: 12px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/*ABOUT*/
+#about {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #a2cfe3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#about img {
+    width: 80px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+#about b {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
 
 
 @media only screen and (max-width: 768px) {
+
+    body {
+        font-size: 18px;
+    }
 
     .hamburger-menu {
         display: block;
@@ -136,5 +259,44 @@ footer a:hover, nav a:hover {
     .nav-list {
         display: none;
     }
+
+    #aids-overview {
+        display: none;
+    }
+
+    #about {
+        max-width: 80%;
+        margin-top: 20px;
+    }
+
+    #aids-by-unit {
+        align-items: center;
+    }
+
+    #qr-button {
+        display: block;
+    }
+
+    .unit-selection {
+        width: 80%;
+        text-align: center;
+        margin-right: 0;
+        margin-bottom: 20px;
+        margin-left: 0;
+    }
+
+    button {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    footer {
+        position: relative;
+        margin-top: 40px;
+    }
+
+
+
 }
 
