@@ -8,22 +8,22 @@
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
+            <h2>Hjälpmedelsöversikt: @Model.DisplayedUnit</h2>
 
             <div>
-                <label for="Category">Kategori:</label>
-                <select id="Category" name="Category">
+                <label for="category">Kategori:</label>
+                <select id="category" name="category">
                     <option value="Alla">Alla</option>
                     @foreach (var category in Model.Categories)
                     {
                         <option value="@category.Name">@category.Name</option>
                     }
                 </select>
-                <label for="färg">Status:</label>
-                <select id="färg" name="färg">
-                    <option value="röd">Alla</option>
-                    <option value="grön">Ledig</option>
-                    <option value="blå">Upptagen</option>
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="Alla">Alla</option>
+                    <option value="Ledigt">Ledigt</option>
+                    <option value="Upptaget">Upptaget</option>
                 </select>
             </div>
 
@@ -58,7 +58,7 @@
 
                         string inspectionDate = aid.Inspection.ToString("yyyy-MM");
 
-					    <tr>
+                        <tr class="aid-row" data-category="@aid.Category" data-status="@status">
 						    <td>@aid.Id</td>
 						    <td>@aid.Category</td>
 						    <td>@aid.ProductName</td>
@@ -82,7 +82,7 @@
         </div>
         <div class="unit-reminder">
             <h3>Kom ihåg!</h3>
-            <i>Här kommer du kunna spara påminnelser och information om enheten.</i>
+            <i>Här kommer du kunna lägga in påminnelser och information om enheten.</i>
         </div>
 
     </aside>
@@ -93,7 +93,7 @@
 <div id="unit-popup">
     <div class="pop-up">
         <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
-            <p>Välj enhet:</p>
+            <h3>Välj enhet:</h3>
             <select id="unit-list" name="unitId" multiple size="5">
                 @foreach (var unit in Model.Units)
                 {

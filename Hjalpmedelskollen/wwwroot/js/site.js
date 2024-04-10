@@ -30,3 +30,25 @@ unitButton.addEventListener('click', function () {
 cancelButton.addEventListener('click', function () {
     unitPopup.style.display = 'none';
 });
+
+
+document.getElementById('category').addEventListener('change', filterAids);
+document.getElementById('status').addEventListener('change', filterAids);
+
+function filterAids() {
+    var selectedCategory = document.getElementById('category').value;
+    var selectedStatus = document.getElementById('status').value;
+    var aidRows = document.querySelectorAll('.aid-row');
+
+    aidRows.forEach(function (row) {
+        var category = row.dataset.category;
+        var status = row.dataset.status;
+
+        if ((selectedCategory === 'Alla' || category === selectedCategory) &&
+            (selectedStatus === 'Alla' || status === selectedStatus)) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
