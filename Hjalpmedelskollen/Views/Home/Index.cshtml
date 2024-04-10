@@ -6,7 +6,7 @@
 
 <div id="aids-by-unit">
 
-    <div id="aids-overview">
+    <main id="aids-overview">
         <div class="overview-content">
             <h2>Hjälpmedelsöversikt - @Model.DisplayedUnit</h2>
 
@@ -71,14 +71,22 @@
                 </table>
             </div>
         </div>
-    </div>
+    </main>
 
-    <div class="unit-selection">
-        <p>Vald enhet: @Model.DisplayedUnit </p>
-        <button id="unit-button">Byt enhet</button>
-        <button>Registrera hjälpmedel</button>
-        <button id="qr-button">Skanna QR-kod</button>
-    </div>
+    <aside id="unit-aside">
+        <div class="unit-selection">
+            <h3>Vald enhet: @Model.DisplayedUnit </h3>
+            <button id="unit-button">Byt enhet</button>
+            <button>Registrera hjälpmedel</button>
+            <button id="qr-button">Skanna QR-kod</button>
+        </div>
+        <div class="unit-reminder">
+            <h3>Kom ihåg!</h3>
+            <i>Här kommer du kunna spara påminnelser och information om enheten.</i>
+        </div>
+
+    </aside>
+
 
 </div>
  
