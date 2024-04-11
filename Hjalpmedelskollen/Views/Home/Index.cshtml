@@ -45,27 +45,27 @@
 
                         if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
                         {
-                            backgroundColor = "rgba(255, 255, 0, 0.5)";
+                            backgroundColor = "yellow-background";
                         }
                         else if (aid.Inspection < DateTime.Now)
                         {
-                            backgroundColor = "rgba(255, 0, 0, 0.5)";
+                            backgroundColor = "red-background";
                         }
                         else if (aid.Inspection > DateTime.Now.AddMonths(1))
                         {
-                            backgroundColor = "rgba(144, 238, 144, 0.7)";
+                            backgroundColor = "green-background";
                         }
 
                         string inspectionDate = aid.Inspection.ToString("yyyy-MM");
 
                         <tr class="aid-row" data-category="@aid.Category" data-status="@status">
-						    <td>@aid.Id</td>
-						    <td>@aid.Category</td>
-						    <td>@aid.ProductName</td>
-						    <td>@status</td>
-						    <td>@aid.Location</td>
-                            <td style="background-color: @backgroundColor;"> @inspectionDate</td>
-						    <td>@aid.Comment</td>
+                            <td class="m-column">@aid.Id</td>
+                            <td class="m-column">@aid.Category</td>
+                            <td class="m-column">@aid.ProductName</td>
+                            <td class="m-column">@status</td>
+						    <td class="m-column">@aid.Location</td>
+                            <td class="@backgroundColor s-column">@inspectionDate</td>
+						    <td class="l-column">@aid.Comment</td>
 					    </tr>
 				    }
                 </table>
