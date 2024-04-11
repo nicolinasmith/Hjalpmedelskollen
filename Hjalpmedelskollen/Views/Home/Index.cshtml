@@ -77,7 +77,7 @@
         <div class="unit-selection">
             <h3>Vald enhet: @Model.DisplayedUnit </h3>
             <button id="unit-button">Byt enhet</button>
-            <button>Registrera hjälpmedel</button>
+            <button id="add-aid-button">Registrera hjälpmedel</button>
             <button id="qr-button">Skanna QR-kod</button>
         </div>
         <div class="divider"></div>
@@ -103,9 +103,62 @@
             </select>
             <div>
                 <button type="submit" id="select-unit-button">Välj</button>
-                <button type="button" id="cancel-button">Avbryt</button>
+                <button type="button" id="cancel-select-unit">Avbryt</button>
             </div>
         </form>
     </div>
 </div>
+
+<div id="aid-popup">
+    <div class="l-pop-up" id="add-aid">
+		<form method="post" action="/Home/RegisterAid" id="register-aid-form">
+			<h3>Registrera hjälpmedel:</h3>
+            <div class="add-aid-row">
+                <div>
+                    <div class="add-form">
+                        <label for="unit">Enhet: *</label>
+                        <input type="text" id="unit" name="unit" value="@Model.DisplayedUnit" readonly>
+                    </div>
+
+                    <div class="add-form">
+                        <label for="id">Registreringsnummer: *</label>
+                        <input type="text" id="id" name="id" required>
+                    </div>
+                    <div class="add-form">
+				        <label for="category">Kategori: *</label>
+				        <select id="category-list" name="category">
+					        @foreach (var category in Model.Categories)
+					        {
+						        <option value="@category.Name">@category.Name</option>
+					        }
+				        </select>
+			        </div>
+                    <div class="add-form">
+				        <label for="product-name">Produktnamn: *</label>
+				        <input type="text" id="product-name" name="productName" required>
+			        </div>
+                </div>
+                <div>
+                    <div class="add-form">
+				        <label for="location">Plats:</label>
+				        <input type="text" id="location" name="location">
+			        </div>
+                    <div class="add-form">
+				        <label for="inspection">Nästa besiktning:</label>
+				        <input type="month" id="inspection" name="inspection">
+			        </div>
+                    <div class="add-form">
+				        <label for="comment">Kommentar:</label>
+				        <input id="comment" name="comment">
+			        </div>
+                </div>
+            </div>
+            <div>
+				<button type="submit" id="add-aid-button">Registrera</button>
+				<button type="button" id="cancel-add-aid">Avbryt</button>
+			</div>
+		</form>
+	</div>
+</div>
+
 

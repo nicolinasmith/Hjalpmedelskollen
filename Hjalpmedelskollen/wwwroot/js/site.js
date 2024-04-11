@@ -16,21 +16,30 @@ document.querySelector('.hamburger-menu').addEventListener('click', function () 
     }
 });
 
-
+/*AIDS BY UNIT*/
 var unitButton = document.getElementById('unit-button');
 var selectUnitButton = document.getElementById('select-unit-button');
-var cancelButton = document.getElementById('cancel-button');
+var cancelSelectUnit = document.getElementById('cancel-select-unit');
 var unitPopup = document.getElementById('unit-popup');
+var addAidPopup = document.getElementById('aid-popup');
+var addAidButton = document.getElementById('add-aid-button');
+var cancelAddAid = document.getElementById('cancel-add-aid');
+
+addAidButton.addEventListener('click', function () {
+    addAidPopup.style.display = 'block';
+});
 
 unitButton.addEventListener('click', function () {
     unitPopup.style.display = 'block';
-
 });
 
-cancelButton.addEventListener('click', function () {
+cancelSelectUnit.addEventListener('click', function () {
     unitPopup.style.display = 'none';
 });
 
+cancelAddAid.addEventListener('click', function () {
+    addAidPopup.style.display = 'none';
+});
 
 document.getElementById('category').addEventListener('change', filterAids);
 document.getElementById('status').addEventListener('change', filterAids);
