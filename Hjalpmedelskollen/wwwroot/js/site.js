@@ -61,3 +61,19 @@ function filterAids() {
         }
     });
 }
+
+var categoryList = document.getElementById('category-list');
+var newCategoryOption = document.getElementById('add-new-category');
+
+categoryList.addEventListener('change', function () {
+    if (categoryList.value === 'new-category') {
+        var newCategory = prompt('Ange den nya kategorin:');
+        if (newCategory) {
+            var option = document.createElement('option');
+            option.textContent = newCategory;
+            option.value = newCategory;
+            categoryList.insertBefore(option, newCategoryOption);
+            categoryList.value = newCategory;
+        }
+    }
+});
