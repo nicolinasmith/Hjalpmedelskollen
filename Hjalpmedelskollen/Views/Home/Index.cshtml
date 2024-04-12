@@ -82,7 +82,7 @@
         </div>
         <div class="divider"></div>
         <div class="unit-reminder">
-            <h3>Kom ihåg!</h3>
+            <h3>Anslagstavlan</h3>
             <i>Här kommer du kunna lägga in påminnelser och information om @Model.DisplayedUnit.</i>
         </div>
 
@@ -101,7 +101,7 @@
                     <option value="@unit.Id">@unit.Name</option>
                 }
             </select>
-            <div>
+            <div class="popup-buttons">
                 <button type="submit" id="select-unit-button">Välj</button>
                 <button type="button" id="cancel-select-unit">Avbryt</button>
             </div>
@@ -116,8 +116,8 @@
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet: *</label>
-                        <input type="text" id="unit" name="unit" value="@Model.DisplayedUnit" readonly>
+                        <label for="unit">Enhet:</label>
+                        <input type="text" id="unit" name="unit" value="@Model.DisplayedUnit" readonly disabled>
                     </div>
 
                     <div class="add-form">
@@ -131,7 +131,7 @@
 					        {
 						        <option value="@category.Name">@category.Name</option>
 					        }
-                            <option value="new-category" id="add-new-category">- Ny kategori</option>
+                            <option value="new-category" id="add-new-category">LÄGG TILL NY</option>
 				        </select>
 			        </div>
                     <div class="add-form">
@@ -155,13 +155,13 @@
                     <div class="add-form">
                         <label for="qr">QR-kod: *</label>
                         <select id="qr" name="qr">
-							<option value="Ja">Ja</option>
-							<option value="Nej">Nej</option>
+							<option value="no">Nej</option>
+							<option value="yes">Ja</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="popup-buttons">
 				<button type="submit" id="add-aid-button">Registrera</button>
 				<button type="button" id="cancel-add-aid">Avbryt</button>
 			</div>
@@ -169,4 +169,17 @@
 	</div>
 </div>
 
+<div id="new-category-popup">
+    <div class="pop-up">
+			<h3>Lägg till ny kategori:</h3>
+			<div>
+				<label for="new-category"></label>
+				<input type="text" id="new-category" name="newCategory" required>
+			</div>
+			<div class="popup-buttons">
+				<button type="submit" id="add-category-button">Lägg till</button>
+				<button type="button" id="cancel-add-category">Avbryt</button>
+			</div>
+	</div>
+</div>
 
