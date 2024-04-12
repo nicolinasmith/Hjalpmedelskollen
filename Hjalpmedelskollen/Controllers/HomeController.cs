@@ -39,6 +39,8 @@ namespace Hjalpmedelskollen.Controllers
             var aidsByUnit = _context.Aids
                                     .Where(a => a.UnitId == unitId)
                                     .Include(a => a.UnitModel)
+                                    .ToList()
+                                    .OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase)
                                     .ToList();
 
             var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
@@ -48,11 +50,15 @@ namespace Hjalpmedelskollen.Controllers
             var categories = aidsByUnit
                 .Select(a => a.Category)
                 .Distinct()
+                .OrderBy(c => c, StringComparer.OrdinalIgnoreCase)
                 .Select(c => new AidsByUnitViewModel.Category()
                 {
                     Name = c
                 })
                 .ToList();
+
+
+
 
 
             var viewModel = new AidsByUnitViewModel()
