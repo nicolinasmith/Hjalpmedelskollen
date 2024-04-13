@@ -23,7 +23,7 @@ namespace Hjalpmedelskollen.Models
         public DateTime Inspection { get; set; }
 
         [MaxLength(80)]
-        public string? Comment { get; set; }
+        public string Comment { get; set; }
 
         public DateTime Registered { get; set; }
 
@@ -32,6 +32,5 @@ namespace Hjalpmedelskollen.Models
         [ForeignKey("UnitModel")]
         public int UnitId { get; set; }
 
-        public UnitModel UnitModel { get; set; }
     }
 }

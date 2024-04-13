@@ -38,7 +38,6 @@ namespace Hjalpmedelskollen.Controllers
         {
             var aidsByUnit = _context.Aids
                                     .Where(a => a.UnitId == unitId)
-                                    .Include(a => a.UnitModel)
                                     .ToList()
                                     .OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase)
                                     .ToList();
@@ -63,13 +62,44 @@ namespace Hjalpmedelskollen.Controllers
 
             var viewModel = new AidsByUnitViewModel()
             {
-                DisplayedUnit = unit.Name,
+                SelectedUnit = unit,
                 Aids = aidsByUnit,
                 Categories = categories,
                 Units = units
             };
 
             return viewModel;
+        }
+
+        [HttpPost]
+        public IActionResult AddAidToDatabase(AidModel aid)
+        {
+
+            aid.Registered = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+
+            string[] parts = Request.Form["Inspection"].ToString().Split('-');
+            int selectedMonth = int.Parse(parts[1]);
+            DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth, 1);
+            aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Aids.Add(aid);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel lades till i databasen.");
+                    return BadRequest("Ett fel inträffade när ett hjälpmedel lades till i databasen.");
+                }
+            }
+            else
+            {
+                return View("Index", aid);
+            }
         }
 
 

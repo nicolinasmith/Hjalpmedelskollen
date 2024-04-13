@@ -8,7 +8,7 @@
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h2>Hjälpmedelsöversikt: @Model.DisplayedUnit</h2>
+            <h2>Hjälpmedelsöversikt: @Model.SelectedUnit.Name</h2>
 
             <div>
                 <label for="category">Kategori:</label>
@@ -75,7 +75,7 @@
 
     <aside id="unit-aside">
         <div class="unit-selection">
-            <h3>Vald enhet: @Model.DisplayedUnit </h3>
+            <h3>Vald enhet: @Model.SelectedUnit.Name</h3>
             <button id="unit-button">Byt enhet</button>
             <button id="add-aid-button">Registrera hjälpmedel</button>
             <button id="qr-button">Skanna QR-kod</button>
@@ -83,7 +83,7 @@
         <div class="grey-divider"></div>
         <div class="unit-reminder">
             <h3>Anslagstavlan</h3>
-            <i>Här kommer du kunna lägga in påminnelser och information om @Model.DisplayedUnit.</i>
+            <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
         </div>
 
     </aside>
@@ -111,13 +111,14 @@
 
 <div id="aid-popup">
     <div class="l-pop-up" id="add-aid">
-		<form method="post" action="/Home/RegisterAid" id="register-aid-form">
+		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
 			<h3>Registrera hjälpmedel:</h3>
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
                         <label for="unit">Enhet:</label>
-                        <input type="text" id="unit" name="unit" value="@Model.DisplayedUnit" readonly disabled>
+                        <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
+                        <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
 
                     <div class="add-form">
@@ -138,6 +139,13 @@
 				        <label for="product-name">Produktnamn:</label>
 				        <input type="text" id="product-name" name="productName" required>
 			        </div>
+                    <div class="add-form">
+						<label for="status">Status:</label>
+						<select id="status" name="status">
+							<option value="true">Ledigt</option>
+							<option value="false">Upptaget</option>
+						</select>
+                    </div>
                 </div>
                 <div>
                     <div class="add-form">
