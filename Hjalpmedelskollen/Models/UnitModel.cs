@@ -17,7 +17,5 @@ namespace Hjalpmedelskollen.Models
 
         [ForeignKey ("InstitutionModel")]
         public int InstitutionId { get; set; }
-
-        public InstitutionModel InstitutionModel { get; set; }
     }
 }

@@ -4,13 +4,13 @@ namespace Hjalpmedelskollen.ViewModels
 {
     public class AidsByUnitViewModel
     {
-        public string DisplayedUnit { get; set; }
-
         public List<AidModel> Aids { get; set; }
 
         public List<Category> Categories { get; set; }
 
         public List<UnitModel> Units { get; set; }
+
+        public UnitModel SelectedUnit { get; set; }
 
         public AidsByUnitViewModel()
         {
