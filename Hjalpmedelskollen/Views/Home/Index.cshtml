@@ -4,12 +4,20 @@
     ViewData["Title"] = "Översikt";
 }
 
+<div class="small-nav">
+    <ul>
+        <li>Vald enhet: @Model.SelectedUnit.Name</li>
+        <li id="change-unit" class="small-li">Byt enhet</li>
+        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
+    </ul>
+</div>
+
 <div id="aids-by-unit">
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h2>Hjälpmedelsöversikt: @Model.SelectedUnit.Name</h2>
-
+            <h2>Hjälpmedelsöversikt</h2>
+            <p>@Model.SelectedUnit.Name | Antal registrerade hjälpmedel: @Model.Aids.Count</p>
             <div>
                 <label for="category">Kategori:</label>
                 <select id="category" name="category">
