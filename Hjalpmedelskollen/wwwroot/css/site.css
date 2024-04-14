@@ -13,12 +13,11 @@ body {
 
 /*NAV*/
 nav {
-    background-color: #a2cfe3;
+    background-color: #eaebed;
     color: #000000;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 5px;
-    margin-bottom: 40px;
     font-size: 16px;
 }
 
@@ -61,7 +60,8 @@ nav {
 
 /*FOOTER*/
 footer {
-    background-color: #a2cfe3;
+    /*background-color: #a2cfe3;*/
+    background-color: #eaebed;
     color: #000000;
     padding: 20px;
     position: fixed;
@@ -69,6 +69,7 @@ footer {
     left: 0;
     right: 0;
     max-width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 footer a, nav a, nav li {
@@ -82,7 +83,7 @@ footer a, nav a, nav li {
     align-content: center;
 }
 
-footer a:hover, nav a:hover {
+footer a:hover, nav a:hover, .small-nav a:hover {
     color: white;
 }
 
@@ -93,6 +94,35 @@ footer a:hover, nav a:hover {
 }
 
 /*AIDS BY UNIT*/
+
+.small-nav {
+    margin-bottom: 20px;
+    background-color: #454a4f;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.small-nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 5px;
+}
+    .small-nav li {
+        list-style-type: none;
+        color: #ffffff;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .small-li {
+        cursor: pointer;
+    }
+
+    .small-li:hover {
+        color: #e1dcdc;
+    }
+
 #aids-by-unit {
     display: flex;
     flex-direction: row;
@@ -180,11 +210,11 @@ footer a:hover, nav a:hover {
     text-align: left;
 }
 
-.table-style th {
-    background-color: #ced6d6;
-    color: black;
-    padding: 8px;
-}
+    .table-style th {
+        background-color: #454a4f;
+        color: #ffffff;
+        padding: 8px;
+    }
 
 .red-background {
     background-color: rgba(255, 0, 0, 0.5);
@@ -250,7 +280,7 @@ button:hover {
     margin-top: 30px;
     padding: 20px;
     width: 350px;
-    background-color: #a2cfe3;
+    background-color: #eaebed;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -260,7 +290,7 @@ button:hover {
     margin-top: 30px;
     padding: 20px;
     width: 450px;
-    background-color: #a2cfe3;
+    background-color: #eaebed;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -417,6 +447,10 @@ input, .add-form select {
     }
 
     .nav-list {
+        display: none;
+    }
+
+    .small-nav {
         display: none;
     }
 
