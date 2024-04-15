@@ -24,21 +24,35 @@
     var unitPopup = document.getElementById('unit-popup');
     var cancelSelectUnit = document.getElementById('cancel-select-unit');
 
-    changeUnit.addEventListener('click', function () {
-        unitPopup.style.display = 'block';
-    });
+    if (changeUnit) {
+        changeUnit.addEventListener('click', function () {
+            unitPopup.style.display = 'block';
+        });
+    }
 
-    changeUnitMobile.addEventListener('click', function () {
-        unitPopup.style.display = 'block';
-    });
+    if (changeUnitMobile) {
+        changeUnitMobile.addEventListener('click', function () {
+            unitPopup.style.display = 'block';
+        });
+    }
 
-    cancelSelectUnit.addEventListener('click', function () {
-        unitPopup.style.display = 'none';
-    });
+    if (cancelSelectUnit) {
+        cancelSelectUnit.addEventListener('click', function () {
+            unitPopup.style.display = 'none';
+        });
+    }
 
     /*AIDS BY UNIT - FILTER*/
-    document.getElementById('category').addEventListener('change', filterAids);
-    document.getElementById('status').addEventListener('change', filterAids);
+    var categoryElement = document.getElementById('category');
+    var statusElement = document.getElementById('status');
+
+    if (categoryElement) {
+        categoryElement.addEventListener('change', filterAids);
+    }
+
+    if (statusElement) {
+        statusElement.addEventListener('change', filterAids);
+    }
 
     function filterAids() {
         var selectedCategory = document.getElementById('category').value;
@@ -64,17 +78,23 @@
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
 
-    addNewAid.addEventListener('click', function () {
-        addAidPopup.style.display = 'block';
-    });
+    if (addNewAid) {
+        addNewAid.addEventListener('click', function () {
+                addAidPopup.style.display = 'block';
+        });
+    }
 
-    addNewAidMobile.addEventListener('click', function () {
-        addAidPopup.style.display = 'block';
-    });
+    if (addNewAidMobile) {
+        addNewAidMobile.addEventListener('click', function () {
+                addAidPopup.style.display = 'block';
+        });
+    }
 
-    cancelAddAid.addEventListener('click', function () {
-        addAidPopup.style.display = 'none';
-    });
+    if (cancelAddAid) {
+        cancelAddAid.addEventListener('click', function () {
+                addAidPopup.style.display = 'none';
+        });
+    }
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('category-list');
@@ -83,26 +103,35 @@
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
 
-    categoryList.addEventListener('change', function () {
-        if (categoryList.value === 'new-category') {
-            newCategoryPopup.style.display = 'block';
-        }
-    });
+    if (categoryList) {
+        categoryList.addEventListener('change', function () {
+            if (categoryList.value === 'new-category') {
+                newCategoryPopup.style.display = 'block';
+            }
+        });
 
-    addCategoryButton.addEventListener('click', function () {
-        var newCategoryInput = document.getElementById('new-category').value;
-        if (newCategoryInput.trim() !== '') {
-            var newCategory = document.createElement('option');
-            newCategory.text = newCategoryInput;
-            categoryList.add(newCategory);
-            categoryList.value = newCategoryInput;
-        }
-        newCategoryPopup.style.display = 'none';
-    });
+    }
 
-    cancelAddCategory.addEventListener('click', function () {
-        newCategoryPopup.style.display = 'none';
-    });
+    if (addCategoryButton) {
+        addCategoryButton.addEventListener('click', function () {
+            var newCategoryInput = document.getElementById('new-category').value;
+            if (newCategoryInput.trim() !== '') {
+                var newCategory = document.createElement('option');
+                newCategory.text = newCategoryInput;
+                categoryList.add(newCategory);
+                categoryList.value = newCategoryInput;
+            }
+            newCategoryPopup.style.display = 'none';
+        });
+
+    }
+
+    if (cancelAddAid) {
+        cancelAddCategory.addEventListener('click', function () {
+            newCategoryPopup.style.display = 'none';
+        });
+
+    }
 
 
     /*AIDS BY UNIT - SHOW AID*/
@@ -112,40 +141,44 @@
     var deleteAidButton = document.getElementById('delete-aid-button');
     var cancelUpdateAid = document.getElementById('cancel-update-aid');
 
+    if (aidRows) {
+        aidRows.forEach(function (row) {
+            row.addEventListener('click', function () {
 
-    aidRows.forEach(function (row) {
-        row.addEventListener('click', function () {
+                var selectedUnitName = document.getElementById('select-aid-unit').value;
+                var unitSelectElement = document.getElementById('update-aid-unit');
 
-            var selectedUnitName = document.getElementById('select-aid-unit').value;
-            var unitSelectElement = document.getElementById('update-aid-unit');
-
-            for (var i = 0; i < unitSelectElement.options.length; i++) {
-                var option = unitSelectElement.options[i];
-                if (option.text === selectedUnitName) {
-                    unitSelectElement.selectedIndex = i;
-                    break;
+                for (var i = 0; i < unitSelectElement.options.length; i++) {
+                    var option = unitSelectElement.options[i];
+                    if (option.text === selectedUnitName) {
+                        unitSelectElement.selectedIndex = i;
+                        break;
+                    }
                 }
-            }
 
-            var aidId = row.dataset.id;
-            var category = row.dataset.category;
-            var productName = row.cells[2].textContent;
-            var status = row.cells[3].textContent;
-            var location = row.cells[4].textContent;
-            var inspectionDate = row.cells[5].textContent;
-            var comment = row.cells[6].textContent;
+                var aidId = row.dataset.id;
+                var category = row.dataset.category;
+                var productName = row.cells[2].textContent;
+                var status = row.cells[3].textContent;
+                var location = row.cells[4].textContent;
+                var inspectionDate = row.cells[5].textContent;
+                var comment = row.cells[6].textContent;
 
-            document.getElementById('update-id').value = aidId;
-            document.getElementById('update-product-name').value = productName;
-            document.getElementById('update-location').value = location;
-            document.getElementById('update-comment').value = comment;
+                document.getElementById('update-id').value = aidId;
+                document.getElementById('update-product-name').value = productName;
+                document.getElementById('update-location').value = location;
+                document.getElementById('update-comment').value = comment;
 
-            aidPopup.style.display = 'block';
+                aidPopup.style.display = 'block';
+            });
         });
-    });
 
-    cancelUpdateAid.addEventListener('click', function () {
-        aidPopup.style.display = 'none';
-    });
+    }
+
+    if (cancelUpdateAid) {
+        cancelUpdateAid.addEventListener('click', function () {
+            aidPopup.style.display = 'none';
+        });
+    }
 
 });
