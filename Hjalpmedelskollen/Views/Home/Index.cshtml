@@ -14,6 +14,14 @@
 
 <div id="aids-by-unit">
 
+    <div id="mobile-buttons">
+        <p>Vald enhet: @Model.SelectedUnit.Name</p>
+        <button id="mobile-change-unit">Byt enhet</button>
+		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
+        <button id="qr-button">Skanna QR-kod</button>
+
+    </div>
+
     <main id="aids-overview">
         <div class="overview-content">
             <h2>Hjälpmedelsöversikt</h2>
@@ -82,18 +90,11 @@
     </main>
 
     <aside id="unit-aside">
-        <div class="unit-selection">
-            <h3>Vald enhet: @Model.SelectedUnit.Name</h3>
-            <button id="unit-button">Byt enhet</button>
-            <button id="add-aid-button">Registrera hjälpmedel</button>
-            <button id="qr-button">Skanna QR-kod</button>
-        </div>
-        <div class="grey-divider"></div>
         <div class="unit-reminder">
             <h3>Anslagstavlan</h3>
             <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
+            <button>Redigera</button>
         </div>
-
     </aside>
 
 
@@ -102,7 +103,7 @@
 <div id="unit-popup">
     <div class="pop-up">
         <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
-            <h3>Välj enhet:</h3>
+            <h3>Välj enhet</h3>
             <select id="unit-list" name="unitId" multiple size="5">
                 @foreach (var unit in Model.Units)
                 {
@@ -120,7 +121,7 @@
 <div id="aid-popup">
     <div class="l-pop-up" id="add-aid">
 		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
-			<h3>Registrera hjälpmedel:</h3>
+			<h3>Registrera hjälpmedel</h3>
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
@@ -177,7 +178,6 @@
                     </div>
                 </div>
             </div>
-            <div class="blue-divider"></div>
             <div class="popup-buttons">
 				<button type="submit" id="add-aid-button">Registrera</button>
 				<button type="button" id="cancel-add-aid">Avbryt</button>
@@ -188,7 +188,7 @@
 
 <div id="new-category-popup">
     <div class="pop-up">
-			<h3>Lägg till ny kategori:</h3>
+			<h3>Lägg till ny kategori</h3>
 			<div>
 				<label for="new-category"></label>
 				<input type="text" id="new-category" name="newCategory" required>
