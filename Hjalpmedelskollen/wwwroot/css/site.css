@@ -183,6 +183,10 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     text-align: left;
 }
 
+.aid-row {
+    cursor: pointer;
+}
+
     .table-style th {
         background-color: #454a4f;
         color: #ffffff;
@@ -252,6 +256,18 @@ button:hover {
     background-color: rgba(0,0,0,0.4);
 }
 
+#show-aid-popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
 .pop-up {
     margin: auto;
     margin-top: 30px;
@@ -272,7 +288,7 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#aid-popup {
+#add-aid-popup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -297,7 +313,7 @@ button:hover {
 }
 
 
-.add-aid-row {
+.add-aid-row, .update-aid-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
