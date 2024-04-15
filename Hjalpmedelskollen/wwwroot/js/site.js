@@ -24,23 +24,17 @@
     var unitPopup = document.getElementById('unit-popup');
     var cancelSelectUnit = document.getElementById('cancel-select-unit');
 
-    if (changeUnit) {
-        changeUnit.addEventListener('click', function () {
-            unitPopup.style.display = 'block';
-        });
-    }
+    changeUnit.addEventListener('click', function () {
+        unitPopup.style.display = 'block';
+    });
 
-    if (changeUnitMobile) {
-        changeUnitMobile.addEventListener('click', function () {
-            unitPopup.style.display = 'block';
-        });
-    }
+    changeUnitMobile.addEventListener('click', function () {
+        unitPopup.style.display = 'block';
+    });
 
-    if (cancelSelectUnit) {
-        cancelSelectUnit.addEventListener('click', function () {
-            unitPopup.style.display = 'none';
-        });
-    }
+    cancelSelectUnit.addEventListener('click', function () {
+        unitPopup.style.display = 'none';
+    });
 
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('category').addEventListener('change', filterAids);
