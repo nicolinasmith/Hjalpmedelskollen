@@ -1,4 +1,6 @@
-﻿var menuDisplayed = false;
+﻿document.addEventListener('DOMContentLoaded', function () {
+
+    var menuDisplayed = false;
 
     document.querySelector('.hamburger-menu').addEventListener('click', function () {
         var navList = document.querySelector('.nav-list');
@@ -145,3 +147,5 @@
     cancelUpdateAid.addEventListener('click', function () {
         aidPopup.style.display = 'none';
     });
+
+});
