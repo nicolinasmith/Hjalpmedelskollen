@@ -194,15 +194,15 @@
                 <div>
                     <div class="add-form">
                         <label for="unit">Enhet:</label>
-                        <select id="update-unit" name="unit">
-							@foreach (var unit in Model.Units)
-							{
-								<option value="@unit.Id">@unit.Name</option>
-							}
+                        <select id="update-aid-unit" name="unit">
+                            @foreach (var unit in Model.Units)
+                            {
+                                <option value="@unit.Id">@unit.Name</option>
+                            }
                         </select>
+                        <input type="hidden" id="select-aid-unit" value="@Model.SelectedUnit.Name">
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
-
                     <div class="add-form">
                         <label for="update-id">Registreringsnummer:</label>
                         <input type="text" id="update-id" name="update-id" readonly disabled>

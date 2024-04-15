@@ -113,8 +113,19 @@ var cancelUpdateAid = document.getElementById('cancel-update-aid');
 
 aidRows.forEach(function (row) {
     row.addEventListener('click', function () {
+
+        var selectedUnitName = document.getElementById('select-aid-unit').value;
+        var unitSelectElement = document.getElementById('update-aid-unit');
+
+        for (var i = 0; i < unitSelectElement.options.length; i++) {
+            var option = unitSelectElement.options[i];
+            if (option.text === selectedUnitName) {
+                unitSelectElement.selectedIndex = i;
+                break;
+            }
+        }
+
         var aidId = row.dataset.id;
-        //var unit = row.dataset.unit;
         var category = row.dataset.category;
         var productName = row.cells[2].textContent;
         var status = row.cells[3].textContent;
@@ -123,10 +134,8 @@ aidRows.forEach(function (row) {
         var comment = row.cells[6].textContent;
 
         document.getElementById('update-id').value = aidId;
-        //document.getElementById('update-unit').value = unit;
         document.getElementById('update-product-name').value = productName;
         document.getElementById('update-location').value = location;
-        //document.getElementById('update-inspection-date').value = inspectionDate;
         document.getElementById('update-comment').value = comment;
 
         aidPopup.style.display = 'block';
