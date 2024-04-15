@@ -4,12 +4,28 @@
     ViewData["Title"] = "Översikt";
 }
 
+<div class="small-nav">
+    <ul>
+        <li>Vald enhet: @Model.SelectedUnit.Name</li>
+        <li id="change-unit" class="small-li">Byt enhet</li>
+        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
+    </ul>
+</div>
+
 <div id="aids-by-unit">
+
+    <div id="mobile-buttons">
+        <p>Vald enhet: @Model.SelectedUnit.Name</p>
+        <button id="mobile-change-unit">Byt enhet</button>
+		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
+        <button id="qr-button">Skanna QR-kod</button>
+
+    </div>
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h2>Hjälpmedelsöversikt: @Model.SelectedUnit.Name</h2>
-
+            <h2>Hjälpmedelsöversikt</h2>
+            <p>@Model.SelectedUnit.Name | Antal registrerade hjälpmedel: @Model.Aids.Count</p>
             <div>
                 <label for="category">Kategori:</label>
                 <select id="category" name="category">
@@ -58,7 +74,7 @@
 
                         string inspectionDate = aid.Inspection.ToString("yyyy-MM");
 
-                        <tr class="aid-row" data-category="@aid.Category" data-status="@status">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -74,18 +90,11 @@
     </main>
 
     <aside id="unit-aside">
-        <div class="unit-selection">
-            <h3>Vald enhet: @Model.SelectedUnit.Name</h3>
-            <button id="unit-button">Byt enhet</button>
-            <button id="add-aid-button">Registrera hjälpmedel</button>
-            <button id="qr-button">Skanna QR-kod</button>
-        </div>
-        <div class="grey-divider"></div>
         <div class="unit-reminder">
             <h3>Anslagstavlan</h3>
             <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
+            <button>Redigera</button>
         </div>
-
     </aside>
 
 
@@ -94,7 +103,7 @@
 <div id="unit-popup">
     <div class="pop-up">
         <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
-            <h3>Välj enhet:</h3>
+            <h3>Välj enhet</h3>
             <select id="unit-list" name="unitId" multiple size="5">
                 @foreach (var unit in Model.Units)
                 {
@@ -109,10 +118,10 @@
     </div>
 </div>
 
-<div id="aid-popup">
+<div id="add-aid-popup">
     <div class="l-pop-up" id="add-aid">
 		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
-			<h3>Registrera hjälpmedel:</h3>
+			<h3>Registrera hjälpmedel</h3>
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
@@ -169,7 +178,6 @@
                     </div>
                 </div>
             </div>
-            <div class="blue-divider"></div>
             <div class="popup-buttons">
 				<button type="submit" id="add-aid-button">Registrera</button>
 				<button type="button" id="cancel-add-aid">Avbryt</button>
@@ -178,9 +186,87 @@
 	</div>
 </div>
 
+<div id="show-aid-popup">
+    <div class="l-pop-up" id="show-aid">
+        <form method="post" action="/Home/AddAidToDatabase" id="update-aid-form">
+            <h3>Uppdatera hjälpmedel</h3>
+            <div class="update-aid-row">
+                <div>
+                    <div class="add-form">
+                        <label for="unit">Enhet:</label>
+                        <select id="update-aid-unit" name="unit">
+                            @foreach (var unit in Model.Units)
+                            {
+                                <option value="@unit.Id">@unit.Name</option>
+                            }
+                        </select>
+                        <input type="hidden" id="select-aid-unit" value="@Model.SelectedUnit.Name">
+                        <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
+                    </div>
+                    <div class="add-form">
+                        <label for="update-id">Registreringsnummer:</label>
+                        <input type="text" id="update-id" name="update-id" readonly disabled>
+                    </div>
+                    <div class="add-form">
+                        <label for="category">Kategori:</label>
+                        <select id="category-list" name="category">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                            <option value="new-category" id="add-new-category">LÄGG TILL NY</option>
+                        </select>
+                    </div>
+                    <div class="add-form">
+                        <label for="product-name">Produktnamn:</label>
+                        <input type="text" id="update-product-name" name="productName" required>
+                    </div>
+                    <div class="add-form">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            <option value="true">Ledigt</option>
+                            <option value="false">Upptaget</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="add-form">
+                        <label for="location">Plats:</label>
+                        <input type="text" id="update-location" name="location">
+                    </div>
+                    <div class="add-form">
+                        <label for="inspection">Nästa besiktning:</label>
+                        <input type="month" id="update-inspection" name="inspection">
+                    </div>
+                    <div class="add-form">
+                        <label for="comment">Kommentar:</label>
+                        <input id="update-comment" name="comment">
+                    </div>
+                    <div class="add-form">
+                        <label for="qr">QR-kod:</label>
+                        <select id="qr" name="qr">
+                            <option value="no">Nej</option>
+                            <option value="yes">Ja</option>
+                        </select>
+                    </div>
+                    <div class="add-form">
+                        <label for="registered">Registrerad</label>
+                        <input type="text" id="update-registered" value="" readonly disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" id="update-aid-button">Spara</button>
+                <button type="submit" id="delete-aid-button">Ta bort</button>
+                <button type="button" id="cancel-update-aid">Avbryt</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div id="new-category-popup">
     <div class="pop-up">
-			<h3>Lägg till ny kategori:</h3>
+			<h3>Lägg till ny kategori</h3>
 			<div>
 				<label for="new-category"></label>
 				<input type="text" id="new-category" name="newCategory" required>
