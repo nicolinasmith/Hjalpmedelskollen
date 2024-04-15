@@ -408,8 +408,7 @@ input, .add-form select {
         border-bottom-right-radius: 10px;
         position: absolute;
         z-index: 1;
-        width: 99%;
-        border: 2px solid #eaebed;
+        width: 100%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
