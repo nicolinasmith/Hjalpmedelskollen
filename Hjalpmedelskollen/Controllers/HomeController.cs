@@ -21,15 +21,23 @@ namespace Hjalpmedelskollen.Controllers
 
         //TODO: Sortera kod, se vart databasanropen ska ske och hur data lagras tillfälligt
 
-        public IActionResult Index()
+        public IActionResult Index(int? unitId)
         {
-            var viewModel = GetAidsByUnitViewModel(1);
+            int defaultUnitId = 1;
+
+            if (!unitId.HasValue)
+            {
+                unitId = defaultUnitId;
+            }
+
+            var viewModel = GetAidsByUnitViewModel(unitId.Value);
             return View(viewModel);
+
         }
 
         [HttpPost]
         public IActionResult AidsByUnit(int unitId)
-        {
+        { 
             var viewModel = GetAidsByUnitViewModel(unitId);
             return View("Index", viewModel);
         }
@@ -72,15 +80,17 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAidToDatabase(AidModel aid)
+        public IActionResult AddAidToDatabase(AidModel aid, int unitId)
         {
-
             aid.Registered = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
 
-            string[] parts = Request.Form["Inspection"].ToString().Split('-');
-            int selectedMonth = int.Parse(parts[1]);
-            DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth, 1);
-            aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
+            if (aid.Inspection.HasValue)
+            {
+                string[] parts = Request.Form["Inspection"].ToString().Split('-');
+                int selectedMonth = int.Parse(parts[1]);
+                DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth, 1);
+                aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
+            }
 
             if (ModelState.IsValid)
             {
@@ -88,7 +98,7 @@ namespace Hjalpmedelskollen.Controllers
                 {
                     _context.Aids.Add(aid);
                     _context.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { unitId = unitId });
                 }
                 catch (Exception ex)
                 {

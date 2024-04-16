@@ -140,7 +140,6 @@
                         <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
-
                     <div class="add-form">
                         <label for="id">Registreringsnummer:</label>
                         <input type="text" id="id" name="id" required>
@@ -196,6 +195,17 @@
 		</form>
 	</div>
 </div>
+
+    <div id="add-aid-feedback">
+		<div class="pop-up">
+			<div>
+                <p id="add-feedback-text"></p>
+			</div>
+			<div class="popup-buttons">
+				<button type="button" id="ok-add-feedback">OK</button>
+			</div>
+		</div>
+	</div>
 
 <div id="show-aid-popup">
     <div class="l-pop-up" id="show-aid">
