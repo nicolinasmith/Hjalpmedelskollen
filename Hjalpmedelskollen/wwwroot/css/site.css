@@ -75,6 +75,7 @@ footer {
 footer a, nav a, nav li {
     text-decoration: none;
     color: black;
+    margin-left: 4px;
 }
 
 .footer-content {
@@ -85,12 +86,6 @@ footer a, nav a, nav li {
 
 footer a:hover, nav a:hover, .small-nav a:hover {
     color: white;
-}
-
-.footer-divider {
-    margin: 0 7px;
-    border-right: 2px solid #000000;
-    height: 20px;
 }
 
 /*AIDS BY UNIT*/
@@ -353,13 +348,7 @@ input, .add-form select, #unit-list option {
     font-size: 18px;
 }
 
-
-
 @media only screen and (max-width: 768px) {
-
-    body {
-        font-size: 18px;
-    }
 
     .hamburger-menu {
         display: block;

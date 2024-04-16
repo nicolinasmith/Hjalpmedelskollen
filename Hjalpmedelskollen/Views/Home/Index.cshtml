@@ -136,16 +136,16 @@
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet:</label>
+                        <label for="unit">Enhet: *</label>
                         <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
                     <div class="add-form">
-                        <label for="id">Registreringsnummer:</label>
+                        <label for="id">Registreringsnummer: *</label>
                         <input type="text" id="id" name="id" required>
                     </div>
                     <div class="add-form">
-				        <label for="category">Kategori:</label>
+				        <label for="category">Kategori: *</label>
 				        <select id="category-list" name="category">
 					        @foreach (var category in Model.Categories)
 					        {
@@ -155,11 +155,11 @@
 				        </select>
 			        </div>
                     <div class="add-form">
-				        <label for="product-name">Produktnamn:</label>
+				        <label for="product-name">Produktnamn: *</label>
 				        <input type="text" id="product-name" name="productName" required>
 			        </div>
                     <div class="add-form">
-						<label for="status">Status:</label>
+						<label for="status">Status: *</label>
 						<select id="status" name="status">
 							<option value="true">Ledigt</option>
 							<option value="false">Upptaget</option>
@@ -180,7 +180,7 @@
 				        <input id="comment" name="comment">
 			        </div>
                     <div class="add-form">
-                        <label for="qr">QR-kod:</label>
+                        <label for="qr">QR-kod: *</label>
                         <select id="qr" name="qr">
 							<option value="no">Nej</option>
 							<option value="yes">Ja</option>
@@ -214,7 +214,7 @@
             <div class="update-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet:</label>
+                        <label for="unit">Enhet: *</label>
                         <select id="update-aid-unit" name="unit">
                             @foreach (var unit in Model.Units)
                             {
@@ -225,11 +225,11 @@
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
                     <div class="add-form">
-                        <label for="update-id">Registreringsnummer:</label>
+                        <label for="update-id">Registreringsnummer: *</label>
                         <input type="text" id="update-id" name="update-id" readonly disabled>
                     </div>
                     <div class="add-form">
-                        <label for="category">Kategori:</label>
+                        <label for="category">Kategori: *</label>
                         <select id="update-category-list" name="category">
                             @foreach (var category in Model.Categories)
                             {
@@ -239,11 +239,11 @@
                         </select>
                     </div>
                     <div class="add-form">
-                        <label for="product-name">Produktnamn:</label>
+                        <label for="product-name">Produktnamn: *</label>
                         <input type="text" id="update-product-name" name="productName" required>
                     </div>
                     <div class="add-form">
-                        <label for="status">Status:</label>
+                        <label for="status">Status: *</label>
                         <select id="update-status" name="status">
                             <option value="Ledigt">Ledigt</option>
                             <option value="Upptaget">Upptaget</option>
@@ -264,7 +264,7 @@
                         <input id="update-comment" name="comment">
                     </div>
                     <div class="add-form">
-                        <label for="qr">QR-kod:</label>
+                        <label for="qr">QR-kod: *</label>
                         <select id="update-qr" name="qr">
                             <option value="Nej">Nej</option>
                             <option value="Ja">Ja</option>
