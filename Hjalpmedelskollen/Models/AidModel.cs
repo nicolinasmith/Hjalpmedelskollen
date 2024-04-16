@@ -18,12 +18,12 @@ namespace Hjalpmedelskollen.Models
         public bool Status { get; set; }
 
         [MaxLength(50)]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
-        public DateTime Inspection { get; set; }
+        public DateTime? Inspection { get; set; }
 
         [MaxLength(80)]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         public DateTime Registered { get; set; }
 
