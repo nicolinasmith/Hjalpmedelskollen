@@ -141,6 +141,16 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     margin-bottom: 80px;
 }
 
+.fa-triangle-exclamation, .fa-circle-check, .fa-circle-xmark {
+    margin-right: 8px;
+}
+
+.inspection-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .overview-content {
     padding-left: 10px;
     padding-right: 10px;
