@@ -83,7 +83,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -226,7 +226,7 @@
                     </div>
                     <div class="add-form">
                         <label for="update-id">Registreringsnummer:</label>
-                        <input type="text" id="update-id" name="update-id" readonly>
+                        <input type="text" id="update-id" name="update-id" readonly disabled>
                     </div>
                     <div class="add-form">
                         <label for="category">Kategori:</label>

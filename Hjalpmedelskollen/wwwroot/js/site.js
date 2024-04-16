@@ -149,6 +149,10 @@
                     qrElement.value = qr;
                 }
 
+                var registered = this.getAttribute('data-registered');
+                var registeredDate = registered.split(' ')[0];
+                document.getElementById('update-registered').value = registeredDate;
+
                 var id = this.getAttribute('data-id');
                 var productName = this.querySelector('.m-column:nth-child(3)').textContent;
                 var location = this.querySelector('.m-column:nth-child(5)').textContent;
