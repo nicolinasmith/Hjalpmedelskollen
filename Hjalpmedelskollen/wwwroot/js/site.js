@@ -63,6 +63,7 @@
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
+    var addAidFeedback = document.getElementById('add-aid-feedback');
 
         addNewAid.addEventListener('click', function () {
                 addAidPopup.style.display = 'block';
@@ -91,7 +92,6 @@
         });
 
  
-
         addCategoryButton.addEventListener('click', function () {
             var newCategoryInput = document.getElementById('new-category').value;
             if (newCategoryInput.trim() !== '') {
@@ -103,7 +103,7 @@
             newCategoryPopup.style.display = 'none';
         });
 
-    
+   
         cancelAddCategory.addEventListener('click', function () {
             newCategoryPopup.style.display = 'none';
         });

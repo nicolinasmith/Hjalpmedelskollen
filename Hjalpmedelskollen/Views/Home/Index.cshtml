@@ -57,22 +57,31 @@
                     @foreach (var aid in Model.Aids)
 				    {
                         string backgroundColor = "";
+                        string inspectionDate = string.Empty;
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
 
-                        if (aid.Inspection.Month == DateTime.Now.Month && aid.Inspection.Year == DateTime.Now.Year)
+                        if (aid.Inspection.HasValue)
                         {
-                            backgroundColor = "yellow-background";
-                        }
-                        else if (aid.Inspection < DateTime.Now)
-                        {
-                            backgroundColor = "red-background";
-                        }
-                        else if (aid.Inspection > DateTime.Now.AddMonths(1))
-                        {
-                            backgroundColor = "green-background";
-                        }
+                            inspectionDate = aid.Inspection.Value.ToString("yyyy-MM");
 
-                        string inspectionDate = aid.Inspection.ToString("yyyy-MM");
+                            if (aid.Inspection.Value.Month == DateTime.Now.Month && aid.Inspection.Value.Year == DateTime.Now.Year)
+                            {
+                                backgroundColor = "yellow-background";
+                            }
+                            else if (aid.Inspection.Value < DateTime.Now)
+                            {
+                                backgroundColor = "red-background";
+                            }
+                            else if (aid.Inspection.Value > DateTime.Now.AddMonths(1))
+                            {
+                                backgroundColor = "green-background";
+                            }
+                        }
+                        else
+                        {
+                            backgroundColor = "default-background";
+                            inspectionDate = " ";
+                        }
 
                         <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status">
                             <td class="m-column">@aid.Id</td>
@@ -93,7 +102,9 @@
         <div class="unit-reminder">
             <h3>Anslagstavlan</h3>
             <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
-            <button>Redigera</button>
+            <div class="popup-buttons">
+                <button>Redigera</button>
+            </div>
         </div>
     </aside>
 
@@ -129,7 +140,6 @@
                         <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
-
                     <div class="add-form">
                         <label for="id">Registreringsnummer:</label>
                         <input type="text" id="id" name="id" required>
@@ -185,6 +195,17 @@
 		</form>
 	</div>
 </div>
+
+    <div id="add-aid-feedback">
+		<div class="pop-up">
+			<div>
+                <p id="add-feedback-text"></p>
+			</div>
+			<div class="popup-buttons">
+				<button type="button" id="ok-add-feedback">OK</button>
+			</div>
+		</div>
+	</div>
 
 <div id="show-aid-popup">
     <div class="l-pop-up" id="show-aid">

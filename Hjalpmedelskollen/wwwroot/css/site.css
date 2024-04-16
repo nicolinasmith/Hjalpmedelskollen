@@ -129,7 +129,7 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     align-items: start;
     justify-content: space-evenly;
     margin-top: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
     width: 100%;
 }
 
@@ -205,6 +205,10 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     background-color:rgba(255, 255, 0, 0.5) ;
 }
 
+.default-background {
+    background-color: white;
+}
+
 .s-column {
     width: 10%;
 }
@@ -244,19 +248,7 @@ button:hover {
     opacity: 0.8;
 }
 
-#unit-popup {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-#show-aid-popup {
+#show-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -288,6 +280,7 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/*
 #add-aid-popup {
     display: none;
     position: fixed;
@@ -310,7 +303,7 @@ button:hover {
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
-}
+}*/
 
 
 .add-aid-row, .update-aid-row {
