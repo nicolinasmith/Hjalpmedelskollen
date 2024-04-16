@@ -3,6 +3,7 @@ using Hjalpmedelskollen.Models;
 using Hjalpmedelskollen.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -110,6 +111,43 @@ namespace Hjalpmedelskollen.Controllers
             {
                 return View("Index", aid);
             }
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAidToDatabase(string aidId, string formAction)
+        {
+            if (formAction == "delete")
+            {
+                if (string.IsNullOrEmpty(aidId))
+                {
+                    return BadRequest("Registrerinsnummer måste anges för att ta bort.");
+                }
+
+                try
+                {
+                    var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
+                    if (aid == null)
+                    {
+                        return NotFound();
+                    }
+
+                    _context.Aids.Remove(aid);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", new { unitId = aid.UnitId });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
+                    return BadRequest("Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
+                }
+
+
+            }
+            else
+            {
+                return View("Index");
+            }
+
         }
 
 

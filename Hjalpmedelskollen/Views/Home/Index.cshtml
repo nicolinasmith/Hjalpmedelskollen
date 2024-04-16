@@ -83,7 +83,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -207,9 +207,9 @@
 		</div>
 	</div>
 
-<div id="show-aid-popup">
+<div id="update-aid-popup">
     <div class="l-pop-up" id="show-aid">
-        <form method="post" action="/Home/AddAidToDatabase" id="update-aid-form">
+        <form method="post" action="/Home/UpdateAidToDatabase" id="update-aid-form">
             <h3>Uppdatera hjälpmedel</h3>
             <div class="update-aid-row">
                 <div>
@@ -226,11 +226,11 @@
                     </div>
                     <div class="add-form">
                         <label for="update-id">Registreringsnummer:</label>
-                        <input type="text" id="update-id" name="update-id" readonly disabled>
+                        <input type="text" id="update-id" name="update-id" readonly>
                     </div>
                     <div class="add-form">
                         <label for="category">Kategori:</label>
-                        <select id="category-list" name="category">
+                        <select id="update-category-list" name="category">
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Name">@category.Name</option>
@@ -244,9 +244,9 @@
                     </div>
                     <div class="add-form">
                         <label for="status">Status:</label>
-                        <select id="status" name="status">
-                            <option value="true">Ledigt</option>
-                            <option value="false">Upptaget</option>
+                        <select id="update-status" name="status">
+                            <option value="Ledigt">Ledigt</option>
+                            <option value="Upptaget">Upptaget</option>
                         </select>
                     </div>
                 </div>
@@ -265,9 +265,9 @@
                     </div>
                     <div class="add-form">
                         <label for="qr">QR-kod:</label>
-                        <select id="qr" name="qr">
-                            <option value="no">Nej</option>
-                            <option value="yes">Ja</option>
+                        <select id="update-qr" name="qr">
+                            <option value="Nej">Nej</option>
+                            <option value="Ja">Ja</option>
                         </select>
                     </div>
                     <div class="add-form">
@@ -277,8 +277,8 @@
                 </div>
             </div>
             <div class="popup-buttons">
-                <button type="submit" id="update-aid-button">Spara</button>
-                <button type="submit" id="delete-aid-button">Ta bort</button>
+                <button type="submit" id="update-aid-button" name="form-action" value="update">Spara</button>
+                <button type="submit" id="delete-aid-button" name="form-action" value="delete">Ta bort</button>
                 <button type="button" id="cancel-update-aid">Avbryt</button>
             </div>
         </form>

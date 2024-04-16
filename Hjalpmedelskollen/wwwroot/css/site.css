@@ -250,7 +250,7 @@ button:hover {
     opacity: 0.8;
 }
 
-#show-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup {
+#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup {
     display: none;
     position: fixed;
     z-index: 1;
