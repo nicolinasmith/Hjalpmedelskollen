@@ -141,6 +141,20 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     margin-bottom: 80px;
 }
 
+.fa-check, .fa-xmark {
+    margin-right: 8px;
+}
+
+.fa-exclamation {
+    margin-right: 14px;
+}
+
+.inspection-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .overview-content {
     padding-left: 10px;
     padding-right: 10px;
