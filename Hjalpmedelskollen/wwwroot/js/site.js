@@ -37,12 +37,12 @@
         });
 
     /*AIDS BY UNIT - FILTER*/
-    document.getElementById('category').addEventListener('change', filterAids);
-    document.getElementById('status').addEventListener('change', filterAids);
+    document.getElementById('select-category').addEventListener('change', filterAids);
+    document.getElementById('select-status').addEventListener('change', filterAids);
 
     function filterAids() {
-        var selectedCategory = document.getElementById('category').value;
-        var selectedStatus = document.getElementById('status').value;
+        var selectedCategory = document.getElementById('select-category').value;
+        var selectedStatus = document.getElementById('select-status').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
         aidRows.forEach(function (row) {

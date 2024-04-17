@@ -29,7 +29,7 @@
             <p>Antal registrerade hjälpmedel: @Model.Aids.Count</p>
             <div>
                 <label for="category">Kategori:</label>
-                <select id="category" name="category">
+                <select id="select-category" name="category">
                     <option value="Alla">Alla</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -37,7 +37,7 @@
                     }
                 </select>
                 <label for="status">Status:</label>
-                <select id="status" name="status">
+                <select id="select-status" name="status">
                     <option value="Alla">Alla</option>
                     <option value="Ledigt">Ledigt</option>
                     <option value="Upptaget">Upptaget</option>
