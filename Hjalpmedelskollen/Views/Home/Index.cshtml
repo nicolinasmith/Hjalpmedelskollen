@@ -15,19 +15,19 @@
 <div id="aids-by-unit">
 
     <div id="mobile-buttons">
-        <p>Vald enhet: @Model.SelectedUnit.Name</p>
+        <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
 		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
-
+        <span class="divider"></span>
     </div>
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h1>@Model.SelectedUnit.Name</h1>
+            <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
             <p>Antal registrerade hjälpmedel: @Model.Aids.Count</p>
-            <div>
+            <div class="filter-selections">
                 <label for="category">Kategori:</label>
                 <select id="select-category" name="category">
                     <option value="Alla">Alla</option>
