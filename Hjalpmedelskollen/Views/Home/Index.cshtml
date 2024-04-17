@@ -51,14 +51,15 @@
                         <th>Produktnamn</th>
                         <th>Status</th>
                         <th>Plats</th>
-                        <th>Besiktning</th>
-                        <th>Kommentar</th>
+                        <th>Nästa besiktning</th>
+                        <th>Övrigt</th>
                     </tr>
                     @foreach (var aid in Model.Aids)
 				    {
                         string backgroundColor = "";
                         string inspectionDate = string.Empty;
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
+                        string icon = "";
 
                         if (aid.Inspection.HasValue)
                         {
@@ -67,14 +68,17 @@
                             if (aid.Inspection.Value.Month == DateTime.Now.Month && aid.Inspection.Value.Year == DateTime.Now.Year)
                             {
                                 backgroundColor = "yellow-background";
+                                icon = "fa-solid fa-exclamation";
                             }
                             else if (aid.Inspection.Value < DateTime.Now)
                             {
                                 backgroundColor = "red-background";
+                                icon = "fa-solid fa-xmark";
                             }
                             else if (aid.Inspection.Value > DateTime.Now.AddMonths(1))
                             {
                                 backgroundColor = "green-background";
+                                icon = "fa-solid fa-check";
                             }
                         }
                         else
@@ -83,13 +87,17 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
                             <td class="m-column">@status</td>
 						    <td class="m-column">@aid.Location</td>
-                            <td class="@backgroundColor s-column">@inspectionDate</td>
+                            <td class="@backgroundColor s-column">
+                                <div class="inspection-layout">
+                                    @inspectionDate<i class="@icon"></i>
+                                </div>
+                            </td>
 						    <td class="l-column">@aid.Comment</td>
 					    </tr>
 				    }
@@ -103,7 +111,7 @@
             <h3>Anslagstavlan</h3>
             <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
             <div class="popup-buttons">
-                <button>Redigera</button>
+                <button>Uppdatera</button>
             </div>
         </div>
     </aside>
@@ -136,16 +144,16 @@
             <div class="add-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet:</label>
+                        <label for="unit">Enhet: *</label>
                         <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
                     <div class="add-form">
-                        <label for="id">Registreringsnummer:</label>
+                        <label for="id">Registreringsnummer: *</label>
                         <input type="text" id="id" name="id" required>
                     </div>
                     <div class="add-form">
-				        <label for="category">Kategori:</label>
+				        <label for="category">Kategori: *</label>
 				        <select id="category-list" name="category">
 					        @foreach (var category in Model.Categories)
 					        {
@@ -155,11 +163,11 @@
 				        </select>
 			        </div>
                     <div class="add-form">
-				        <label for="product-name">Produktnamn:</label>
+				        <label for="product-name">Produktnamn: *</label>
 				        <input type="text" id="product-name" name="productName" required>
 			        </div>
                     <div class="add-form">
-						<label for="status">Status:</label>
+						<label for="status">Status: *</label>
 						<select id="status" name="status">
 							<option value="true">Ledigt</option>
 							<option value="false">Upptaget</option>
@@ -176,11 +184,11 @@
 				        <input type="month" id="inspection" name="inspection">
 			        </div>
                     <div class="add-form">
-				        <label for="comment">Kommentar:</label>
+				        <label for="comment">Övrigt:</label>
 				        <input id="comment" name="comment">
 			        </div>
                     <div class="add-form">
-                        <label for="qr">QR-kod:</label>
+                        <label for="qr">QR-kod: *</label>
                         <select id="qr" name="qr">
 							<option value="no">Nej</option>
 							<option value="yes">Ja</option>
@@ -207,14 +215,14 @@
 		</div>
 	</div>
 
-<div id="show-aid-popup">
+<div id="update-aid-popup">
     <div class="l-pop-up" id="show-aid">
-        <form method="post" action="/Home/AddAidToDatabase" id="update-aid-form">
+        <form method="post" action="/Home/UpdateAidToDatabase" id="update-aid-form">
             <h3>Uppdatera hjälpmedel</h3>
             <div class="update-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet:</label>
+                        <label for="unit">Enhet: *</label>
                         <select id="update-aid-unit" name="unit">
                             @foreach (var unit in Model.Units)
                             {
@@ -225,12 +233,12 @@
                         <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
                     <div class="add-form">
-                        <label for="update-id">Registreringsnummer:</label>
+                        <label for="update-id">Registreringsnummer: *</label>
                         <input type="text" id="update-id" name="update-id" readonly disabled>
                     </div>
                     <div class="add-form">
-                        <label for="category">Kategori:</label>
-                        <select id="category-list" name="category">
+                        <label for="category">Kategori: *</label>
+                        <select id="update-category-list" name="category">
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Name">@category.Name</option>
@@ -239,14 +247,14 @@
                         </select>
                     </div>
                     <div class="add-form">
-                        <label for="product-name">Produktnamn:</label>
+                        <label for="product-name">Produktnamn: *</label>
                         <input type="text" id="update-product-name" name="productName" required>
                     </div>
                     <div class="add-form">
-                        <label for="status">Status:</label>
-                        <select id="status" name="status">
-                            <option value="true">Ledigt</option>
-                            <option value="false">Upptaget</option>
+                        <label for="status">Status: *</label>
+                        <select id="update-status" name="status">
+                            <option value="Ledigt">Ledigt</option>
+                            <option value="Upptaget">Upptaget</option>
                         </select>
                     </div>
                 </div>
@@ -260,14 +268,14 @@
                         <input type="month" id="update-inspection" name="inspection">
                     </div>
                     <div class="add-form">
-                        <label for="comment">Kommentar:</label>
+                        <label for="comment">Övrigt:</label>
                         <input id="update-comment" name="comment">
                     </div>
                     <div class="add-form">
-                        <label for="qr">QR-kod:</label>
-                        <select id="qr" name="qr">
-                            <option value="no">Nej</option>
-                            <option value="yes">Ja</option>
+                        <label for="qr">QR-kod: *</label>
+                        <select id="update-qr" name="qr">
+                            <option value="Nej">Nej</option>
+                            <option value="Ja">Ja</option>
                         </select>
                     </div>
                     <div class="add-form">
@@ -277,8 +285,8 @@
                 </div>
             </div>
             <div class="popup-buttons">
-                <button type="submit" id="update-aid-button">Spara</button>
-                <button type="submit" id="delete-aid-button">Ta bort</button>
+                <button type="submit" id="update-aid-button" name="form-action" value="update">Spara</button>
+                <button type="submit" id="delete-aid-button" name="form-action" value="delete">Ta bort</button>
                 <button type="button" id="cancel-update-aid">Avbryt</button>
             </div>
         </form>

@@ -110,9 +110,7 @@
 
     /*AIDS BY UNIT - SHOW AID*/
     var aidRows = document.querySelectorAll('.aid-row');
-    var aidPopup = document.getElementById('show-aid-popup');
-    var updateAidButton = document.getElementById('update-aid-button');
-    var deleteAidButton = document.getElementById('delete-aid-button');
+    var aidPopup = document.getElementById('update-aid-popup');
     var cancelUpdateAid = document.getElementById('cancel-update-aid');
 
         aidRows.forEach(function (row) {
@@ -129,17 +127,44 @@
                     }
                 }
 
-                var aidId = row.dataset.id;
-                var category = row.dataset.category;
-                var productName = row.cells[2].textContent;
-                var status = row.cells[3].textContent;
-                var location = row.cells[4].textContent;
-                var inspectionDate = row.cells[5].textContent;
-                var comment = row.cells[6].textContent;
+                var category = this.getAttribute('data-category');
+                var selectElement = document.getElementById('update-category-list');
+                var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
+                if (categoryOption) {
 
-                document.getElementById('update-id').value = aidId;
+                    selectElement.value = category;
+                }
+
+                var status = this.getAttribute('data-status');
+                var statusElement = document.getElementById('update-status');
+                var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
+                if (statusOption) {
+                    statusElement.value = status;
+                }
+
+                var qr = this.getAttribute('data-qr');
+                var qrElement = document.getElementById('update-qr');
+                var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
+                if (qrOption) {
+                    qrElement.value = qr;
+                }
+
+                var registered = this.getAttribute('data-registered');
+                var registeredDate = registered.split(' ')[0];
+                document.getElementById('update-registered').value = registeredDate;
+
+                var id = this.getAttribute('data-id');
+                var productName = this.querySelector('.m-column:nth-child(3)').textContent;
+                var location = this.querySelector('.m-column:nth-child(5)').textContent;
+                var inspection = this.querySelector('.s-column').textContent;
+                var comment = this.querySelector('.l-column').textContent;
+
+                document.getElementById('update-id').value = id;
+                document.getElementById('category-list').value = category;
                 document.getElementById('update-product-name').value = productName;
+                document.getElementById('status').value = status;
                 document.getElementById('update-location').value = location;
+                document.getElementById('update-inspection').value = inspection;
                 document.getElementById('update-comment').value = comment;
 
                 aidPopup.style.display = 'block';
