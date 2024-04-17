@@ -15,20 +15,21 @@
 <div id="aids-by-unit">
 
     <div id="mobile-buttons">
-        <p>Vald enhet: @Model.SelectedUnit.Name</p>
+        <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
 		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
-
+        <span class="divider"></span>
     </div>
 
     <main id="aids-overview">
         <div class="overview-content">
+            <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
-            <p>@Model.SelectedUnit.Name | Antal registrerade hjälpmedel: @Model.Aids.Count</p>
-            <div>
+            <p>Antal registrerade hjälpmedel: @Model.Aids.Count</p>
+            <div class="filter-selections">
                 <label for="category">Kategori:</label>
-                <select id="category" name="category">
+                <select id="select-category" name="category">
                     <option value="Alla">Alla</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -36,7 +37,7 @@
                     }
                 </select>
                 <label for="status">Status:</label>
-                <select id="status" name="status">
+                <select id="select-status" name="status">
                     <option value="Alla">Alla</option>
                     <option value="Ledigt">Ledigt</option>
                     <option value="Upptaget">Upptaget</option>
@@ -46,19 +47,20 @@
             <div class="table-container">
                 <table class="table-style">
                     <tr class="table-header">
-                        <th>Registreringsnummer</th>
-                        <th>Kategori</th>
-                        <th>Produktnamn</th>
-                        <th>Status</th>
-                        <th>Plats</th>
-                        <th>Nästa besiktning</th>
-                        <th>Övrigt</th>
+                        <th title ="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
+                        <th title="Samlingskategorin som hjälpmedlet tillhör (exempelvis rollator, rullstol)">Kategori</th>
+                        <th title="Produktnamn för hjälpmedlet (exempelvis Futura 600, Cross)">Produktnamn</th>
+                        <th title="Om hjälpmedlet är ledigt eller upptaget">Status</th>
+                        <th title="Plats där hjälpmedlet finns på enheten">Plats</th>
+                        <th title="Tidpunkt för hjälpmedel behöver besiktigas nästa gång">Nästa besiktning</th>
+                        <th title="Övrig kommentar om hjälpmedlet">Kommentar</th>
                     </tr>
                     @foreach (var aid in Model.Aids)
 				    {
                         string backgroundColor = "";
                         string inspectionDate = string.Empty;
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
+                        string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
 
                         if (aid.Inspection.HasValue)
@@ -91,7 +93,7 @@
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
-                            <td class="m-column">@status</td>
+                            <td class="m-column @statusBackgroundColor">@status</td>
 						    <td class="m-column">@aid.Location</td>
                             <td class="@backgroundColor s-column">
                                 <div class="inspection-layout">

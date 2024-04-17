@@ -317,11 +317,6 @@ input, .add-form select, #unit-list option {
     width: 100%;
 }
 
-/*
-#unit-list option {
-    padding: 5px;
-}*/
-
 .popup-buttons {
     width: 100%;
     display: flex;
@@ -364,6 +359,13 @@ input, .add-form select, #unit-list option {
 
 @media only screen and (max-width: 768px) {
 
+    /* Andra regler för mobila enheter */
+
+    body {
+        font-size: 16px;
+        color: #000000;
+    }
+
     .hamburger-menu {
         display: block;
         margin-right: 15px;
@@ -385,16 +387,16 @@ input, .add-form select, #unit-list option {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    #hamburger-menu-content li {
-        color: #ffffff;
-        text-decoration: none;
-        margin: 8px;
-    }
+        #hamburger-menu-content li {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 8px;
+        }
 
-    #hamburger-menu-content a {
-        color: #ffffff;
-        text-decoration: none;
-    }
+        #hamburger-menu-content a {
+            color: #ffffff;
+            text-decoration: none;
+        }
 
     nav {
         padding: 10px;
@@ -405,11 +407,11 @@ input, .add-form select, #unit-list option {
         margin-left: 0;
     }
 
-    .nav-brand img {
-        height: 25px;
-        width: auto;
-        margin-right: 8px;
-    }
+        .nav-brand img {
+            height: 25px;
+            width: auto;
+            margin-right: 8px;
+        }
 
     .nav-list {
         display: none;
@@ -419,7 +421,13 @@ input, .add-form select, #unit-list option {
         display: none;
     }
 
-    #aids-overview {
+    #aids-by-unit {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .headline {
         display: none;
     }
 
@@ -428,18 +436,47 @@ input, .add-form select, #unit-list option {
         margin-top: 20px;
     }
 
-    #aids-by-unit {
-        align-items: center;
+    .table-style th:nth-child(1),
+    .table-style td:nth-child(1),
+    .table-style th:nth-child(4),
+    .table-style td:nth-child(4),
+    .table-style th:nth-child(5),
+    .table-style td:nth-child(5),
+    .table-style th:nth-child(6),
+    .table-style td:nth-child(6),
+    .table-style th:nth-child(7),
+    .table-style td:nth-child(7) {
+        display: none;
+    }
+
+    .table-style {
+        font-size: 16px;
+    }
+
+    #aids-overview {
+        width: 90%;
+    }
+
+    .m-column {
+        width: 50%;
     }
 
     #mobile-buttons {
-        display:block;
+        display: block;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         margin-top: 20px;
+        margin-bottom: 20px;
         width: 80%;
+    }
+
+    .divider {
+        width: 100%;
+        border: 2px solid rgba(0,0,0,0.4);
+        margin-top: 50px;
+        margin-bottom: 20px;
     }
 
     #unit-aside {
@@ -450,7 +487,7 @@ input, .add-form select, #unit-list option {
         width: 80%;
     }
 
-    .add-aid-row {
+    .add-aid-row, .update-aid-row {
         flex-direction: column;
         margin: 0;
     }
@@ -458,10 +495,6 @@ input, .add-form select, #unit-list option {
     .add-form input, .add-form select, #new-category-popup input {
         padding: 8px;
         font-size: 16px;
-    }
-
-    .divider {
-        display: none;
     }
 
     .unit-selection {
@@ -476,9 +509,9 @@ input, .add-form select, #unit-list option {
         background-color: #ffffff;
     }
 
-    .unit-selection h3 {
-        font-size: 18px;
-    }
+        .unit-selection h3 {
+            font-size: 18px;
+        }
 
     .unit-reminder {
         display: none;
@@ -486,7 +519,6 @@ input, .add-form select, #unit-list option {
 
     .pop-up {
         width: 80%;
-
     }
 
     #unit-list option {
@@ -513,8 +545,4 @@ input, .add-form select, #unit-list option {
         position: relative;
         margin-top: 40px;
     }
-
-
-
 }
-

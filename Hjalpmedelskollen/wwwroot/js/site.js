@@ -37,12 +37,12 @@
         });
 
     /*AIDS BY UNIT - FILTER*/
-    document.getElementById('category').addEventListener('change', filterAids);
-    document.getElementById('status').addEventListener('change', filterAids);
+    document.getElementById('select-category').addEventListener('change', filterAids);
+    document.getElementById('select-status').addEventListener('change', filterAids);
 
     function filterAids() {
-        var selectedCategory = document.getElementById('category').value;
-        var selectedStatus = document.getElementById('status').value;
+        var selectedCategory = document.getElementById('select-category').value;
+        var selectedStatus = document.getElementById('select-status').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
         aidRows.forEach(function (row) {
@@ -156,7 +156,12 @@
                 var id = this.getAttribute('data-id');
                 var productName = this.querySelector('.m-column:nth-child(3)').textContent;
                 var location = this.querySelector('.m-column:nth-child(5)').textContent;
-                var inspection = this.querySelector('.s-column').textContent;
+
+                var inspectionContainer = this.querySelector('.s-column');
+                var inspectionDate = inspectionContainer.textContent.trim();
+                var iconClass = inspectionContainer.querySelector('i').className;
+                inspectionDate = inspectionDate.replace(iconClass, '').trim();
+
                 var comment = this.querySelector('.l-column').textContent;
 
                 document.getElementById('update-id').value = id;
@@ -164,7 +169,7 @@
                 document.getElementById('update-product-name').value = productName;
                 document.getElementById('status').value = status;
                 document.getElementById('update-location').value = location;
-                document.getElementById('update-inspection').value = inspection;
+                document.getElementById('update-inspection').value = inspectionDate;
                 document.getElementById('update-comment').value = comment;
 
                 aidPopup.style.display = 'block';
