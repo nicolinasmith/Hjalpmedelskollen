@@ -24,8 +24,8 @@
 
     <main id="aids-overview">
         <div class="overview-content">
-            <h2>Hjälpmedelsöversikt</h2>
-            <p>@Model.SelectedUnit.Name | Antal registrerade hjälpmedel: @Model.Aids.Count</p>
+            <h2>Hjälpmedelsöversikt: @Model.SelectedUnit.Name</h2>
+            <p>Antal registrerade hjälpmedel: @Model.Aids.Count</p>
             <div>
                 <label for="category">Kategori:</label>
                 <select id="category" name="category">
@@ -46,19 +46,20 @@
             <div class="table-container">
                 <table class="table-style">
                     <tr class="table-header">
-                        <th>Registreringsnummer</th>
-                        <th>Kategori</th>
-                        <th>Produktnamn</th>
-                        <th>Status</th>
-                        <th>Plats</th>
-                        <th>Nästa besiktning</th>
-                        <th>Övrigt</th>
+                        <th title ="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
+                        <th title="Samlingskategorin som hjälpmedlet tillhör">Kategori</th>
+                        <th title="Produktnamn för hjälpmedlet">Produktnamn</th>
+                        <th title="Om hjälpmedlet är ledigt eller upptaget">Status</th>
+                        <th title="Plats där hjälpmedlet finns på enheten">Plats</th>
+                        <th title="Tidpunkt för hjälpmedel behöver besiktigas nästa gång">Nästa besiktning</th>
+                        <th title="Övrig kommentar om hjälpmedlet">Kommentar</th>
                     </tr>
                     @foreach (var aid in Model.Aids)
 				    {
                         string backgroundColor = "";
                         string inspectionDate = string.Empty;
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
+                        string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
 
                         if (aid.Inspection.HasValue)
@@ -91,7 +92,7 @@
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
-                            <td class="m-column">@status</td>
+                            <td class="m-column @statusBackgroundColor">@status</td>
 						    <td class="m-column">@aid.Location</td>
                             <td class="@backgroundColor s-column">
                                 <div class="inspection-layout">
