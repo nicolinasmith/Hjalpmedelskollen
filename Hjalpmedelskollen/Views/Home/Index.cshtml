@@ -28,20 +28,24 @@
             <h2>Hjälpmedelsöversikt</h2>
             <p>Antal registrerade hjälpmedel: @Model.Aids.Count</p>
             <div class="filter-selections">
-                <label for="category">Kategori:</label>
-                <select id="select-category" name="category">
-                    <option value="Alla">Alla</option>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <option value="@category.Name">@category.Name</option>
-                    }
-                </select>
-                <label for="status">Status:</label>
-                <select id="select-status" name="status">
-                    <option value="Alla">Alla</option>
-                    <option value="Ledigt">Ledigt</option>
-                    <option value="Upptaget">Upptaget</option>
-                </select>
+                <div class="selection">
+                    <label for="category">Kategori:</label>
+                    <select id="select-category" name="category">
+                        <option value="Alla">Alla</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Name">@category.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="selection">
+                    <label for="status">Status:</label>
+                    <select id="select-status" name="status">
+                        <option value="Alla">Alla</option>
+                        <option value="Ledigt">Ledigt</option>
+                        <option value="Upptaget">Upptaget</option>
+                    </select>
+                </div>
             </div>
 
             <div class="table-container">
@@ -62,6 +66,7 @@
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
                         string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
+                        string unitName = "";
 
                         if (aid.Inspection.HasValue)
                         {
@@ -89,7 +94,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -206,7 +211,7 @@
 	</div>
 </div>
 
-    <div id="add-aid-feedback">
+<div id="add-aid-feedback">
 		<div class="pop-up">
 			<div>
                 <p id="add-feedback-text"></p>
@@ -224,23 +229,21 @@
             <div class="update-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unit">Enhet: *</label>
-                        <select id="update-aid-unit" name="unit">
+                        <label for="unitId">Enhet: *</label>
+                        <select id="update-aid-unit" name="unitId">
                             @foreach (var unit in Model.Units)
                             {
                                 <option value="@unit.Id">@unit.Name</option>
                             }
                         </select>
-                        <input type="hidden" id="select-aid-unit" value="@Model.SelectedUnit.Name">
-                        <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
                     </div>
                     <div class="add-form">
                         <label for="update-id">Registreringsnummer: *</label>
-                        <input type="text" id="update-id" name="update-id" readonly disabled>
+                        <input type="text" id="update-id" name="Id" readonly class="disabled-input">
                     </div>
                     <div class="add-form">
                         <label for="category">Kategori: *</label>
-                        <select id="update-category-list" name="category">
+                        <select id="update-category-list" name="Category">
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Name">@category.Name</option>
@@ -250,49 +253,64 @@
                     </div>
                     <div class="add-form">
                         <label for="product-name">Produktnamn: *</label>
-                        <input type="text" id="update-product-name" name="productName" required>
+                        <input type="text" id="update-product-name" name="ProductName" required>
                     </div>
                     <div class="add-form">
                         <label for="status">Status: *</label>
-                        <select id="update-status" name="status">
-                            <option value="Ledigt">Ledigt</option>
-                            <option value="Upptaget">Upptaget</option>
+                        <select id="update-status" name="Status">
+                            <option value="true">Ledigt</option>
+                            <option value="false">Upptaget</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="add-form">
                         <label for="location">Plats:</label>
-                        <input type="text" id="update-location" name="location">
+                        <input type="text" id="update-location" name="Location">
                     </div>
                     <div class="add-form">
                         <label for="inspection">Nästa besiktning:</label>
-                        <input type="month" id="update-inspection" name="inspection">
+                        <input type="month" id="update-inspection" name="Inspection">
                     </div>
                     <div class="add-form">
                         <label for="comment">Övrigt:</label>
-                        <input id="update-comment" name="comment">
+                        <input id="update-comment" name="Comment">
                     </div>
                     <div class="add-form">
                         <label for="qr">QR-kod: *</label>
-                        <select id="update-qr" name="qr">
-                            <option value="Nej">Nej</option>
-                            <option value="Ja">Ja</option>
+                        <select id="update-qr" name="QrCode">
+                            <option value="true">Ja</option>
+                            <option value="false">Nej</option>
                         </select>
                     </div>
                     <div class="add-form">
-                        <label for="registered">Registrerad</label>
-                        <input type="text" id="update-registered" value="" readonly disabled>
+                        <label for="registered">Registrerad *</label>
+                        <input type="text" id="update-registered" name="registered" value="" readonly class="disabled-input">
                     </div>
                 </div>
             </div>
             <div class="popup-buttons">
-                <button type="submit" id="update-aid-button" name="form-action" value="update">Spara</button>
-                <button type="submit" id="delete-aid-button" name="form-action" value="delete">Ta bort</button>
+                <input type="hidden" name="formAction" id="formAction" value="">
+                <button type="submit" id="update-aid-button">Spara</button>
+                <button type="submit" id="delete-aid-button">Ta bort</button>
                 <button type="button" id="cancel-update-aid">Avbryt</button>
             </div>
         </form>
     </div>
+</div>
+
+
+<div id="confirm-popup">
+    <div class="pop-up">
+		<h3>Är du säker?</h3>
+		<div>
+			<p id="confirm-text"></p>
+		</div>
+		<div class="popup-buttons">
+			<button type="button" id="confirm-yes">Ja</button>
+			<button type="button" id="confirm-no">Avbryt</button>
+		</div>
+	</div>
 </div>
 
 <div id="new-category-popup">

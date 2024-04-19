@@ -24,17 +24,17 @@
     var unitPopup = document.getElementById('unit-popup');
     var cancelSelectUnit = document.getElementById('cancel-select-unit');
 
-        changeUnit.addEventListener('click', function () {
-            unitPopup.style.display = 'block';
-        });
+    changeUnit.addEventListener('click', function () {
+        unitPopup.style.display = 'block';
+    });
 
-        changeUnitMobile.addEventListener('click', function () {
-            unitPopup.style.display = 'block';
-        });
-    
-        cancelSelectUnit.addEventListener('click', function () {
-            unitPopup.style.display = 'none';
-        });
+    changeUnitMobile.addEventListener('click', function () {
+        unitPopup.style.display = 'block';
+    });
+
+    cancelSelectUnit.addEventListener('click', function () {
+        unitPopup.style.display = 'none';
+    });
 
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
@@ -65,18 +65,18 @@
     var cancelAddAid = document.getElementById('cancel-add-aid');
     var addAidFeedback = document.getElementById('add-aid-feedback');
 
-        addNewAid.addEventListener('click', function () {
-                addAidPopup.style.display = 'block';
-        });
+    addNewAid.addEventListener('click', function () {
+        addAidPopup.style.display = 'block';
+    });
 
-        addNewAidMobile.addEventListener('click', function () {
-                addAidPopup.style.display = 'block';
-        });
+    addNewAidMobile.addEventListener('click', function () {
+        addAidPopup.style.display = 'block';
+    });
 
 
-        cancelAddAid.addEventListener('click', function () {
-                addAidPopup.style.display = 'none';
-        });
+    cancelAddAid.addEventListener('click', function () {
+        addAidPopup.style.display = 'none';
+    });
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('category-list');
@@ -85,99 +85,135 @@
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
 
-        categoryList.addEventListener('change', function () {
-            if (categoryList.value === 'new-category') {
-                newCategoryPopup.style.display = 'block';
-            }
-        });
+    categoryList.addEventListener('change', function () {
+        if (categoryList.value === 'new-category') {
+            newCategoryPopup.style.display = 'block';
+        }
+    });
 
- 
-        addCategoryButton.addEventListener('click', function () {
-            var newCategoryInput = document.getElementById('new-category').value;
-            if (newCategoryInput.trim() !== '') {
-                var newCategory = document.createElement('option');
-                newCategory.text = newCategoryInput;
-                categoryList.add(newCategory);
-                categoryList.value = newCategoryInput;
-            }
-            newCategoryPopup.style.display = 'none';
-        });
 
-   
-        cancelAddCategory.addEventListener('click', function () {
-            newCategoryPopup.style.display = 'none';
-        });
+    addCategoryButton.addEventListener('click', function () {
+        var newCategoryInput = document.getElementById('new-category').value;
+        if (newCategoryInput.trim() !== '') {
+            var newCategory = document.createElement('option');
+            newCategory.text = newCategoryInput;
+            categoryList.add(newCategory);
+            categoryList.value = newCategoryInput;
+        }
+        newCategoryPopup.style.display = 'none';
+    });
 
-    /*AIDS BY UNIT - SHOW AID*/
+
+    cancelAddCategory.addEventListener('click', function () {
+        newCategoryPopup.style.display = 'none';
+    });
+
+    /*AIDS BY UNIT - UPDATE AID*/
     var aidRows = document.querySelectorAll('.aid-row');
     var aidPopup = document.getElementById('update-aid-popup');
     var cancelUpdateAid = document.getElementById('cancel-update-aid');
 
-        aidRows.forEach(function (row) {
-            row.addEventListener('click', function () {
+    aidRows.forEach(function (row) {
+        row.addEventListener('click', function () {
 
-                var selectedUnitName = document.getElementById('select-aid-unit').value;
-                var unitSelectElement = document.getElementById('update-aid-unit');
+            var unitId = this.getAttribute('data-unit-id');
+            var unitSelectElement = document.getElementById('update-aid-unit');
 
-                for (var i = 0; i < unitSelectElement.options.length; i++) {
-                    var option = unitSelectElement.options[i];
-                    if (option.text === selectedUnitName) {
-                        unitSelectElement.selectedIndex = i;
-                        break;
-                    }
+            for (var i = 0; i < unitSelectElement.options.length; i++) {
+                if (unitSelectElement.options[i].value === unitId) {
+                    unitSelectElement.selectedIndex = i;
+                    break;
                 }
+            }
 
-                var category = this.getAttribute('data-category');
-                var selectElement = document.getElementById('update-category-list');
-                var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
-                if (categoryOption) {
+            var category = this.getAttribute('data-category');
+            var selectElement = document.getElementById('update-category-list');
+            var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
+            if (categoryOption) {
 
-                    selectElement.value = category;
-                }
+                selectElement.value = category;
+            }
 
-                var status = this.getAttribute('data-status');
-                var statusElement = document.getElementById('update-status');
-                var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
-                if (statusOption) {
-                    statusElement.value = status;
-                }
+            var status = this.getAttribute('data-status');
+            var statusElement = document.getElementById('update-status');
+            var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
+            if (statusOption) {
+                statusElement.value = status;
+            }
 
-                var qr = this.getAttribute('data-qr');
-                var qrElement = document.getElementById('update-qr');
-                var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
-                if (qrOption) {
-                    qrElement.value = qr;
-                }
+            var qr = this.getAttribute('data-qr');
+            var qrElement = document.getElementById('update-qr');
+            var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
+            if (qrOption) {
+                qrElement.value = qr;
+            }
 
-                var registered = this.getAttribute('data-registered');
-                var registeredDate = registered.split(' ')[0];
-                document.getElementById('update-registered').value = registeredDate;
+            var registered = this.getAttribute('data-registered');
+            var registeredDate = registered.split(' ')[0];
+            document.getElementById('update-registered').value = registeredDate;
 
-                var id = this.getAttribute('data-id');
-                var productName = this.querySelector('.m-column:nth-child(3)').textContent;
-                var location = this.querySelector('.m-column:nth-child(5)').textContent;
+            var id = this.getAttribute('data-id');
+            var productName = this.querySelector('.m-column:nth-child(3)').textContent;
+            var location = this.querySelector('.m-column:nth-child(5)').textContent;
 
-                var inspectionContainer = this.querySelector('.s-column');
-                var inspectionDate = inspectionContainer.textContent.trim();
-                var iconClass = inspectionContainer.querySelector('i').className;
-                inspectionDate = inspectionDate.replace(iconClass, '').trim();
+            var inspectionContainer = this.querySelector('.s-column');
+            var inspectionDate = inspectionContainer.textContent.trim();
+            var iconClass = inspectionContainer.querySelector('i').className;
+            inspectionDate = inspectionDate.replace(iconClass, '').trim();
 
-                var comment = this.querySelector('.l-column').textContent;
+            var comment = this.querySelector('.l-column').textContent;
 
-                document.getElementById('update-id').value = id;
-                document.getElementById('category-list').value = category;
-                document.getElementById('update-product-name').value = productName;
-                document.getElementById('status').value = status;
-                document.getElementById('update-location').value = location;
-                document.getElementById('update-inspection').value = inspectionDate;
-                document.getElementById('update-comment').value = comment;
+            document.getElementById('update-id').value = id;
+            document.getElementById('category-list').value = category;
+            document.getElementById('update-product-name').value = productName;
+            document.getElementById('status').value = status;
+            document.getElementById('update-location').value = location;
+            document.getElementById('update-inspection').value = inspectionDate;
+            document.getElementById('update-comment').value = comment;
 
-                aidPopup.style.display = 'block';
-            });
+            aidPopup.style.display = 'block';
         });
+    });
 
-        cancelUpdateAid.addEventListener('click', function () {
-            aidPopup.style.display = 'none';
-        });
+    cancelUpdateAid.addEventListener('click', function () {
+        aidPopup.style.display = 'none';
+    });
 
+
+    var confirmPopup = document.getElementById('confirm-popup');
+    var confirmYes = document.getElementById('confirm-yes');
+    var confirmNo = document.getElementById('confirm-no');
+    var confirmText = document.getElementById('confirm-text');
+
+    document.getElementById('update-aid-button').addEventListener('click', function (event) {
+        event.preventDefault();
+        confirmPopup.style.display = 'block';
+        confirmYes.dataset.action = 'update';
+        confirmText.textContent = 'Vill du spara ändringarna på detta hjälpmedel?';
+    });
+
+    document.getElementById('delete-aid-button').addEventListener('click', function (event) {
+        event.preventDefault();
+        confirmPopup.style.display = 'block';
+        confirmYes.dataset.action = 'delete';
+        confirmText.textContent = 'Vill du ta bort detta hjälpmedel?';
+    });
+
+    confirmNo.addEventListener('click', function (event) {
+        event.preventDefault();
+        confirmPopup.style.display = 'none';
+    });
+
+    confirmYes.addEventListener('click', function () {
+        var action = this.dataset.action;
+        var form = document.getElementById('update-aid-form');
+
+        if (action === 'update') {
+            form.formAction.value = 'update';
+        } else if (action === 'delete') {
+            form.formAction.value = 'delete';
+        }
+
+        form.submit();
+    });
 });
