@@ -49,9 +49,9 @@
             </div>
 
             <div class="table-container">
-                <table class="table-style">
+                <table class="table-style" id="aid-table">
                     <tr class="table-header">
-                        <th title ="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
+                        <th title="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
                         <th title="Samlingskategorin som hjälpmedlet tillhör (exempelvis rollator, rullstol)">Kategori</th>
                         <th title="Produktnamn för hjälpmedlet (exempelvis Futura 600, Cross)">Produktnamn</th>
                         <th title="Om hjälpmedlet är ledigt eller upptaget">Status</th>
@@ -66,7 +66,6 @@
                         string status = aid.Status == true ? "Ledigt" : "Upptaget";
                         string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
-                        string unitName = "";
 
                         if (aid.Inspection.HasValue)
                         {

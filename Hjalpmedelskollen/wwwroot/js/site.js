@@ -63,7 +63,7 @@
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
-    var addAidFeedback = document.getElementById('add-aid-feedback');
+    //var addAidFeedback = document.getElementById('add-aid-feedback');
 
     addNewAid.addEventListener('click', function () {
         addAidPopup.style.display = 'block';
@@ -80,7 +80,7 @@
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('category-list');
-    var newCategoryOption = document.getElementById('add-new-category');
+    //var newCategoryOption = document.getElementById('add-new-category');
     var newCategoryPopup = document.getElementById('new-category-popup');
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
@@ -216,4 +216,55 @@
 
         form.submit();
     });
+
+    /*AIDS BY UNIT - SORT TABLE*/
+    /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById('aid-table');
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    function addSortEventToHeader() {
+        var headers = document.querySelectorAll('.table-header th');
+        headers.forEach(function (header, index) {
+            header.addEventListener('click', function () {
+                sortTable(index);
+            });
+        });
+    }
+
+    addSortEventToHeader();
+
 });
