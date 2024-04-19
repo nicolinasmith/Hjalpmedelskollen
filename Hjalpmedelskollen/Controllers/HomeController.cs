@@ -20,8 +20,6 @@ namespace Hjalpmedelskollen.Controllers
             _context = context;
         }
 
-        //TODO: Sortera kod, se vart databasanropen ska ske och hur data lagras tillfälligt
-
         public IActionResult Index(int? unitId)
         {
             int defaultUnitId = 1;
@@ -99,7 +97,7 @@ namespace Hjalpmedelskollen.Controllers
                 {
                     _context.Aids.Add(aid);
                     _context.SaveChanges();
-                    return RedirectToAction("Index", new { unitId = unitId });
+                    return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
                 {
@@ -114,23 +112,41 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAidToDatabase(string aidId, string formAction)
+        public IActionResult UpdateAidToDatabase(AidModel aid, string formAction)
         {
-            if (formAction == "delete")
+            if (formAction == "update")
             {
-                if (string.IsNullOrEmpty(aidId))
+                if (ModelState.IsValid)
                 {
-                    return BadRequest("Registrerinsnummer måste anges för att ta bort.");
+                    try
+                    {
+                        if (aid.Inspection.HasValue)
+                        {
+                            aid.Inspection = aid.Inspection.Value.ToUniversalTime();
+                        }
+                        if (aid.Registered != DateTime.MinValue)
+                        {
+                            aid.Registered = aid.Registered.ToUniversalTime();
+                        }
+                        _context.Aids.Update(aid);
+                        _context.SaveChanges();
+                        return RedirectToAction("Index", new { unitId = aid.UnitId });
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
+                        return BadRequest("Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
+                    }
                 }
-
+                else
+                {
+                    return View("Index", aid);
+                }
+            }
+            else if (formAction == "delete")
+            {
                 try
                 {
-                    var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
-                    if (aid == null)
-                    {
-                        return NotFound();
-                    }
-
                     _context.Aids.Remove(aid);
                     _context.SaveChanges();
                     return RedirectToAction("Index", new { unitId = aid.UnitId });
@@ -140,12 +156,10 @@ namespace Hjalpmedelskollen.Controllers
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
                     return BadRequest("Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
                 }
-
-
             }
             else
             {
-                return View("Index");
+                return BadRequest("Ett fel inträffade.");
             }
 
         }

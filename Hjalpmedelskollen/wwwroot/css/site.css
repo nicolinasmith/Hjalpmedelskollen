@@ -236,6 +236,18 @@ footer a:hover, nav a:hover, .small-nav a:hover {
     display: none;
 }
 
+.filter-selections {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-selections label {
+    font-weight: bold;
+}
+
 button {
     background-color: #454a4f;
     color: #ffffff;
@@ -259,7 +271,7 @@ button:hover {
     opacity: 0.8;
 }
 
-#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup {
+#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup, #confirm-popup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -302,6 +314,11 @@ button:hover {
    display: flex;
    flex-direction: column;
    margin: 15px;
+}
+
+.disabled-input {
+    background-color: #f0f0f0;
+    color: #2a2828;
 }
 
 input, .add-form select, #unit-list option {
@@ -358,8 +375,6 @@ input, .add-form select, #unit-list option {
 }
 
 @media only screen and (max-width: 768px) {
-
-    /* Andra regler för mobila enheter */
 
     body {
         font-size: 16px;
