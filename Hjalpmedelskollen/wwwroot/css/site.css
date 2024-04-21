@@ -410,6 +410,7 @@ input, .add-form select, #unit-list option {
         }
 
         #hamburger-menu-content a {
+            display: block;
             color: #ffffff;
             text-decoration: none;
         }
