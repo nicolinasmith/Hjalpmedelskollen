@@ -465,6 +465,22 @@ input, .add-form select, #unit-list option {
         display: none;
     }
 
+    .selection {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .selection select {
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .filter-selections {
+        flex-direction: column;
+        
+    }
+
     .table-style {
         font-size: 16px;
     }
