@@ -1,5 +1,43 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
+    /*SOURCE https://www.geeksforgeeks.org/create-a-qr-code-scanner-or-reader-in-html-css-javascript/ */
+    function domReady(fn) {
+        if (
+            document.readyState === "complete" ||
+            document.readyState === "interactive"
+        ) {
+            setTimeout(fn, 1000);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }
+
+    domReady(function () {
+        var scanQrButton = document.getElementById('qr-button');
+        var qrContainer = document.getElementById('qr-popup');
+        var cancelQrButton = document.getElementById('cancel-qr-button');
+
+        scanQrButton.addEventListener('click', function () {
+            qrContainer.style.display = 'block';
+
+            function onScanSuccess(decodeText, decodeResult) {
+                alert("Your QR code is: " + decodeText);
+            }
+
+            let htmlScanner = new Html5QrcodeScanner(
+                "my-qr-reader",
+                { fps: 10, qrbos: 250 }
+            );
+            htmlScanner.render(onScanSuccess);
+        });
+
+        cancelQrButton.addEventListener('click', function () {
+            qrContainer.style.display = 'none';
+        });
+    });
+
+
+
     var menuDisplayed = false;
 
     document.querySelector('.hamburger-menu').addEventListener('click', function () {
