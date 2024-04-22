@@ -164,6 +164,18 @@ namespace Hjalpmedelskollen.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult GetAid (string aidId)
+        {
+            var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
+            if (aid == null)
+            {
+                return NotFound();
+            }
+
+            return Json(aid);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

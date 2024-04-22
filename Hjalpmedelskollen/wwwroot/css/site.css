@@ -11,6 +11,49 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+
+#qr-popup {
+    display: none;
+    width: 100%;
+    margin: 5px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+
+#my-qr-reader {
+    padding: 20px !important;
+    border: 1.5px solid #b2b2b2 !important;
+    border-radius: 8px;
+}
+
+    #my-qr-reader img[alt="Info icon"] {
+        display: none;
+    }
+
+    #my-qr-reader img[alt="Camera based scan"] {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+#html5-qrcode-anchor-scan-type-change {
+    text-decoration: none !important;
+    color: #1d9bf0;
+}
+
+video {
+    width: 100% !important;
+    border: 1px solid #b2b2b2 !important;
+    border-radius: 0.25em;
+}
+
+
 /*NAV*/
 nav {
     background-color: #eaebed;
@@ -272,7 +315,8 @@ button:hover {
     opacity: 0.8;
 }
 
-#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup, #confirm-popup {
+#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, 
+#new-category-popup, #confirm-popup, #qr-missing-popup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -322,7 +366,7 @@ button:hover {
     color: #2a2828;
 }
 
-input, .add-form select, #unit-list option {
+input, .add-form select, #select-unit-list option {
    padding: 5px;
 }
 
@@ -331,7 +375,7 @@ input, .add-form select, #unit-list option {
     margin-top: 5px;
 }
 
-#unit-list {
+#select-unit-list {
     width: 100%;
 }
 
@@ -410,6 +454,7 @@ input, .add-form select, #unit-list option {
         }
 
         #hamburger-menu-content a {
+            display: block;
             color: #ffffff;
             text-decoration: none;
         }
@@ -463,6 +508,22 @@ input, .add-form select, #unit-list option {
     .table-style th:nth-child(7),
     .table-style td:nth-child(7) {
         display: none;
+    }
+
+    .selection {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .selection select {
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .filter-selections {
+        flex-direction: column;
+        
     }
 
     .table-style {
@@ -537,7 +598,7 @@ input, .add-form select, #unit-list option {
         width: 80%;
     }
 
-    #unit-list option {
+    #select-unit-list option {
         font-size: 18px;
         padding: 10px;
     }

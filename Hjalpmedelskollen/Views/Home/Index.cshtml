@@ -8,8 +8,19 @@
     <ul>
         <li>Vald enhet: @Model.SelectedUnit.Name</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
+        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
+</div>
+
+<div id="qr-popup">
+    <div class="pop-up">
+        <b>Skanna QR-kod</b>
+        <div class="qr-section">
+            <div id="my-qr-reader">
+            </div>
+        </div>
+        <button id="cancel-qr-button">Avbryt</button>
+    </div>
 </div>
 
 <div id="aids-by-unit">
@@ -17,7 +28,7 @@
     <div id="mobile-buttons">
         <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
-		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
+        <button id="mobile-add-new-aid" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
         <span class="divider"></span>
     </div>
@@ -93,7 +104,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -129,7 +140,7 @@
     <div class="pop-up">
         <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
             <h3>Välj enhet</h3>
-            <select id="unit-list" name="unitId" multiple size="5">
+            <select id="select-unit-list" name="unitId" multiple size="5">
                 @foreach (var unit in Model.Units)
                 {
                     <option value="@unit.Id">@unit.Name</option>
@@ -151,8 +162,12 @@
                 <div>
                     <div class="add-form">
                         <label for="unit">Enhet: *</label>
-                        <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
-                        <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
+                        <select id="unit-list" name="unitId">
+							@foreach (var unit in Model.Units)
+							{
+								<option value="@unit.Id">@unit.Name</option>
+							}
+                         </select>
                     </div>
                     <div class="add-form">
                         <label for="id">Registreringsnummer: *</label>
@@ -196,8 +211,8 @@
                     <div class="add-form">
                         <label for="qr">QR-kod: *</label>
                         <select id="qr" name="qr">
-							<option value="no">Nej</option>
-							<option value="yes">Ja</option>
+							<option value="false">Nej</option>
+							<option value="true">Ja</option>
                         </select>
                     </div>
                 </div>
@@ -301,7 +316,7 @@
 
 <div id="confirm-popup">
     <div class="pop-up">
-		<h3>Är du säker?</h3>
+		<h3>Bekräfta</h3>
 		<div>
 			<p id="confirm-text"></p>
 		</div>
@@ -310,6 +325,19 @@
 			<button type="button" id="confirm-no">Avbryt</button>
 		</div>
 	</div>
+</div>
+
+<div id="qr-missing-popup">
+    <div class="pop-up">
+        <h3>Hjälpmedel saknas</h3>
+        <div>
+            <p id="qr-missing-text"></p>
+        </div>
+        <div class="popup-buttons">
+            <button type="button" id="add-qr-aid" data-selected-unit="@Model.SelectedUnit.Id">Ja</button>
+            <button type="button" id="cancel-qr-aid">Avbryt</button>
+        </div>
+    </div>
 </div>
 
 <div id="new-category-popup">
