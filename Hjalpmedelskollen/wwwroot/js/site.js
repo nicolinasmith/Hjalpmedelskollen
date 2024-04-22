@@ -22,6 +22,22 @@
 
             function onScanSuccess(decodeText, decodeResult) {
                 alert("Your QR code is: " + decodeText);
+
+                $.ajax({
+                    url: '/Home/GetAid', // Uppdatera URL:en med rätt controller-namn
+                    method: 'GET',
+                    data: {
+                        aidId: decodeText
+                    },
+                    success: function (response) {
+                        displayQrAid(response);
+                        console.log(response); // Om begäran lyckas, logga svaret i konsolen
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText); // Om det uppstår ett fel, logga felmeddelandet i konsolen
+                    }
+                });
+
             }
 
             let htmlScanner = new Html5QrcodeScanner(
@@ -36,6 +52,62 @@
         });
     });
 
+
+    function displayQrAid(aid) {
+
+        var aidPopup = document.getElementById('update-aid-popup');
+
+        var unitId = aid.unitId;
+        var unitSelectElement = document.getElementById('update-aid-unit');
+        var unitOption = document.querySelector('#update-aid-unit option[value="' + unitId + '"]');
+        if (unitOption) {
+            unitSelectElement.value = unitId;
+        }
+
+        /*
+        for (var i = 0; i < unitSelectElement.options.length; i++) {
+            if (unitSelectElement.options[i].value === unitId) {
+                unitSelectElement.selectedIndex = i;
+                break;
+            }
+        }*/
+
+        var category = aid.category;
+        var selectElement = document.getElementById('update-category-list');
+        var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
+        if (categoryOption) {
+
+            selectElement.value = category;
+        }
+
+        var status = aid.status;
+        var statusElement = document.getElementById('update-status');
+        var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
+        if (statusOption) {
+            statusElement.value = status;
+        }
+
+        var qr = aid.qrCode;
+        var qrElement = document.getElementById('update-qr');
+        var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
+        if (qrOption) {
+            qrElement.value = qr;
+        }
+
+        var registeredDate = new Date(aid.registered).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit', day: '2-digit' });
+        var inspectionDate = new Date(aid.inspection).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit' });
+
+        document.getElementById('update-registered').value = registeredDate;
+        document.getElementById('update-id').value = aid.id;
+        document.getElementById('category-list').value = category;
+        document.getElementById('update-product-name').value = aid.productName;
+        //document.getElementById('update-status').value = status;
+        document.getElementById('update-location').value = aid.location;
+        document.getElementById('update-inspection').value = inspectionDate;
+        document.getElementById('update-comment').value = aid.comment;
+
+        aidPopup.style.display = 'block';
+    }
 
 
     var menuDisplayed = false;
@@ -154,6 +226,10 @@
     aidRows.forEach(function (row) {
         row.addEventListener('click', function () {
 
+            console.log(this.getAttribute('data-qr'));
+            console.log(this.getAttribute('data-status'));
+
+
             var unitId = this.getAttribute('data-unit-id');
             var unitSelectElement = document.getElementById('update-aid-unit');
 
@@ -204,7 +280,7 @@
             document.getElementById('update-id').value = id;
             document.getElementById('category-list').value = category;
             document.getElementById('update-product-name').value = productName;
-            document.getElementById('status').value = status;
+            //document.getElementById('status').value = status;
             document.getElementById('update-location').value = location;
             document.getElementById('update-inspection').value = inspectionDate;
             document.getElementById('update-comment').value = comment;

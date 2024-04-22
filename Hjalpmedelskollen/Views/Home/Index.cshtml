@@ -104,7 +104,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
@@ -207,8 +207,8 @@
                     <div class="add-form">
                         <label for="qr">QR-kod: *</label>
                         <select id="qr" name="qr">
-							<option value="no">Nej</option>
-							<option value="yes">Ja</option>
+							<option value="false">Nej</option>
+							<option value="true">Ja</option>
                         </select>
                     </div>
                 </div>
@@ -268,8 +268,8 @@
                     <div class="add-form">
                         <label for="status">Status: *</label>
                         <select id="update-status" name="Status">
-                            <option value="true">Ledigt</option>
-                            <option value="false">Upptaget</option>
+                            <option value="True">Ledigt</option>
+                            <option value="False">Upptaget</option>
                         </select>
                     </div>
                 </div>
@@ -289,8 +289,8 @@
                     <div class="add-form">
                         <label for="qr">QR-kod: *</label>
                         <select id="update-qr" name="QrCode">
-                            <option value="true">Ja</option>
-                            <option value="false">Nej</option>
+                            <option value="True">Ja</option>
+                            <option value="False">Nej</option>
                         </select>
                     </div>
                     <div class="add-form">
