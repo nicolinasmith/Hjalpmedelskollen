@@ -11,22 +11,6 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-
-#qr-popup {
-    display: none;
-    width: 100%;
-    margin: 5px;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    text-align: center;
-}
-
-
 #my-qr-reader {
     padding: 20px !important;
     border: 1.5px solid #b2b2b2 !important;
@@ -316,7 +300,7 @@ button:hover {
 }
 
 #update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, 
-#new-category-popup, #confirm-popup, #qr-missing-popup {
+#new-category-popup, #confirm-popup, #qr-missing-popup, #qr-popup {
     display: none;
     position: fixed;
     z-index: 1;

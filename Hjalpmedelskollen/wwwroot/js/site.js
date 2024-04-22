@@ -1,131 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
-    /*SCAN QR*/
-    /*SOURCE https://www.geeksforgeeks.org/create-a-qr-code-scanner-or-reader-in-html-css-javascript/ */
-    function domReady(fn) {
-        if (
-            document.readyState === "complete" ||
-            document.readyState === "interactive"
-        ) {
-            setTimeout(fn, 1000);
-        } else {
-            document.addEventListener("DOMContentLoaded", fn);
-        }
-    }
-
-    domReady(function () {
-        var scanQrButton = document.getElementById('qr-button');
-        var qrContainer = document.getElementById('qr-popup');
-        var cancelQrButton = document.getElementById('cancel-qr-button');
-        var qrAidMissingPopup = document.getElementById('qr-missing-popup');
-        var qrAidMissingText = document.getElementById('qr-missing-text');
-        var addQrAid = document.getElementById('add-qr-aid');
-        var cancelQrAid = document.getElementById('cancel-qr-aid');
-
-        scanQrButton.addEventListener('click', function () {
-            qrContainer.style.display = 'block';
-
-            function onScanSuccess(decodeText, decodeResult) {
-                $.ajax({
-                    url: '/Home/GetAid',
-                    method: 'GET',
-                    data: {
-                        aidId: decodeText
-                    },
-                    success: function (response) {
-                        displayQrAid(response);
-                        console.log(response); 
-                    },
-                    error: function (xhr, status, error) {
-                        if (xhr.status === 404) {
-                            qrAidMissingPopup.style.display = 'block';
-                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer '${decodeText}'. Vill du registrera det?`;
-                            var qr= document.getElementById('id').value = decodeText;
-                            document.getElementById('qr').value = true;
-                        } else {
-                            console.error(xhr.responseText);
-                        }
-                    }
-                });
-            }
-
-            let htmlScanner = new Html5QrcodeScanner(
-                "my-qr-reader",
-                { fps: 10, qrbos: 250 }
-            );
-            htmlScanner.render(onScanSuccess);
-        });
-
-        cancelQrAid.addEventListener('click', function () {
-            qrAidMissingPopup.style.display = 'none';
-        });
-
-        addQrAid.addEventListener('click', function () {
-            addAidPopup.style.display = 'block';
-            qrAidMissingPopup.style.display = 'none';
-
-            var unitId = this.getAttribute('data-selected-unit');
-            var selectElement = document.getElementById('unit-list');
-            var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
-
-            if (unitOption) {
-                selectElement.value = unitId;
-            }
-        });
-
-        cancelQrButton.addEventListener('click', function () {
-            qrContainer.style.display = 'none';
-        });
-    });
-
-
-    function displayQrAid(aid) {
-
-        var aidPopup = document.getElementById('update-aid-popup');
-
-        var unitId = aid.unitId;
-        var unitSelectElement = document.getElementById('update-aid-unit');
-        var unitOption = document.querySelector('#update-aid-unit option[value="' + unitId + '"]');
-        if (unitOption) {
-            unitSelectElement.value = unitId;
-        }
-
-        var category = aid.category;
-        var selectElement = document.getElementById('update-category-list');
-        var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
-        if (categoryOption) {
-
-            selectElement.value = category;
-        }
-
-        var status = aid.status;
-        var statusElement = document.getElementById('update-status');
-        var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
-        if (statusOption) {
-            statusElement.value = status;
-        }
-
-        var qr = aid.qrCode;
-        var qrElement = document.getElementById('update-qr');
-        var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
-        if (qrOption) {
-            qrElement.value = qr;
-        }
-
-        var registeredDate = new Date(aid.registered).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit', day: '2-digit' });
-        var inspectionDate = new Date(aid.inspection).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit' });
-
-        document.getElementById('update-registered').value = registeredDate;
-        document.getElementById('update-id').value = aid.id;
-        document.getElementById('category-list').value = category;
-        document.getElementById('update-product-name').value = aid.productName;
-        document.getElementById('update-location').value = aid.location;
-        document.getElementById('update-inspection').value = inspectionDate;
-        document.getElementById('update-comment').value = aid.comment;
-
-        aidPopup.style.display = 'block';
-    }
-
     /*HAMBURGER MENU*/
     var menuDisplayed = false;
 
@@ -188,6 +62,56 @@
         });
     }
 
+    /*AIDS BY UNIT - SORT TABLE*/
+    /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById('aid-table');
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    function addSortEventToHeader() {
+        var headers = document.querySelectorAll('.table-header th');
+        headers.forEach(function (header, index) {
+            header.addEventListener('click', function () {
+                sortTable(index);
+            });
+        });
+    }
+
+    addSortEventToHeader();
+
     /*AIDS BY UNIT - ADD AID*/
     var addAidPopup = document.getElementById('add-aid-popup');
     var addAidUnit = document.getElementById('unit-list');
@@ -247,7 +171,6 @@
         }
         newCategoryPopup.style.display = 'none';
     });
-
 
     cancelAddCategory.addEventListener('click', function () {
         newCategoryPopup.style.display = 'none';
@@ -313,7 +236,6 @@
             document.getElementById('update-id').value = id;
             document.getElementById('category-list').value = category;
             document.getElementById('update-product-name').value = productName;
-            //document.getElementById('status').value = status;
             document.getElementById('update-location').value = location;
             document.getElementById('update-inspection').value = inspectionDate;
             document.getElementById('update-comment').value = comment;
@@ -325,7 +247,6 @@
     cancelUpdateAid.addEventListener('click', function () {
         aidPopup.style.display = 'none';
     });
-
 
     var confirmPopup = document.getElementById('confirm-popup');
     var confirmYes = document.getElementById('confirm-yes');
@@ -364,54 +285,129 @@
         form.submit();
     });
 
-    /*AIDS BY UNIT - SORT TABLE*/
-    /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
-    function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById('aid-table');
-        switching = true;
-        dir = "asc";
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                switchcount++;
-            } else {
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
+    /*SCAN QR*/
+    /*SOURCE https://www.geeksforgeeks.org/create-a-qr-code-scanner-or-reader-in-html-css-javascript/ */
+    function domReady(fn) {
+        if (
+            document.readyState === "complete" ||
+            document.readyState === "interactive"
+        ) {
+            setTimeout(fn, 1000);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
         }
     }
 
-    function addSortEventToHeader() {
-        var headers = document.querySelectorAll('.table-header th');
-        headers.forEach(function (header, index) {
-            header.addEventListener('click', function () {
-                sortTable(index);
-            });
+    domReady(function () {
+        var scanQrButton = document.getElementById('qr-button');
+        var qrContainer = document.getElementById('qr-popup');
+        var cancelQrButton = document.getElementById('cancel-qr-button');
+        var qrAidMissingPopup = document.getElementById('qr-missing-popup');
+        var qrAidMissingText = document.getElementById('qr-missing-text');
+        var addQrAid = document.getElementById('add-qr-aid');
+        var cancelQrAid = document.getElementById('cancel-qr-aid');
+
+        scanQrButton.addEventListener('click', function () {
+            qrContainer.style.display = 'block';
+
+            function onScanSuccess(decodeText, decodeResult) {
+                $.ajax({
+                    url: '/Home/GetAid',
+                    method: 'GET',
+                    data: {
+                        aidId: decodeText
+                    },
+                    success: function (response) {
+                        qrContainer.style.display = 'none';
+                        displayQrAid(response);
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.status === 404) {
+                            qrAidMissingPopup.style.display = 'block';
+                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer '${decodeText}'. Vill du registrera det?`;
+                            document.getElementById('id').value = decodeText;
+                            document.getElementById('qr').value = true;
+                        } else {
+                            console.error(xhr.responseText);
+                        }
+                    }
+                });
+            }
+
+            let htmlScanner = new Html5QrcodeScanner(
+                "my-qr-reader",
+                { fps: 10, qrbos: 250 }
+            );
+            htmlScanner.render(onScanSuccess);
         });
+
+        cancelQrAid.addEventListener('click', function () {
+            qrAidMissingPopup.style.display = 'none';
+        });
+
+        addQrAid.addEventListener('click', function () {
+            addAidPopup.style.display = 'block';
+            qrAidMissingPopup.style.display = 'none';
+
+            var unitId = this.getAttribute('data-selected-unit');
+            var selectElement = document.getElementById('unit-list');
+            var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
+
+            if (unitOption) {
+                selectElement.value = unitId;
+            }
+        });
+
+        cancelQrButton.addEventListener('click', function () {
+            qrContainer.style.display = 'none';
+        });
+    });
+
+    function displayQrAid(aid) {
+
+        var aidPopup = document.getElementById('update-aid-popup');
+
+        var unitId = aid.unitId;
+        var unitSelectElement = document.getElementById('update-aid-unit');
+        var unitOption = document.querySelector('#update-aid-unit option[value="' + unitId + '"]');
+        if (unitOption) {
+            unitSelectElement.value = unitId;
+        }
+
+        var category = aid.category;
+        var selectElement = document.getElementById('update-category-list');
+        var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
+        if (categoryOption) {
+
+            selectElement.value = category;
+        }
+
+        var status = aid.status;
+        var statusElement = document.getElementById('update-status');
+        var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
+        if (statusOption) {
+            statusElement.value = status;
+        }
+
+        var qr = aid.qrCode;
+        var qrElement = document.getElementById('update-qr');
+        var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
+        if (qrOption) {
+            qrElement.value = qr;
+        }
+
+        var registeredDate = new Date(aid.registered).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit', day: '2-digit' });
+        var inspectionDate = new Date(aid.inspection).toLocaleDateString("sv-SE", { year: 'numeric', month: '2-digit' });
+
+        document.getElementById('update-registered').value = registeredDate;
+        document.getElementById('update-id').value = aid.id;
+        document.getElementById('category-list').value = category;
+        document.getElementById('update-product-name').value = aid.productName;
+        document.getElementById('update-location').value = aid.location;
+        document.getElementById('update-inspection').value = inspectionDate;
+        document.getElementById('update-comment').value = aid.comment;
+
+        aidPopup.style.display = 'block';
     }
-
-    addSortEventToHeader();
-
 });
