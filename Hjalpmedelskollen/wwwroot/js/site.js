@@ -217,12 +217,19 @@
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('category-list');
+    var updateCategoryList = document.getElementById('update-category-list');
     var newCategoryPopup = document.getElementById('new-category-popup');
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
 
     categoryList.addEventListener('change', function () {
         if (categoryList.value === 'new-category') {
+            newCategoryPopup.style.display = 'block';
+        }
+    });
+
+    updateCategoryList.addEventListener('change', function () {
+        if (updateCategoryList.value === 'new-category') {
             newCategoryPopup.style.display = 'block';
         }
     });
@@ -235,6 +242,8 @@
             newCategory.text = newCategoryInput;
             categoryList.add(newCategory);
             categoryList.value = newCategoryInput;
+            updateCategoryList.add(newCategory);
+            updateCategoryList.value = newCategoryInput;
         }
         newCategoryPopup.style.display = 'none';
     });

@@ -1,0 +1,91 @@
+﻿
+<div id="update-aid-popup">
+    <div class="l-pop-up" id="show-aid">
+        <form method="post" action="/Home/UpdateAidToDatabase" id="update-aid-form">
+            <h3>Uppdatera hjälpmedel</h3>
+            <div class="update-aid-row">
+                <div>
+                    <div class="add-form">
+                        <label for="unitId">Enhet: *</label>
+                        <select id="update-aid-unit" name="unitId">
+                            @foreach (var unit in Model.Units)
+                            {
+                                <option value="@unit.Id">@unit.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="add-form">
+                        <label for="update-id">Registreringsnummer: *</label>
+                        <input type="text" id="update-id" name="Id" readonly class="disabled-input">
+                    </div>
+                    <div class="add-form">
+                        <label for="category">Kategori: *</label>
+                        <select id="update-category-list" name="Category">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                            <option value="new-category" id="update-new-category">LÄGG TILL NY</option>
+                        </select>
+                    </div>
+                    <div class="add-form">
+                        <label for="product-name">Produktnamn: *</label>
+                        <input type="text" id="update-product-name" name="ProductName" required>
+                    </div>
+                    <div class="add-form">
+                        <label for="status">Status: *</label>
+                        <select id="update-status" name="Status">
+                            <option value="true">Ledigt</option>
+                            <option value="false">Upptaget</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="add-form">
+                        <label for="location">Plats:</label>
+                        <input type="text" id="update-location" name="Location">
+                    </div>
+                    <div class="add-form">
+                        <label for="inspection">Nästa besiktning:</label>
+                        <input type="month" id="update-inspection" name="Inspection">
+                    </div>
+                    <div class="add-form">
+                        <label for="comment">Övrigt:</label>
+                        <input id="update-comment" name="Comment">
+                    </div>
+                    <div class="add-form">
+                        <label for="qr">QR-kod: *</label>
+                        <select id="update-qr" name="QrCode">
+                            <option value="true">Ja</option>
+                            <option value="false">Nej</option>
+                        </select>
+                    </div>
+                    <div class="add-form">
+                        <label for="registered">Registrerad *</label>
+                        <input type="text" id="update-registered" name="registered" value="" readonly class="disabled-input">
+                    </div>
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <input type="hidden" name="formAction" id="formAction" value="">
+                <button type="submit" id="update-aid-button">Spara</button>
+                <button type="submit" id="delete-aid-button">Ta bort</button>
+                <button type="button" id="cancel-update-aid">Avbryt</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="confirm-popup">
+    <div class="pop-up">
+        <h3>Bekräfta</h3>
+        <div>
+            <p id="confirm-text"></p>
+        </div>
+        <div class="popup-buttons">
+            <button type="button" id="confirm-yes">Ja</button>
+            <button type="button" id="confirm-no">Avbryt</button>
+        </div>
+    </div>
+</div>

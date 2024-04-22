@@ -1,0 +1,82 @@
+﻿
+<div id="add-aid-popup">
+	<div class="l-pop-up" id="add-aid">
+		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
+			<h3>Registrera hjälpmedel</h3>
+			<div class="add-aid-row">
+				<div>
+					<div class="add-form">
+						<label for="unit">Enhet: *</label>
+						<select id="unit-list" name="unitId">
+							@foreach (var unit in Model.Units)
+							{
+								<option value="@unit.Id">@unit.Name</option>
+							}
+						</select>
+					</div>
+					<div class="add-form">
+						<label for="id">Registreringsnummer: *</label>
+						<input type="text" id="id" name="id" required>
+					</div>
+					<div class="add-form">
+						<label for="category">Kategori: *</label>
+						<select id="category-list" name="category">
+							@foreach (var category in Model.Categories)
+							{
+								<option value="@category.Name">@category.Name</option>
+							}
+							<option value="new-category" id="add-new-category">LÄGG TILL NY</option>
+						</select>
+					</div>
+					<div class="add-form">
+						<label for="product-name">Produktnamn: *</label>
+						<input type="text" id="product-name" name="productName" required>
+					</div>
+					<div class="add-form">
+						<label for="status">Status: *</label>
+						<select id="status" name="status">
+							<option value="true">Ledigt</option>
+							<option value="false">Upptaget</option>
+						</select>
+					</div>
+				</div>
+				<div>
+					<div class="add-form">
+						<label for="location">Plats:</label>
+						<input type="text" id="location" name="location">
+					</div>
+					<div class="add-form">
+						<label for="inspection">Nästa besiktning:</label>
+						<input type="month" id="inspection" name="inspection">
+					</div>
+					<div class="add-form">
+						<label for="comment">Övrigt:</label>
+						<input id="comment" name="comment">
+					</div>
+					<div class="add-form">
+						<label for="qr">QR-kod: *</label>
+						<select id="qr" name="qr">
+							<option value="false">Nej</option>
+							<option value="true">Ja</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="popup-buttons">
+				<button type="submit" id="add-aid-button">Registrera</button>
+				<button type="button" id="cancel-add-aid">Avbryt</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div id="add-aid-feedback">
+	<div class="pop-up">
+		<div>
+			<p id="add-feedback-text"></p>
+		</div>
+		<div class="popup-buttons">
+			<button type="button" id="ok-add-feedback">OK</button>
+		</div>
+	</div>
+</div>
