@@ -170,7 +170,6 @@ namespace Hjalpmedelskollen.Controllers
             var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
             if (aid == null)
             {
-                // Om AID inte hittades, kan du returnera en JSON-felmeddelande eller något annat lämpligt
                 return NotFound();
             }
 

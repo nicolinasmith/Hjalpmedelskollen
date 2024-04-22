@@ -315,7 +315,8 @@ button:hover {
     opacity: 0.8;
 }
 
-#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, #new-category-popup, #confirm-popup {
+#update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, 
+#new-category-popup, #confirm-popup, #qr-missing-popup {
     display: none;
     position: fixed;
     z-index: 1;

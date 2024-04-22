@@ -17,13 +17,15 @@
         var scanQrButton = document.getElementById('qr-button');
         var qrContainer = document.getElementById('qr-popup');
         var cancelQrButton = document.getElementById('cancel-qr-button');
+        var qrAidMissingPopup = document.getElementById('qr-missing-popup');
+        var qrAidMissingText = document.getElementById('qr-missing-text');
+        var addQrAid = document.getElementById('add-qr-aid');
+        var cancelQrAid = document.getElementById('cancel-qr-aid');
 
         scanQrButton.addEventListener('click', function () {
             qrContainer.style.display = 'block';
 
             function onScanSuccess(decodeText, decodeResult) {
-                alert("Your QR code is: " + decodeText);
-
                 $.ajax({
                     url: '/Home/GetAid',
                     method: 'GET',
@@ -35,10 +37,16 @@
                         console.log(response); 
                     },
                     error: function (xhr, status, error) {
-                        console.error(xhr.responseText); 
+                        if (xhr.status === 404) {
+                            qrAidMissingPopup.style.display = 'block';
+                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer '${decodeText}'. Vill du registrera det?`;
+                            document.getElementById('add-aid-id').value = decodeText;
+                            document.getElementById('qr').value = true;
+                        } else {
+                            console.error(xhr.responseText);
+                        }
                     }
                 });
-
             }
 
             let htmlScanner = new Html5QrcodeScanner(
@@ -46,6 +54,16 @@
                 { fps: 10, qrbos: 250 }
             );
             htmlScanner.render(onScanSuccess);
+        });
+
+        cancelQrAid.addEventListener('click', function () {
+            qrAidMissingPopup.style.display = 'none';
+        });
+
+
+        addQrAid.addEventListener('click', function () {
+            addAidPopup.style.display = 'block';
+            qrAidMissingPopup.style.display = 'none';
         });
 
         cancelQrButton.addEventListener('click', function () {
@@ -101,7 +119,7 @@
         aidPopup.style.display = 'block';
     }
 
-
+    /*HAMBURGER MENU*/
     var menuDisplayed = false;
 
     document.querySelector('.hamburger-menu').addEventListener('click', function () {
@@ -182,7 +200,6 @@
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('category-list');
-    //var newCategoryOption = document.getElementById('add-new-category');
     var newCategoryPopup = document.getElementById('new-category-popup');
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');

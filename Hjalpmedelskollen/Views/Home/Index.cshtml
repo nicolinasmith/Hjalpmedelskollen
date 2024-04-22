@@ -167,7 +167,7 @@
                     </div>
                     <div class="add-form">
                         <label for="id">Registreringsnummer: *</label>
-                        <input type="text" id="id" name="id" required>
+                        <input id="add-aid-id" type="text" id="id" name="id" required>
                     </div>
                     <div class="add-form">
 				        <label for="category">Kategori: *</label>
@@ -312,7 +312,7 @@
 
 <div id="confirm-popup">
     <div class="pop-up">
-		<h3>Är du säker?</h3>
+		<h3>Bekräfta</h3>
 		<div>
 			<p id="confirm-text"></p>
 		</div>
@@ -321,6 +321,19 @@
 			<button type="button" id="confirm-no">Avbryt</button>
 		</div>
 	</div>
+</div>
+
+<div id="qr-missing-popup">
+    <div class="pop-up">
+        <h3>Hjälpmedel saknas</h3>
+        <div>
+            <p id="qr-missing-text"></p>
+        </div>
+        <div class="popup-buttons">
+            <button type="button" id="add-qr-aid">Ja</button>
+            <button type="button" id="cancel-qr-aid">Avbryt</button>
+        </div>
+    </div>
 </div>
 
 <div id="new-category-popup">
