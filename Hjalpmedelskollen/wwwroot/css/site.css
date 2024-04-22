@@ -366,7 +366,7 @@ button:hover {
     color: #2a2828;
 }
 
-input, .add-form select, #unit-list option {
+input, .add-form select, #select-unit-list option {
    padding: 5px;
 }
 
@@ -375,7 +375,7 @@ input, .add-form select, #unit-list option {
     margin-top: 5px;
 }
 
-#unit-list {
+#select-unit-list {
     width: 100%;
 }
 
@@ -598,7 +598,7 @@ input, .add-form select, #unit-list option {
         width: 80%;
     }
 
-    #unit-list option {
+    #select-unit-list option {
         font-size: 18px;
         padding: 10px;
     }

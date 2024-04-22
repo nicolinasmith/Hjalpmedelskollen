@@ -40,7 +40,7 @@
                         if (xhr.status === 404) {
                             qrAidMissingPopup.style.display = 'block';
                             qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer '${decodeText}'. Vill du registrera det?`;
-                            document.getElementById('add-aid-id').value = decodeText;
+                            var qr= document.getElementById('id').value = decodeText;
                             document.getElementById('qr').value = true;
                         } else {
                             console.error(xhr.responseText);
@@ -60,10 +60,17 @@
             qrAidMissingPopup.style.display = 'none';
         });
 
-
         addQrAid.addEventListener('click', function () {
             addAidPopup.style.display = 'block';
             qrAidMissingPopup.style.display = 'none';
+
+            var unitId = this.getAttribute('data-selected-unit');
+            var selectElement = document.getElementById('unit-list');
+            var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
+
+            if (unitOption) {
+                selectElement.value = unitId;
+            }
         });
 
         cancelQrButton.addEventListener('click', function () {
@@ -183,19 +190,26 @@
 
     /*AIDS BY UNIT - ADD AID*/
     var addAidPopup = document.getElementById('add-aid-popup');
+    var addAidUnit = document.getElementById('unit-list');
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
     //var addAidFeedback = document.getElementById('add-aid-feedback');
 
-    addNewAid.addEventListener('click', function () {
+    function handleAddAidClick() {
         addAidPopup.style.display = 'block';
-    });
 
-    addNewAidMobile.addEventListener('click', function () {
-        addAidPopup.style.display = 'block';
-    });
+        var unitId = this.getAttribute('data-selected-unit');
+        var selectElement = document.getElementById('unit-list');
+        var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
 
+        if (unitOption) {
+            selectElement.value = unitId;
+        }
+    }
+
+    addNewAid.addEventListener('click', handleAddAidClick);
+    addNewAidMobile.addEventListener('click', handleAddAidClick);
 
     cancelAddAid.addEventListener('click', function () {
         addAidPopup.style.display = 'none';

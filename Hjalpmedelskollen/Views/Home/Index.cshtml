@@ -8,7 +8,7 @@
     <ul>
         <li>Vald enhet: @Model.SelectedUnit.Name</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
+        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
 </div>
 
@@ -28,7 +28,7 @@
     <div id="mobile-buttons">
         <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
-		<button id="mobile-add-new-aid">Registrera hjälpmedel</button>
+        <button id="mobile-add-new-aid" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
         <span class="divider"></span>
     </div>
@@ -140,7 +140,7 @@
     <div class="pop-up">
         <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
             <h3>Välj enhet</h3>
-            <select id="unit-list" name="unitId" multiple size="5">
+            <select id="select-unit-list" name="unitId" multiple size="5">
                 @foreach (var unit in Model.Units)
                 {
                     <option value="@unit.Id">@unit.Name</option>
@@ -162,12 +162,16 @@
                 <div>
                     <div class="add-form">
                         <label for="unit">Enhet: *</label>
-                        <input type="text" id="unit" name="unit" value="@Model.SelectedUnit.Name" readonly disabled>
-                        <input type="hidden" id="unitId" name="unitId" value="@Model.SelectedUnit.Id">
+                        <select id="unit-list" name="unitId">
+							@foreach (var unit in Model.Units)
+							{
+								<option value="@unit.Id">@unit.Name</option>
+							}
+                         </select>
                     </div>
                     <div class="add-form">
                         <label for="id">Registreringsnummer: *</label>
-                        <input id="add-aid-id" type="text" id="id" name="id" required>
+                        <input type="text" id="id" name="id" required>
                     </div>
                     <div class="add-form">
 				        <label for="category">Kategori: *</label>
@@ -330,7 +334,7 @@
             <p id="qr-missing-text"></p>
         </div>
         <div class="popup-buttons">
-            <button type="button" id="add-qr-aid">Ja</button>
+            <button type="button" id="add-qr-aid" data-selected-unit="@Model.SelectedUnit.Id">Ja</button>
             <button type="button" id="cancel-qr-aid">Avbryt</button>
         </div>
     </div>
