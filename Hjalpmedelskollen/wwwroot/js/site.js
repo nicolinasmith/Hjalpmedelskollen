@@ -1,5 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
+    /*SCAN QR*/
     /*SOURCE https://www.geeksforgeeks.org/create-a-qr-code-scanner-or-reader-in-html-css-javascript/ */
     function domReady(fn) {
         if (
@@ -24,17 +25,17 @@
                 alert("Your QR code is: " + decodeText);
 
                 $.ajax({
-                    url: '/Home/GetAid', // Uppdatera URL:en med rätt controller-namn
+                    url: '/Home/GetAid',
                     method: 'GET',
                     data: {
                         aidId: decodeText
                     },
                     success: function (response) {
                         displayQrAid(response);
-                        console.log(response); // Om begäran lyckas, logga svaret i konsolen
+                        console.log(response); 
                     },
                     error: function (xhr, status, error) {
-                        console.error(xhr.responseText); // Om det uppstår ett fel, logga felmeddelandet i konsolen
+                        console.error(xhr.responseText); 
                     }
                 });
 
@@ -63,14 +64,6 @@
         if (unitOption) {
             unitSelectElement.value = unitId;
         }
-
-        /*
-        for (var i = 0; i < unitSelectElement.options.length; i++) {
-            if (unitSelectElement.options[i].value === unitId) {
-                unitSelectElement.selectedIndex = i;
-                break;
-            }
-        }*/
 
         var category = aid.category;
         var selectElement = document.getElementById('update-category-list');
@@ -101,7 +94,6 @@
         document.getElementById('update-id').value = aid.id;
         document.getElementById('category-list').value = category;
         document.getElementById('update-product-name').value = aid.productName;
-        //document.getElementById('update-status').value = status;
         document.getElementById('update-location').value = aid.location;
         document.getElementById('update-inspection').value = inspectionDate;
         document.getElementById('update-comment').value = aid.comment;
@@ -226,10 +218,6 @@
     aidRows.forEach(function (row) {
         row.addEventListener('click', function () {
 
-            console.log(this.getAttribute('data-qr'));
-            console.log(this.getAttribute('data-status'));
-
-
             var unitId = this.getAttribute('data-unit-id');
             var unitSelectElement = document.getElementById('update-aid-unit');
 
@@ -249,6 +237,7 @@
             }
 
             var status = this.getAttribute('data-status');
+            status = status.toLowerCase();
             var statusElement = document.getElementById('update-status');
             var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
             if (statusOption) {
@@ -256,6 +245,7 @@
             }
 
             var qr = this.getAttribute('data-qr');
+            qr = qr.toLowerCase();
             var qrElement = document.getElementById('update-qr');
             var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
             if (qrOption) {
