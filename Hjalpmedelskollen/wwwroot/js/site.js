@@ -165,12 +165,15 @@
         var selectedStatus = document.getElementById('select-status').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
+
         aidRows.forEach(function (row) {
             var category = row.dataset.category;
             var status = row.dataset.status;
 
+            var statusBool = status === 'True' ? 'Ledigt' : 'Upptaget';
+
             if ((selectedCategory === 'Alla' || category === selectedCategory) &&
-                (selectedStatus === 'Alla' || status === selectedStatus)) {
+                (selectedStatus === 'Alla' || statusBool === selectedStatus)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
