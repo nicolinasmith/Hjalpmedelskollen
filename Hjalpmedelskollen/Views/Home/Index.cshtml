@@ -149,6 +149,7 @@
 </div>
 <div id="show-all-notes"> 
     <div class="pop-up">
+        <form method="post" action="/Home/DeleteNoteFromDatabase" id="delete-note-form">
         <h3>Anslagstavlan</h3>
         <div>
 			@foreach (var note in Model.NoteBoards)
@@ -158,10 +159,13 @@
                     <div class="all-note">
                         <p class="all-long-message">@note.Note <i>(@trimmedDate)</i></p>
                     </div>
-                    <button class="delete-note" data-id="@note.Id"><i class="fa-solid fa-trash"></i></button>
+                        <button type="submit" class="delete-note"><i class="fa-solid fa-trash"></i></button>
+                        <input type="hidden" name="noteId" value="@note.Id"/>
+                        <input type="hidden" name="UnitId" value="@Model.SelectedUnit.Id" />
                 </div>
 			}
         </div>
+        </form>
         <button id="cancel-show-notes">Stäng</button>
     </div>
 </div>

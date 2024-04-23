@@ -203,6 +203,28 @@ namespace Hjalpmedelskollen.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult DeleteNoteFromDatabase(int noteId, int unitId)
+        {
+            var note = _context.NoteBoards.FirstOrDefault(n => n.Id == noteId);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.NoteBoards.Remove(note);
+                _context.SaveChanges();
+                return RedirectToAction("Index", new { unitId = unitId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
+                return BadRequest("Ett fel inträffade när en anteckning togs bort från databasen.");
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

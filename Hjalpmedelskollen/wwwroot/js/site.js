@@ -417,6 +417,7 @@
     var showAllNotesButton = document.getElementById('show-all-notes-button');
     var cancelShowNotes = document.getElementById('cancel-show-notes');
     var showAllNotes = document.getElementById('show-all-notes');
+    var deleteNote = document.querySelector('delete-note');
 
     displayAddNote.addEventListener('click', function () {
         addNotePopup.style.display = 'block';
