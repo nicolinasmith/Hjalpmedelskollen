@@ -152,21 +152,51 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     padding-right: 10px;
 }
 
-.unit-reminder {
-    padding: 10px;
+.unit-noteboard {
     margin: auto;
+}
+
+.noteboard {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #454a4f;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.noteboard-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.noteboard-buttons button {
+    width: 48%;
+    height: 30px;
+    background-color: #454a4f;
+    border: 1px solid #ffffff;
+}
+
+.noteboard-buttons button:hover {
+    background-color: #929293;
 }
 
 #unit-aside {
     width: 15%;
     display: flex;
     flex-direction: column;
+    text-align: center;
     justify-content: center;
     padding: 10px;
     margin-top: 20px;
-    background-color: white;
+    background-color: #454a4f;
+    color: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 2px solid #454a4f;
 }
 
@@ -457,7 +487,7 @@ video {
         margin-right: 8px;
     }
 
-    .nav-list, .small-nav, .headline, #unit-aside, .unit-reminder {
+    .nav-list, .small-nav, .headline, #unit-aside, .unit-noteboard {
         display: none;
     }
 

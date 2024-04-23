@@ -108,11 +108,20 @@
         </div>
     </main>
     <aside id="unit-aside">
-        <div class="unit-reminder">
+        <div class="unit-noteboard">
             <h3>Anslagstavlan</h3>
-            <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
-            <div class="popup-buttons">
-                <button>Uppdatera</button>
+            @foreach (var note in Model.NoteBoards)
+			{
+                var trimmedDate = note.Date.ToString("yyyy-MM-dd");
+
+				<div class="noteboard">
+					<b>@trimmedDate</b>
+					<p>@note.Note</p>
+				</div>
+			}
+            <div class="noteboard-buttons">
+                <button><i class="fa-solid fa-plus"></i></button>
+                <button><i class="fa-solid fa-edit"></i></button>
             </div>
         </div>
     </aside>

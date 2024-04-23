@@ -53,6 +53,10 @@ namespace Hjalpmedelskollen.Controllers
 
             var units = _context.Units.ToList();
 
+            var noteBoards = _context.NoteBoards
+                                    .Where(n => n.UnitId == unitId)
+                                    .ToList();
+
             var categories = aidsByUnit
                 .Select(a => a.Category)
                 .Distinct()
@@ -68,7 +72,8 @@ namespace Hjalpmedelskollen.Controllers
                 SelectedUnit = unit,
                 Aids = aidsByUnit,
                 Categories = categories,
-                Units = units
+                Units = units,
+                NoteBoards = noteBoards
             };
 
             return viewModel;
