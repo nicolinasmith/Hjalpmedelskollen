@@ -55,6 +55,7 @@ namespace Hjalpmedelskollen.Controllers
 
             var noteBoards = _context.NoteBoards
                                     .Where(n => n.UnitId == unitId)
+                                    .OrderByDescending(n => n.Date)
                                     .ToList();
 
             var categories = aidsByUnit

@@ -110,18 +110,18 @@
     <aside id="unit-aside">
         <div class="unit-noteboard">
             <h3>Anslagstavlan</h3>
-            @foreach (var note in Model.NoteBoards)
-			{
-                var trimmedDate = note.Date.ToString("yyyy-MM-dd");
-
 				<div class="noteboard">
+                @foreach (var note in Model.NoteBoards)
+			    {
+                    var trimmedDate = note.Date.ToString("yyyy-MM-dd");
+
 					<b>@trimmedDate</b>
 					<p>@note.Note</p>
+			    }
 				</div>
-			}
             <div class="noteboard-buttons">
-                <button><i class="fa-solid fa-plus"></i></button>
-                <button><i class="fa-solid fa-edit"></i></button>
+                <button><i class="fa-solid fa-plus"></i> Lägg till</button>
+                <button>Visa alla</button>
             </div>
         </div>
     </aside>

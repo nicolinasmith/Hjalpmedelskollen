@@ -178,12 +178,6 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
 .noteboard-buttons button {
     width: 48%;
     height: 30px;
-    background-color: #454a4f;
-    border: 1px solid #ffffff;
-}
-
-.noteboard-buttons button:hover {
-    background-color: #929293;
 }
 
 #unit-aside {
@@ -194,8 +188,7 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     justify-content: center;
     padding: 10px;
     margin-top: 20px;
-    background-color: #454a4f;
-    color: #ffffff;
+    background-color: #ffffff;
     border-radius: 5px;
     border: 2px solid #454a4f;
 }
