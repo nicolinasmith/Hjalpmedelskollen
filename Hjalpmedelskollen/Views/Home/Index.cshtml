@@ -118,8 +118,7 @@
 
                     <div class="note-container">
                         <div class="note">
-                            <b>@trimmedDate</b>
-                            <p>@note.Note</p>
+                            <p class="long-message">@note.Note <i>(@trimmedDate)</i></p>
                         </div>
                     </div>
                 }
@@ -149,16 +148,15 @@
     </div>
 </div>
 <div id="show-all-notes"> 
-    <div class="note-pop-up">
+    <div class="pop-up">
         <h3>Anslagstavlan</h3>
         <div>
 			@foreach (var note in Model.NoteBoards)
 			{
 				var trimmedDate = note.Date.ToString("yyyy-MM-dd");
                 <div class="note-container">
-                    <div class="note">
-                        <b>@trimmedDate</b>
-                        <p>@note.Note</p>
+                    <div class="all-note">
+                        <p class="all-long-message">@note.Note <i>(@trimmedDate)</i></p>
                     </div>
                     <button class="delete-note" data-id="@note.Id"><i class="fa-solid fa-trash"></i></button>
                 </div>
