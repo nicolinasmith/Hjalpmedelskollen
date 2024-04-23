@@ -132,50 +132,8 @@
     </aside>
 </div>
 
-<div id="add-note-popup">
-    <div class="pop-up">
-        <form method="post" action="/Home/AddNoteToDatabase" id="add-note-form">
-            <h3>Lägg till anteckning på Anslagstavlan</h3>
-            <div>
-                <label for="Note"></label>
-                <input type="text" id="Note" name="Note" required>
-                <input type="hidden" id="UnitId" name="UnitId" value="@Model.SelectedUnit.Id" />
-            </div>
-            <div class="popup-buttons">
-                <button type="submit" id="add-note-button">Lägg till</button>
-                <button type="button" id="cancel-add-note">Avbryt</button>
-            </div>
-        </form>
-    </div>
-</div>
-<div id="show-all-notes"> 
-    <div class="pop-up">
-        <form method="post" action="/Home/DeleteNoteFromDatabase" id="delete-note-form">
-        <h3>Anslagstavlan</h3>
-        <div>
-			@foreach (var note in Model.NoteBoards)
-			{
-				var trimmedDate = note.Date.ToString("yyyy-MM-dd");
-                <div class="note-container">
-                    <div class="all-note">
-                        <b>@trimmedDate</b>
-                        <p class="long-message">@note.Note</p>
-                    </div>
-                        <button type="submit" class="delete-note"><i class="fa-solid fa-trash"></i></button>
-                        <input type="hidden" name="noteId" value="@note.Id"/>
-                        <input type="hidden" name="UnitId" value="@Model.SelectedUnit.Id" />
-                </div>
-			}
-        </div>
-        </form>
-        <div class="popup-buttons">
-            <button id="cancel-show-notes">Stäng</button>
-        </div>
-    </div>
-</div>
-
-
 <partial name="_AddAidPopup" model="Model" />
+<partial name ="_NotePopup" model = "Model" />"
 <partial name="_UpdateAidPopup" model="Model" />
 <partial name="_ScanQrPopup" model="Model" />
 <partial name="_SelectUnitPopup" model="Model" />
