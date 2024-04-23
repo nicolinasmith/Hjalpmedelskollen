@@ -411,6 +411,7 @@ input, .add-form select, #select-unit-list option {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .popup-buttons button {
