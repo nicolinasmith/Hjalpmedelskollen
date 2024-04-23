@@ -118,7 +118,8 @@
 
                     <div class="note-container">
                         <div class="note">
-                            <p class="long-message">@note.Note <i>(@trimmedDate)</i></p>
+                            <b>@trimmedDate</b>
+                            <p class="long-message">@note.Note</p>
                         </div>
                     </div>
                 }
@@ -157,7 +158,8 @@
 				var trimmedDate = note.Date.ToString("yyyy-MM-dd");
                 <div class="note-container">
                     <div class="all-note">
-                        <p class="all-long-message">@note.Note <i>(@trimmedDate)</i></p>
+                        <b>@trimmedDate</b>
+                        <p class="long-message">@note.Note</p>
                     </div>
                         <button type="submit" class="delete-note"><i class="fa-solid fa-trash"></i></button>
                         <input type="hidden" name="noteId" value="@note.Id"/>
@@ -166,7 +168,9 @@
 			}
         </div>
         </form>
-        <button id="cancel-show-notes">Stäng</button>
+        <div class="popup-buttons">
+            <button id="cancel-show-notes">Stäng</button>
+        </div>
     </div>
 </div>
 

@@ -16,6 +16,7 @@ namespace Hjalpmedelskollen.Data
         {
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
         }
+
         public DbSet<InstitutionModel> Institutions { get; set; }
         public DbSet<UnitModel> Units { get; set; }
         public DbSet<AidModel> Aids { get; set; }
