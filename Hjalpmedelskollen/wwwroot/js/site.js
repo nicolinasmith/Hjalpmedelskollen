@@ -46,7 +46,6 @@
         var selectedStatus = document.getElementById('select-status').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
-
         aidRows.forEach(function (row) {
             var category = row.dataset.category;
             var status = row.dataset.status;

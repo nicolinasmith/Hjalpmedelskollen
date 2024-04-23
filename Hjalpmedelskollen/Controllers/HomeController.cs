@@ -63,10 +63,6 @@ namespace Hjalpmedelskollen.Controllers
                 })
                 .ToList();
 
-
-
-
-
             var viewModel = new AidsByUnitViewModel()
             {
                 SelectedUnit = unit,
@@ -175,7 +171,6 @@ namespace Hjalpmedelskollen.Controllers
 
             return Json(aid);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
