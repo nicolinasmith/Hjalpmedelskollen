@@ -318,18 +318,19 @@
                         aidId: decodeText
                     },
                     success: function (response) {
-                        qrContainer.style.display = 'none';
                         displayQrAid(response);
                         console.log(response);
                     },
                     error: function (xhr, status, error) {
                         if (xhr.status === 404) {
                             qrAidMissingPopup.style.display = 'block';
-                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer '${decodeText}'. Vill du registrera det?`;
+                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
                             document.getElementById('id').value = decodeText;
                             document.getElementById('qr').value = true;
                         } else {
                             console.error(xhr.responseText);
+                            qrAidMissingPopup.style.display = 'block';
+                            qrAidMissingText.textContent = 'Något gick fel. Försök igen.';
                         }
                     }
                 });
@@ -348,6 +349,7 @@
 
         addQrAid.addEventListener('click', function () {
             addAidPopup.style.display = 'block';
+            qrContainer.style.display = 'none';
             qrAidMissingPopup.style.display = 'none';
 
             var unitId = this.getAttribute('data-selected-unit');
@@ -365,8 +367,8 @@
     });
 
     function displayQrAid(aid) {
-
-        var aidPopup = document.getElementById('update-aid-popup');
+        document.getElementById('qr-popup').style.display = 'none';
+        document.getElementById('update-aid-popup').style.display = 'block';
 
         var unitId = aid.unitId;
         var unitSelectElement = document.getElementById('update-aid-unit');
@@ -407,7 +409,5 @@
         document.getElementById('update-location').value = aid.location;
         document.getElementById('update-inspection').value = inspectionDate;
         document.getElementById('update-comment').value = aid.comment;
-
-        aidPopup.style.display = 'block';
     }
 });
