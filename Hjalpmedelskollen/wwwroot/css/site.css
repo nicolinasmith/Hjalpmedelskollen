@@ -656,10 +656,12 @@ video {
 
     .popup-buttons {
         flex-direction: column;
+        margin-bottom: 30px;
     }
 
     footer {
         position: relative;
         margin-top: 40px;
+        bottom: 0;
     }
 }
