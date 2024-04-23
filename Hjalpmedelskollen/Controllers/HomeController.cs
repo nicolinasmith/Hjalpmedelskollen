@@ -53,6 +53,11 @@ namespace Hjalpmedelskollen.Controllers
 
             var units = _context.Units.ToList();
 
+            var noteBoards = _context.NoteBoards
+                                    .Where(n => n.UnitId == unitId)
+                                    .OrderByDescending(n => n.Date)
+                                    .ToList();
+
             var categories = aidsByUnit
                 .Select(a => a.Category)
                 .Distinct()
@@ -68,7 +73,8 @@ namespace Hjalpmedelskollen.Controllers
                 SelectedUnit = unit,
                 Aids = aidsByUnit,
                 Categories = categories,
-                Units = units
+                Units = units,
+                NoteBoards = noteBoards
             };
 
             return viewModel;
@@ -170,6 +176,53 @@ namespace Hjalpmedelskollen.Controllers
             }
 
             return Json(aid);
+        }
+
+        [HttpPost]
+        public IActionResult AddNoteToDatabase(NoteBoardModel newNote)
+        {
+            newNote.Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.NoteBoards.Add(newNote);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", new { unitId = newNote.UnitId });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när en anteckning lades till i databasen.");
+                    return BadRequest("Ett fel inträffade när en anteckning lades till i databasen.");
+                }
+            }
+            else
+            {
+                return View("Index", newNote);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteNoteFromDatabase(int noteId, int unitId)
+        {
+            var note = _context.NoteBoards.FirstOrDefault(n => n.Id == noteId);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.NoteBoards.Remove(note);
+                _context.SaveChanges();
+                return RedirectToAction("Index", new { unitId = unitId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
+                return BadRequest("Ett fel inträffade när en anteckning togs bort från databasen.");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

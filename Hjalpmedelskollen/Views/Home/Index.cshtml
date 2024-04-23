@@ -108,17 +108,32 @@
         </div>
     </main>
     <aside id="unit-aside">
-        <div class="unit-reminder">
+        <div class="unit-noteboard">
             <h3>Anslagstavlan</h3>
-            <i>Här kommer du kunna lägga in påminnelser och information om @Model.SelectedUnit.Name.</i>
-            <div class="popup-buttons">
-                <button>Uppdatera</button>
+				<div>
+                @for (int i = 0; i < Model.NoteBoards.Count && i < 5; i++)
+                {
+                    var note = Model.NoteBoards[i];
+                    var trimmedDate = note.Date.ToString("yyyy-MM-dd");
+
+                    <div class="note-container">
+                        <div class="note">
+                            <b>@trimmedDate</b>
+                            <p class="long-message">@note.Note</p>
+                        </div>
+                    </div>
+                }
+				</div>
+            <div class="noteboard-buttons">
+                <button id="display-new-note-button"><i class="fa-solid fa-plus"></i> Lägg till</button>
+                <button id="show-all-notes-button">Visa alla</button>
             </div>
         </div>
     </aside>
 </div>
 
 <partial name="_AddAidPopup" model="Model" />
+<partial name ="_NotePopup" model = "Model" />"
 <partial name="_UpdateAidPopup" model="Model" />
 <partial name="_ScanQrPopup" model="Model" />
 <partial name="_SelectUnitPopup" model="Model" />

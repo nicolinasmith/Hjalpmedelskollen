@@ -12,9 +12,10 @@ namespace Hjalpmedelskollen.ViewModels
 
         public UnitModel SelectedUnit { get; set; }
 
+        public List<NoteBoardModel> NoteBoards { get; set; }
+
         public AidsByUnitViewModel()
         {
-
 
         }
 
@@ -22,9 +23,6 @@ namespace Hjalpmedelskollen.ViewModels
         {
             public string Name { get; set; }
         }
-
-
-
     }
 
 }
