@@ -110,18 +110,23 @@
     <aside id="unit-aside">
         <div class="unit-noteboard">
             <h3>Anslagstavlan</h3>
-				<div class="noteboard">
-                @foreach (var note in Model.NoteBoards)
-			    {
+				<div>
+                @for (int i = 0; i < Model.NoteBoards.Count && i < 5; i++)
+                {
+                    var note = Model.NoteBoards[i];
                     var trimmedDate = note.Date.ToString("yyyy-MM-dd");
 
-					<b>@trimmedDate</b>
-					<p>@note.Note</p>
-			    }
+                    <div class="note-container">
+                        <div class="note">
+                            <b>@trimmedDate</b>
+                            <p>@note.Note</p>
+                        </div>
+                    </div>
+                }
 				</div>
             <div class="noteboard-buttons">
                 <button id="display-new-note-button"><i class="fa-solid fa-plus"></i> Lägg till</button>
-                <button id="display-all-note-button">Visa alla</button>
+                <button id="show-all-notes-button">Visa alla</button>
             </div>
         </div>
     </aside>
@@ -130,7 +135,7 @@
 <div id="add-note-popup">
     <div class="pop-up">
         <form method="post" action="/Home/AddNoteToDatabase" id="add-note-form">
-            <h3>Lägg till anteckning</h3>
+            <h3>Lägg till anteckning på Anslagstavlan</h3>
             <div>
                 <label for="Note"></label>
                 <input type="text" id="Note" name="Note" required>
@@ -141,6 +146,25 @@
                 <button type="button" id="cancel-add-note">Avbryt</button>
             </div>
         </form>
+    </div>
+</div>
+<div id="show-all-notes"> 
+    <div class="note-pop-up">
+        <h3>Anslagstavlan</h3>
+        <div>
+			@foreach (var note in Model.NoteBoards)
+			{
+				var trimmedDate = note.Date.ToString("yyyy-MM-dd");
+                <div class="note-container">
+                    <div class="note">
+                        <b>@trimmedDate</b>
+                        <p>@note.Note</p>
+                    </div>
+                    <button class="delete-note" data-id="@note.Id"><i class="fa-solid fa-trash"></i></button>
+                </div>
+			}
+        </div>
+        <button id="cancel-show-notes">Stäng</button>
     </div>
 </div>
 

@@ -156,6 +156,7 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     margin: auto;
 }
 
+/*
 .noteboard {
     background-color: white;
     color: black;
@@ -165,19 +166,48 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     text-align: left;
     margin-top: 10px;
     margin-bottom: 10px;
-}
+}*/
 
 .noteboard-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 10px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
-.noteboard-buttons button {
+.noteboard-buttons button, .note-pop-up button {
     width: 48%;
     height: 30px;
+    border: 1px solid #ffffff;
+}
+
+.note-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #454a4f;
+    background-color: #ffffff;
+    color: #000000;
+    width: 100%;
+}
+
+.note {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    padding: 10px;
+}
+
+.note-container button {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    font-size: 16px;
 }
 
 #unit-aside {
@@ -187,10 +217,10 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     text-align: center;
     justify-content: center;
     padding: 10px;
-    margin-top: 20px;
-    background-color: #ffffff;
+    margin-top: 10px;
+    background-color: #454a4f;
+    color: #ffffff;
     border-radius: 5px;
-    border: 2px solid #454a4f;
 }
 
 .table-style {
@@ -288,7 +318,8 @@ button:hover {
 }
 
 #update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, 
-#new-category-popup, #confirm-popup, #qr-missing-popup, #qr-popup, #add-note-popup {
+#new-category-popup, #confirm-popup, #qr-missing-popup, #qr-popup, #add-note-popup,
+#show-all-notes {
     display: none;
     position: fixed;
     z-index: 1;
@@ -306,6 +337,21 @@ button:hover {
     padding: 20px;
     width: 350px;
     background-color: #eaebed;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.note-pop-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+    width: 350px;
+    background-color: #454a4f;
+    color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

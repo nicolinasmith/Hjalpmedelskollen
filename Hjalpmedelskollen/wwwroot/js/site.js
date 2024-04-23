@@ -414,6 +414,9 @@
     var displayAddNote = document.getElementById('display-new-note-button');
     var addNotePopup = document.getElementById('add-note-popup');
     var cancelAddNote = document.getElementById('cancel-add-note');
+    var showAllNotesButton = document.getElementById('show-all-notes-button');
+    var cancelShowNotes = document.getElementById('cancel-show-notes');
+    var showAllNotes = document.getElementById('show-all-notes');
 
     displayAddNote.addEventListener('click', function () {
         addNotePopup.style.display = 'block';
@@ -421,5 +424,13 @@
 
     cancelAddNote.addEventListener('click', function () {
         addNotePopup.style.display = 'none';
+    });
+
+    showAllNotesButton.addEventListener('click', function () {
+        showAllNotes.style.display = 'block';
+    });
+
+    cancelShowNotes.addEventListener('click', function () {
+        showAllNotes.style.display = 'none';
     });
 });
