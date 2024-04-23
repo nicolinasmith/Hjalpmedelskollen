@@ -409,4 +409,17 @@
         document.getElementById('update-inspection').value = inspectionDate;
         document.getElementById('update-comment').value = aid.comment;
     }
+
+    /*AIDS BY UNIT - NOTE BOARD*/
+    var displayAddNote = document.getElementById('display-new-note-button');
+    var addNotePopup = document.getElementById('add-note-popup');
+    var cancelAddNote = document.getElementById('cancel-add-note');
+
+    displayAddNote.addEventListener('click', function () {
+        addNotePopup.style.display = 'block';
+    });
+
+    cancelAddNote.addEventListener('click', function () {
+        addNotePopup.style.display = 'none';
+    });
 });

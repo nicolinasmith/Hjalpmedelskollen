@@ -178,6 +178,31 @@ namespace Hjalpmedelskollen.Controllers
             return Json(aid);
         }
 
+        [HttpPost]
+        public IActionResult AddNoteToDatabase(NoteBoardModel newNote)
+        {
+            newNote.Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.NoteBoards.Add(newNote);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", new { unitId = newNote.UnitId });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när en anteckning lades till i databasen.");
+                    return BadRequest("Ett fel inträffade när en anteckning lades till i databasen.");
+                }
+            }
+            else
+            {
+                return View("Index", newNote);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
