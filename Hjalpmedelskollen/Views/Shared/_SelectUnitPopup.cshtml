@@ -1,0 +1,18 @@
+﻿
+<div id="unit-popup">
+    <div class="pop-up">
+        <form method="post" action="/Home/AidsByUnit" id="select-unit-form">
+            <h3>Välj enhet</h3>
+            <select id="select-unit-list" name="unitId" multiple size="5">
+                @foreach (var unit in Model.Units)
+                {
+                    <option value="@unit.Id">@unit.Name</option>
+                }
+            </select>
+            <div class="popup-buttons">
+                <button type="submit" id="select-unit-button">Välj</button>
+                <button type="button" id="cancel-select-unit">Avbryt</button>
+            </div>
+        </form>
+    </div>
+</div>

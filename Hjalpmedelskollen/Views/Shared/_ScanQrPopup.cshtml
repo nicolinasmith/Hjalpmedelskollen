@@ -1,0 +1,24 @@
+﻿
+<div id="qr-popup">
+    <div class="pop-up">
+        <b id="qr-headline">Skanna QR-kod</b>
+        <div class="qr-section">
+            <div id="my-qr-reader">
+            </div>
+        </div>
+        <button id="cancel-qr-button">Avbryt</button>
+    </div>
+</div>
+
+<div id="qr-missing-popup">
+    <div class="pop-up">
+        <h3>Hjälpmedel saknas</h3>
+        <div>
+            <p id="qr-missing-text"></p>
+        </div>
+        <div class="popup-buttons">
+            <button type="button" id="add-qr-aid" data-selected-unit="@Model.SelectedUnit.Id">Ja</button>
+            <button type="button" id="cancel-qr-aid">Avbryt</button>
+        </div>
+    </div>
+</div>
