@@ -145,6 +145,16 @@
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
 
+
+    function addNewCategoryToList(categoryName, list) {
+        if (categoryName.trim() !== '') {
+            var newCategory = document.createElement('option');
+            newCategory.text = categoryName;
+            list.add(newCategory);
+            list.value = categoryName;
+        }
+    }
+
     categoryList.addEventListener('change', function () {
         if (categoryList.value === 'new-category') {
             newCategoryPopup.style.display = 'block';
@@ -157,20 +167,16 @@
         }
     });
 
-
     addCategoryButton.addEventListener('click', function () {
         var newCategoryInput = document.getElementById('new-category').value;
-        if (newCategoryInput.trim() !== '') {
-            var newCategory = document.createElement('option');
-            newCategory.text = newCategoryInput;
-            categoryList.add(newCategory);
-            categoryList.value = newCategoryInput;
-            updateCategoryList.add(newCategory);
-            updateCategoryList.value = newCategoryInput;
+        if (categoryList.value === 'new-category') {
+            addNewCategoryToList(newCategoryInput, categoryList);
+        }
+        if (updateCategoryList.value === 'new-category') {
+            addNewCategoryToList(newCategoryInput, updateCategoryList);
         }
         newCategoryPopup.style.display = 'none';
     });
-
     cancelAddCategory.addEventListener('click', function () {
         newCategoryPopup.style.display = 'none';
     });
