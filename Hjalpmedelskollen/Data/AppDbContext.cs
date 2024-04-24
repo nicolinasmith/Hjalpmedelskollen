@@ -5,16 +5,9 @@ namespace Hjalpmedelskollen.Data
 {
     public class AppDbContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
-
-        public AppDbContext(IConfiguration configuration)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
         {
-            Configuration = configuration;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
         }
 
         public DbSet<InstitutionModel> Institutions { get; set; }
