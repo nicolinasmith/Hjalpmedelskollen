@@ -6,7 +6,7 @@
 
 <div class="small-nav">
     <ul>
-        <li>Vald enhet: @Model.SelectedUnit.Name</li>
+        <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
         <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
