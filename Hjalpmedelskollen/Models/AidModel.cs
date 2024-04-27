@@ -32,5 +32,8 @@ namespace Hjalpmedelskollen.Models
         [ForeignKey("UnitModel")]
         public int UnitId { get; set; }
 
+        [ForeignKey("PatientModel")]
+        public int? PatientId { get; set; }
+
     }
 }
