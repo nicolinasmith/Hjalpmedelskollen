@@ -9,5 +9,7 @@ namespace Hjalpmedelskollen.DAL
         Task<UnitModel> GetUnit(int unitId);
         Task<List<NoteBoardModel>> GetNotes(int unitId);
         Task AddAid(AidModel aid, int? selectedMonth);
+        Task UpdateAid(AidModel aid);
+        Task DeleteAid(AidModel aid);
     }
 }

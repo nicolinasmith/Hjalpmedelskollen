@@ -100,9 +100,9 @@ namespace Hjalpmedelskollen.Controllers
                 return View("Index", aid);
             }
         }
-        /*
+
         [HttpPost]
-        public IActionResult UpdateAidToDatabase(AidModel aid, string formAction)
+        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction)
         {
             if (formAction == "update")
             {
@@ -110,22 +110,13 @@ namespace Hjalpmedelskollen.Controllers
                 {
                     try
                     {
-                        if (aid.Inspection.HasValue)
-                        {
-                            aid.Inspection = aid.Inspection.Value.ToUniversalTime();
-                        }
-                        if (aid.Registered != DateTime.MinValue)
-                        {
-                            aid.Registered = aid.Registered.ToUniversalTime();
-                        }
-                        _context.Aids.Update(aid);
-                        _context.SaveChanges();
+                        await _dbRepository.UpdateAid(aid);
                         return RedirectToAction("Index", new { unitId = aid.UnitId });
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
-                        return BadRequest("Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
+                        return BadRequest($"Ett fel inträffade när ett hjälpmedel uppdaterades i databasen: {ex.Message}.");
                     }
                 }
                 else
@@ -137,23 +128,22 @@ namespace Hjalpmedelskollen.Controllers
             {
                 try
                 {
-                    _context.Aids.Remove(aid);
-                    _context.SaveChanges();
+                    await _dbRepository.DeleteAid(aid);
                     return RedirectToAction("Index", new { unitId = aid.UnitId });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
-                    return BadRequest("Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
+                    return BadRequest($"Ett fel inträffade när ett hjälpmedel togs bort från databasen: {ex.Message}.");
                 }
             }
             else
             {
                 return BadRequest("Ett fel inträffade.");
             }
-
         }
 
+        /*
         [HttpGet]
         public IActionResult GetAid (string aidId)
         {

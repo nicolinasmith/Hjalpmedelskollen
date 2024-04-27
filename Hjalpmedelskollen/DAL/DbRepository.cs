@@ -54,5 +54,26 @@ namespace Hjalpmedelskollen.DAL
             _context.Aids.Add(aid);
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateAid(AidModel aid)
+        {
+            if (aid.Inspection.HasValue)
+            {
+                aid.Inspection = aid.Inspection.Value.ToUniversalTime();
+            }
+            if (aid.Registered != DateTime.MinValue)
+            {
+                aid.Registered = aid.Registered.ToUniversalTime();
+            }
+
+            _context.Aids.Update(aid);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAid(AidModel aid)
+        {
+            _context.Aids.Remove(aid);
+            await _context.SaveChangesAsync();
+        }
     }
 }
