@@ -1,3 +1,4 @@
+using Hjalpmedelskollen.DAL;
 using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Hjalpmedelskollen.ViewModels;
@@ -12,51 +13,28 @@ namespace Hjalpmedelskollen.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+        private readonly IDbRepository _dbRepository;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, IDbRepository dbRepository)
         {
             _logger = logger;
-            _context = context;
+            _dbRepository = dbRepository;
         }
 
-        public IActionResult Index(int? unitId)
+        public async Task<IActionResult> Index(int? unitId)
         {
-            int defaultUnitId = 1;
-
-            if (!unitId.HasValue)
-            {
-                unitId = defaultUnitId;
-            }
-
-            var viewModel = GetAidsByUnitViewModel(unitId.Value);
+            int defaultUnitId = unitId ?? 1;
+            var viewModel = await GetAidsByUnitViewModel(defaultUnitId);
             return View(viewModel);
-
         }
 
-        [HttpPost]
-        public IActionResult AidsByUnit(int unitId)
-        { 
-            var viewModel = GetAidsByUnitViewModel(unitId);
-            return View("Index", viewModel);
-        }
 
-        private AidsByUnitViewModel GetAidsByUnitViewModel(int unitId)
+        private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
         {
-            var aidsByUnit = _context.Aids
-                                    .Where(a => a.UnitId == unitId)
-                                    .ToList()
-                                    .OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase)
-                                    .ToList();
-
-            var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
-
-            var units = _context.Units.ToList();
-
-            var noteBoards = _context.NoteBoards
-                                    .Where(n => n.UnitId == unitId)
-                                    .OrderByDescending(n => n.Date)
-                                    .ToList();
+            var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
+            var selectedUnit = await _dbRepository.GetUnit(unitId);
+            var units = await _dbRepository.GetUnits();
+            var noteBoards = await _dbRepository.GetNotes(unitId);
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -70,7 +48,7 @@ namespace Hjalpmedelskollen.Controllers
 
             var viewModel = new AidsByUnitViewModel()
             {
-                SelectedUnit = unit,
+                SelectedUnit = selectedUnit,
                 Aids = aidsByUnit,
                 Categories = categories,
                 Units = units,
@@ -81,30 +59,40 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAidToDatabase(AidModel aid, int unitId)
+        public async Task<IActionResult> DisplayAidsByUnit(int unitId)
         {
-            aid.Registered = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+            var viewModel = await GetAidsByUnitViewModel(unitId);
+            return View("Index", viewModel);
+        }
 
-            if (aid.Inspection.HasValue)
-            {
-                string[] parts = Request.Form["Inspection"].ToString().Split('-');
-                int selectedMonth = int.Parse(parts[1]);
-                DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth, 1);
-                aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
-            }
-
+        [HttpPost]
+        public async Task<IActionResult> AddAidToDatabaseAsync(AidModel aid, int unitId)
+        {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Aids.Add(aid);
-                    _context.SaveChanges();
+                    string inspection = Request.Form["Inspection"].ToString();
+                    int? selectedMonth = null;
+
+                    if (!string.IsNullOrEmpty(inspection))
+                    {
+                        string[] parts = inspection.Split('-');
+                        int parsedMonth;
+
+                        if (parts.Length > 1 && int.TryParse(parts[1], out parsedMonth))
+                        {
+                            selectedMonth = parsedMonth;
+                        }
+                    }
+
+                    await _dbRepository.AddAid(aid, selectedMonth);
                     return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel lades till i databasen.");
-                    return BadRequest("Ett fel inträffade när ett hjälpmedel lades till i databasen.");
+                    return BadRequest($"Ett fel inträffade när ett hjälpmedel lades till i databasen: {ex.Message}.");
                 }
             }
             else
@@ -114,7 +102,7 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAidToDatabase(AidModel aid, string formAction)
+        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction)
         {
             if (formAction == "update")
             {
@@ -122,22 +110,13 @@ namespace Hjalpmedelskollen.Controllers
                 {
                     try
                     {
-                        if (aid.Inspection.HasValue)
-                        {
-                            aid.Inspection = aid.Inspection.Value.ToUniversalTime();
-                        }
-                        if (aid.Registered != DateTime.MinValue)
-                        {
-                            aid.Registered = aid.Registered.ToUniversalTime();
-                        }
-                        _context.Aids.Update(aid);
-                        _context.SaveChanges();
+                        await _dbRepository.UpdateAid(aid);
                         return RedirectToAction("Index", new { unitId = aid.UnitId });
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
-                        return BadRequest("Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
+                        return BadRequest($"Ett fel inträffade när ett hjälpmedel uppdaterades i databasen: {ex.Message}.");
                     }
                 }
                 else
@@ -149,52 +128,50 @@ namespace Hjalpmedelskollen.Controllers
             {
                 try
                 {
-                    _context.Aids.Remove(aid);
-                    _context.SaveChanges();
+                    await _dbRepository.DeleteAid(aid);
                     return RedirectToAction("Index", new { unitId = aid.UnitId });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
-                    return BadRequest("Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
+                    return BadRequest($"Ett fel inträffade när ett hjälpmedel togs bort från databasen: {ex.Message}.");
                 }
             }
             else
             {
                 return BadRequest("Ett fel inträffade.");
             }
-
         }
 
         [HttpGet]
-        public IActionResult GetAid (string aidId)
+        public async Task<IActionResult> GetAidFromDatabase(string aidId)
         {
-            var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
-            if (aid == null)
+            try
             {
-                return NotFound();
+                var aid = await _dbRepository.GetAid(aidId);
+                return Json(aid);
             }
-
-            return Json(aid);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel skulle visas.");
+                return BadRequest($"Ett fel inträffade när ett hjälpmedel skulle visas: {ex.Message}.");
+            }
         }
 
         [HttpPost]
-        public IActionResult AddNoteToDatabase(NoteBoardModel newNote)
+        public async Task<IActionResult> AddNoteToDatabase(NoteBoardModel newNote)
         {
-            newNote.Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.NoteBoards.Add(newNote);
-                    _context.SaveChanges();
+                    await _dbRepository.AddNote(newNote);
                     return RedirectToAction("Index", new { unitId = newNote.UnitId });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när en anteckning lades till i databasen.");
-                    return BadRequest("Ett fel inträffade när en anteckning lades till i databasen.");
+                    return BadRequest($"Ett fel inträffade när en anteckning lades till i databasen: {ex.Message}.");
                 }
             }
             else
@@ -204,24 +181,17 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteNoteFromDatabase(int noteId, int unitId)
+        public async Task<IActionResult> DeleteNoteFromDatabase(int noteId, int unitId)
         {
-            var note = _context.NoteBoards.FirstOrDefault(n => n.Id == noteId);
-            if (note == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                _context.NoteBoards.Remove(note);
-                _context.SaveChanges();
+                await _dbRepository.DeleteNote(noteId);
                 return RedirectToAction("Index", new { unitId = unitId });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
-                return BadRequest("Ett fel inträffade när en anteckning togs bort från databasen.");
+                return BadRequest($"Ett fel inträffade när en anteckning togs bort från databasen: {ex.Message}.");
             }
         }
 
