@@ -1,4 +1,5 @@
-﻿using Hjalpmedelskollen.Data;
+﻿using Azure.Core;
+using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,20 +16,16 @@ namespace Hjalpmedelskollen.DAL
 
         public async Task<IEnumerable<AidModel>> GetAidsByUnit(int? unitId)
         {
-            int defaultUnitId = unitId ?? 1;
-
             var aids = await _context.Aids
-                .Where(a => a.UnitId == defaultUnitId)
+                .Where(a => a.UnitId == unitId)
                 .ToListAsync();
 
             return aids.OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase);
         }
 
-        public async Task<UnitModel> GetUnit(int unitId)
+        public Task<UnitModel> GetUnit(int unitId)
         {
-            return await _context.Units
-                .Where(u => u.Id == unitId)
-                .FirstOrDefaultAsync();
+            return _context.Units.FirstOrDefaultAsync(u => u.Id == unitId);
         }
 
         public async Task<IEnumerable<UnitModel>> GetUnits()
@@ -36,5 +33,26 @@ namespace Hjalpmedelskollen.DAL
             return await _context.Units.ToListAsync();
         }
 
+        public async Task<List<NoteBoardModel>> GetNotes(int unitId)
+        {
+            var notes = await _context.NoteBoards
+                        .Where(n => n.UnitId == unitId)
+                        .ToListAsync();
+            return notes.OrderByDescending(n => n.Date).ToList();
+        }
+
+        public async Task AddAid(AidModel aid, int? selectedMonth)
+        {
+            aid.Registered = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+
+            if (selectedMonth.HasValue)
+            {
+                DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth.Value, 1);
+                aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
+            }
+
+            _context.Aids.Add(aid);
+            await _context.SaveChangesAsync();
+        }
     }
 }

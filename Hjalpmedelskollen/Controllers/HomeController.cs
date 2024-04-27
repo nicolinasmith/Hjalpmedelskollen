@@ -23,37 +23,25 @@ namespace Hjalpmedelskollen.Controllers
 
         public async Task<IActionResult> Index(int? unitId)
         {
-            var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
-            var viewModel = GetAidsByUnitViewModel(unitId.Value, aidsByUnit);
-
+            int defaultUnitId = unitId ?? 1;
+            var viewModel = await GetAidsByUnitViewModel(defaultUnitId);
             return View(viewModel);
         }
-    
-        /*
+
         [HttpPost]
-        public IActionResult AidsByUnit(int unitId)
-        { 
-            var viewModel = GetAidsByUnitViewModel(unitId);
-            return View("Index", viewModel);
-        }*/
-
-        private AidsByUnitViewModel GetAidsByUnitViewModel(int unitId, IEnumerable<AidModel> aidsByUnit)
+        public async Task<IActionResult> AidsByUnit(int unitId)
         {
-            /*var aidsByUnit = _context.Aids
-                                    .Where(a => a.UnitId == unitId)
-                                    .ToList()
-                                    .OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase)
-                                    .ToList();*/
+            var viewModel = await GetAidsByUnitViewModel(unitId);
+            return View("Index", viewModel);
+        }
 
-            //var unit = _context.Units.FirstOrDefault(u => u.Id == unitId);
+        private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
+        {
+            var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
+            var selectedUnit = await _dbRepository.GetUnit(unitId);
+            var units = await _dbRepository.GetUnits();
+            var noteBoards = await _dbRepository.GetNotes(unitId);
 
-            //var units = _context.Units.ToList();
-
-            /*var noteBoards = _context.NoteBoards
-                                    .Where(n => n.UnitId == unitId)
-                                    .OrderByDescending(n => n.Date)
-                                    .ToList();*/
-            /*
             var categories = aidsByUnit
                 .Select(a => a.Category)
                 .Distinct()
@@ -62,40 +50,43 @@ namespace Hjalpmedelskollen.Controllers
                 {
                     Name = c
                 })
-                .ToList();*/
+                .ToList();
 
             var viewModel = new AidsByUnitViewModel()
             {
-                //SelectedUnit = unit,
+                SelectedUnit = selectedUnit,
                 Aids = aidsByUnit,
-                //Categories = categories,
-                //Units = units
-                //NoteBoards = noteBoards
+                Categories = categories,
+                Units = units,
+                NoteBoards = noteBoards
             };
 
             return viewModel;
         }
 
-        /*
+        
         [HttpPost]
-        public IActionResult AddAidToDatabase(AidModel aid, int unitId)
+        public async Task<IActionResult> AddAidToDatabaseAsync(AidModel aid, int unitId)
         {
-            aid.Registered = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-
-            if (aid.Inspection.HasValue)
-            {
-                string[] parts = Request.Form["Inspection"].ToString().Split('-');
-                int selectedMonth = int.Parse(parts[1]);
-                DateTime inspectionDate = new DateTime(DateTime.Now.Year, selectedMonth, 1);
-                aid.Inspection = DateTime.SpecifyKind(inspectionDate, DateTimeKind.Utc);
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Aids.Add(aid);
-                    _context.SaveChanges();
+                    string inspection = Request.Form["Inspection"].ToString();
+                    int? selectedMonth = null; // Använd en nullable int för att möjliggöra null-värde för månaden
+
+                    if (!string.IsNullOrEmpty(inspection))
+                    {
+                        string[] parts = inspection.Split('-');
+                        int parsedMonth;
+
+                        if (parts.Length > 1 && int.TryParse(parts[1], out parsedMonth))
+                        {
+                            selectedMonth = parsedMonth;
+                        }
+                    }
+
+                    await _dbRepository.AddAid(aid, selectedMonth);
                     return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
@@ -109,7 +100,7 @@ namespace Hjalpmedelskollen.Controllers
                 return View("Index", aid);
             }
         }
-
+        /*
         [HttpPost]
         public IActionResult UpdateAidToDatabase(AidModel aid, string formAction)
         {
