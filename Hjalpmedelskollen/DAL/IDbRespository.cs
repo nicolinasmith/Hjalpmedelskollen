@@ -11,5 +11,6 @@ namespace Hjalpmedelskollen.DAL
         Task AddAid(AidModel aid, int? selectedMonth);
         Task UpdateAid(AidModel aid);
         Task DeleteAid(AidModel aid);
+        Task<AidModel> GetAid (string aidId);
     }
 }

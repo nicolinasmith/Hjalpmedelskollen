@@ -336,6 +336,7 @@
                             console.error(xhr.responseText);
                             qrAidMissingPopup.style.display = 'block';
                             qrAidMissingText.textContent = 'Något gick fel. Försök igen.';
+                            document.getElementById('add-qr-aid').style.display = 'none';
                         }
                     }
                 });

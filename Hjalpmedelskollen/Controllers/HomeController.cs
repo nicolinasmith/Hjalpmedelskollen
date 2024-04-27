@@ -28,12 +28,6 @@ namespace Hjalpmedelskollen.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AidsByUnit(int unitId)
-        {
-            var viewModel = await GetAidsByUnitViewModel(unitId);
-            return View("Index", viewModel);
-        }
 
         private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
         {
@@ -64,7 +58,13 @@ namespace Hjalpmedelskollen.Controllers
             return viewModel;
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> DisplayAidsByUnit(int unitId)
+        {
+            var viewModel = await GetAidsByUnitViewModel(unitId);
+            return View("Index", viewModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddAidToDatabaseAsync(AidModel aid, int unitId)
         {
@@ -73,7 +73,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     string inspection = Request.Form["Inspection"].ToString();
-                    int? selectedMonth = null; // Använd en nullable int för att möjliggöra null-värde för månaden
+                    int? selectedMonth = null;
 
                     if (!string.IsNullOrEmpty(inspection))
                     {
@@ -92,7 +92,7 @@ namespace Hjalpmedelskollen.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel lades till i databasen.");
-                    return BadRequest("Ett fel inträffade när ett hjälpmedel lades till i databasen.");
+                    return BadRequest($"Ett fel inträffade när ett hjälpmedel lades till i databasen: {ex.Message}.");
                 }
             }
             else
@@ -143,19 +143,22 @@ namespace Hjalpmedelskollen.Controllers
             }
         }
 
-        /*
         [HttpGet]
-        public IActionResult GetAid (string aidId)
+        public async Task<IActionResult> GetAid(string aidId)
         {
-            var aid = _context.Aids.FirstOrDefault(a => a.Id == aidId);
-            if (aid == null)
+            try
             {
-                return NotFound();
+                var aid = await _dbRepository.GetAid(aidId);
+                return Json(aid);
             }
-
-            return Json(aid);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel skulle visas.");
+                return BadRequest($"Ett fel inträffade när ett hjälpmedel skulle visas: {ex.Message}.");
+            }
         }
 
+        /*
         [HttpPost]
         public IActionResult AddNoteToDatabase(NoteBoardModel newNote)
         {

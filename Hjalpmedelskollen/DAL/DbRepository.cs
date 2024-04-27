@@ -75,5 +75,11 @@ namespace Hjalpmedelskollen.DAL
             _context.Aids.Remove(aid);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<AidModel?> GetAid(string aidId)
+        {
+            var aid = await _context.Aids.FirstOrDefaultAsync(a => a.Id == aidId);
+            return aid;
+        }
     }
 }
