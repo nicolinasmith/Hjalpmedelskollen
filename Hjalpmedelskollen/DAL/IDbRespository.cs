@@ -12,5 +12,7 @@ namespace Hjalpmedelskollen.DAL
         Task UpdateAid(AidModel aid);
         Task DeleteAid(AidModel aid);
         Task<AidModel> GetAid (string aidId);
+        Task AddNote(NoteBoardModel note);
+        Task DeleteNote(int noteId);
     }
 }

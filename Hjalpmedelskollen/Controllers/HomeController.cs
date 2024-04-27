@@ -144,7 +144,7 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAid(string aidId)
+        public async Task<IActionResult> GetAidFromDatabase(string aidId)
         {
             try
             {
@@ -158,24 +158,20 @@ namespace Hjalpmedelskollen.Controllers
             }
         }
 
-        /*
         [HttpPost]
-        public IActionResult AddNoteToDatabase(NoteBoardModel newNote)
+        public async Task<IActionResult> AddNoteToDatabase(NoteBoardModel newNote)
         {
-            newNote.Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.NoteBoards.Add(newNote);
-                    _context.SaveChanges();
+                    await _dbRepository.AddNote(newNote);
                     return RedirectToAction("Index", new { unitId = newNote.UnitId });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när en anteckning lades till i databasen.");
-                    return BadRequest("Ett fel inträffade när en anteckning lades till i databasen.");
+                    return BadRequest($"Ett fel inträffade när en anteckning lades till i databasen: {ex.Message}.");
                 }
             }
             else
@@ -185,26 +181,19 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteNoteFromDatabase(int noteId, int unitId)
+        public async Task<IActionResult> DeleteNoteFromDatabase(int noteId, int unitId)
         {
-            var note = _context.NoteBoards.FirstOrDefault(n => n.Id == noteId);
-            if (note == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                _context.NoteBoards.Remove(note);
-                _context.SaveChanges();
+                await _dbRepository.DeleteNote(noteId);
                 return RedirectToAction("Index", new { unitId = unitId });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
-                return BadRequest("Ett fel inträffade när en anteckning togs bort från databasen.");
+                return BadRequest($"Ett fel inträffade när en anteckning togs bort från databasen: {ex.Message}.");
             }
-        }*/
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

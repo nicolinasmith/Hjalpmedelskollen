@@ -317,7 +317,7 @@
 
             function onScanSuccess(decodeText, decodeResult) {
                 $.ajax({
-                    url: '/Home/GetAid',
+                    url: '/Home/GetAidFromDatabase',
                     method: 'GET',
                     data: {
                         aidId: decodeText

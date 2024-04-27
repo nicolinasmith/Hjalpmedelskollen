@@ -81,5 +81,19 @@ namespace Hjalpmedelskollen.DAL
             var aid = await _context.Aids.FirstOrDefaultAsync(a => a.Id == aidId);
             return aid;
         }
+
+        public async Task AddNote(NoteBoardModel note)
+        {
+            note.Date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+            _context.NoteBoards.Add(note);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteNote(int noteId)
+        {
+            var note = await _context.NoteBoards.FirstOrDefaultAsync(n => n.Id == noteId);
+            _context.NoteBoards.Remove(note);
+            await _context.SaveChangesAsync();
+        }
     }
 }
