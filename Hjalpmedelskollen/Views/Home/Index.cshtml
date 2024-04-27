@@ -44,6 +44,16 @@
                         <option value="Upptaget">Upptaget</option>
                     </select>
                 </div>
+                <div class="selection">
+                    <label for="patient">Patient:</label>
+                    <select id="select-patient" name="patient">
+                        <option value="Alla">Alla</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id">@patient.Name (@patient.Id)</option>
+                        }
+                    </select>
+                </div>
             </div>
             <div class="table-container">
                 <table class="table-style" id="aid-table">

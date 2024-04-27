@@ -14,5 +14,6 @@ namespace Hjalpmedelskollen.DAL
         Task<AidModel> GetAid (string aidId);
         Task AddNote(NoteBoardModel note);
         Task DeleteNote(int noteId);
+        Task<IEnumerable<PatientModel>> GetPatients(int unitId);
     }
 }
