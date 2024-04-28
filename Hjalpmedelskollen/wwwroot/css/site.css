@@ -343,7 +343,7 @@ button:hover {
 
 #update-aid-popup, #unit-popup, #add-aid-feedback, #add-aid-popup, 
 #new-category-popup, #confirm-popup, #qr-missing-popup, #qr-popup, #add-note-popup,
-#show-all-notes {
+#show-all-notes, #patients-popup, #update-patient-popup {
     display: none;
     position: fixed;
     z-index: 1;

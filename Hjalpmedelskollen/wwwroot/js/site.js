@@ -37,6 +37,14 @@
         unitPopup.style.display = 'none';
     });
 
+    /*AIDS BY UNIT - HANDLE PATIENTS*/
+    var displayPatients = document.getElementById('display-patients');
+    var patientPopup = document.getElementById('patients-popup');
+
+    displayPatients.addEventListener('click', function () {
+        patientPopup.style.display = 'block';
+    });
+
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
     document.getElementById('select-status').addEventListener('change', filterAids);
@@ -63,9 +71,9 @@
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
-    function sortTable(n) {
+    function sortTable(n, selectedTable) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById('aid-table');
+        table = document.getElementById(selectedTable);
         switching = true;
         dir = "asc";
         while (switching) {
@@ -100,16 +108,17 @@
         }
     }
 
-    function addSortEventToHeader() {
-        var headers = document.querySelectorAll('.table-header th');
-        headers.forEach(function (header, index) {
-            header.addEventListener('click', function () {
-                sortTable(index);
-            });
+    function addSortEventToHeader(tableId) {
+    var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
+    headers.forEach(function (header, index) {
+        header.addEventListener('click', function () {
+            sortTable(index, tableId);
         });
+    });
     }
 
-    addSortEventToHeader();
+    addSortEventToHeader('aid-table');
+    addSortEventToHeader('patient-table');
 
     /*AIDS BY UNIT - ADD AID*/
     var addAidPopup = document.getElementById('add-aid-popup');
