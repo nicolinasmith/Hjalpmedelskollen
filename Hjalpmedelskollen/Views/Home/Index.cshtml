@@ -45,12 +45,14 @@
                     </select>
                 </div>
                 <div class="selection">
-                    <label for="patient">Patient:</label>
-                    <select id="select-patient" name="patient">
+                    <label for="location">Plats:</label>
+                    <select id="select-location" name="location">
                         <option value="Alla">Alla</option>
+                        <option value="Förråd">Förråd</option>
+                        <option value="Avdelning">Avdelning</option>
                         @foreach (var patient in Model.Patients)
                         {
-                            <option value="@patient.Id">@patient.Id @patient.Name</option>
+                            <option value="@patient.Id @patient.Name">@patient.Id @patient.Name</option>
                         }
                     </select>
                 </div>
@@ -100,7 +102,7 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId" data-location="@aid.Location">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>

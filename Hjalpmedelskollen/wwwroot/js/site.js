@@ -75,26 +75,30 @@
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
     document.getElementById('select-status').addEventListener('change', filterAids);
+    document.getElementById('select-location').addEventListener('change', filterAids);
 
     function filterAids() {
         var selectedCategory = document.getElementById('select-category').value;
         var selectedStatus = document.getElementById('select-status').value;
+        var selectedLocation = document.getElementById('select-location').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
         aidRows.forEach(function (row) {
             var category = row.dataset.category;
             var status = row.dataset.status;
+            var location = row.dataset.location;
 
             var statusBool = status === 'True' ? 'Ledigt' : 'Upptaget';
 
             if ((selectedCategory === 'Alla' || category === selectedCategory) &&
-                (selectedStatus === 'Alla' || statusBool === selectedStatus)) {
+                (selectedStatus === 'Alla' || statusBool === selectedStatus) &&
+                (selectedLocation === 'Alla' || location === selectedLocation)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
             }
-        });
-    }
+            });
+        }
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
