@@ -339,6 +339,17 @@
         }
     }
 
+    function domReady(fn) {
+        if (
+            document.readyState === "complete" ||
+            document.readyState === "interactive"
+        ) {
+            setTimeout(fn, 1000);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }
+
     domReady(function () {
         var scanQrButton = document.getElementById('qr-button');
         var qrContainer = document.getElementById('qr-popup');
@@ -352,6 +363,7 @@
             qrContainer.style.display = 'block';
 
             function onScanSuccess(decodeText, decodeResult) {
+                console.log(decodeText)
                 $.ajax({
                     url: '/Home/GetAidFromDatabase',
                     method: 'GET',
@@ -360,11 +372,13 @@
                     },
                     success: function (response) {
                         if (response) {
+                            console.log(response)
                             displayQrAid(response);
                         }
                     },
                     error: function (xhr, status, error) {
                         if (xhr.status === 404) {
+                            console.log(xhr.responseText);
                             qrAidMissingPopup.style.display = 'block';
                             qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
                             document.getElementById('id').value = decodeText;
@@ -410,10 +424,10 @@
     });
 
     function displayQrAid(aid) {
- 
+        console.log(aid);
+
         document.getElementById('qr-popup').style.display = 'none';
         document.getElementById('update-aid-popup').style.display = 'block';
-        var cancelUpdate = document.getElementById('cancel-update-aid');
 
         var unitId = aid.unitId;
         var unitSelectElement = document.getElementById('update-aid-unit');
@@ -453,11 +467,8 @@
         document.getElementById('update-location').value = aid.location;
         document.getElementById('update-inspection').value = inspectionDate;
         document.getElementById('update-comment').value = aid.comment;
-
-        cancelUpdate.addEventListener('click', function () {
-            document.getElementById('update-aid-popup').style.display = 'none';
-        });
     }
+
     /*AIDS BY UNIT - NOTE BOARD*/
     var displayAddNote = document.getElementById('display-new-note-button');
     var addNotePopup = document.getElementById('add-note-popup');
