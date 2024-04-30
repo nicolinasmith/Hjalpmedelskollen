@@ -37,6 +37,41 @@
         unitPopup.style.display = 'none';
     });
 
+    /*AIDS BY UNIT - HANDLE PATIENTS*/
+    var displayPatients = document.getElementById('display-patients');
+    var patientPopup = document.getElementById('patients-popup');
+    var closePatientPopup = document.getElementById('close-patients-popup');
+    var patientRow = document.querySelectorAll('.patient-row');
+    var updatePatient = document.getElementById('update-patient-popup');
+    var cancelUpdatePatient = document.getElementById('cancel-update-patient');
+
+    displayPatients.addEventListener('click', function () {
+        patientPopup.style.display = 'block';
+    });
+
+    patientRow.forEach(function (row) {
+        row.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            var name = this.getAttribute('data-name');
+            document.getElementById('update-patient-id').value = id;
+            document.getElementById('update-patient-name').value = name;
+
+            updatePatient.style.display = 'block';
+        });
+    });
+
+    cancelUpdatePatient.addEventListener('click', function () {
+            updatePatient.style.display = 'none';
+    });
+
+    closePatientPopup.addEventListener('click', function () {
+        patientPopup.style.display = 'none';
+    });
+
+
+
+
+
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
     document.getElementById('select-status').addEventListener('change', filterAids);
@@ -63,9 +98,9 @@
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
-    function sortTable(n) {
+    function sortTable(n, selectedTable) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById('aid-table');
+        table = document.getElementById(selectedTable);
         switching = true;
         dir = "asc";
         while (switching) {
@@ -100,16 +135,17 @@
         }
     }
 
-    function addSortEventToHeader() {
-        var headers = document.querySelectorAll('.table-header th');
-        headers.forEach(function (header, index) {
-            header.addEventListener('click', function () {
-                sortTable(index);
-            });
+    function addSortEventToHeader(tableId) {
+    var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
+    headers.forEach(function (header, index) {
+        header.addEventListener('click', function () {
+            sortTable(index, tableId);
         });
+    });
     }
 
-    addSortEventToHeader();
+    addSortEventToHeader('aid-table');
+    addSortEventToHeader('patient-table');
 
     /*AIDS BY UNIT - ADD AID*/
     var addAidPopup = document.getElementById('add-aid-popup');
@@ -303,51 +339,74 @@
         }
     }
 
+    document.getElementById('cancel-qr-button').addEventListener('click', function () {
+        document.getElementById('qr-popup').style.display = 'none';
+    });
+
     domReady(function () {
-        var scanQrButton = document.getElementById('qr-button');
         var qrContainer = document.getElementById('qr-popup');
+        var scanQrButton = document.getElementById('qr-button');
         var cancelQrButton = document.getElementById('cancel-qr-button');
-        var qrAidMissingPopup = document.getElementById('qr-missing-popup');
-        var qrAidMissingText = document.getElementById('qr-missing-text');
-        var addQrAid = document.getElementById('add-qr-aid');
-        var cancelQrAid = document.getElementById('cancel-qr-aid');
+        var htmlScanner = null;
+
+        function onScanSuccess(decodeText, decodeResult) {
+            console.log(decodeText);
+            $.ajax({
+                url: '/Home/GetAidFromDatabase',
+                method: 'GET',
+                data: {
+                    aidId: decodeText
+                },
+                success: function (response) {
+                    if (response) {
+                        console.log(response);
+                        displayQrAid(response);
+                    } else {
+                        showMissingAidPopup(decodeText);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 404) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error(xhr.responseText);
+                        qrAidMissingPopup.style.display = 'block';
+                        qrAidMissingText.textContent = 'Något gick fel. Försök igen.';
+                        document.getElementById('add-qr-aid').style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        htmlScanner = new Html5QrcodeScanner(
+            "my-qr-reader",
+            { fps: 10, qrbos: 250 },
+            onScanSuccess 
+        );
 
         scanQrButton.addEventListener('click', function () {
             qrContainer.style.display = 'block';
-
-            function onScanSuccess(decodeText, decodeResult) {
-                $.ajax({
-                    url: '/Home/GetAidFromDatabase',
-                    method: 'GET',
-                    data: {
-                        aidId: decodeText
-                    },
-                    success: function (response) {
-                        displayQrAid(response);
-                        console.log(response);
-                    },
-                    error: function (xhr, status, error) {
-                        if (xhr.status === 404) {
-                            qrAidMissingPopup.style.display = 'block';
-                            qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
-                            document.getElementById('id').value = decodeText;
-                            document.getElementById('qr').value = true;
-                        } else {
-                            console.error(xhr.responseText);
-                            qrAidMissingPopup.style.display = 'block';
-                            qrAidMissingText.textContent = 'Något gick fel. Försök igen.';
-                            document.getElementById('add-qr-aid').style.display = 'none';
-                        }
-                    }
-                });
-            }
-
-            let htmlScanner = new Html5QrcodeScanner(
-                "my-qr-reader",
-                { fps: 10, qrbos: 250 }
-            );
             htmlScanner.render(onScanSuccess);
         });
+
+        cancelQrButton.addEventListener('click', function () {
+            qrContainer.style.display = 'none';
+            htmlScanner.stop();
+        });
+    });
+
+    function showMissingAidPopup(decodeText) {
+        var qrContainer = document.getElementById('qr-popup');
+        var addQrAid = document.getElementById('add-qr-aid');
+        var cancelQrAid = document.getElementById('cancel-qr-aid');
+
+        var qrAidMissingPopup = document.getElementById('qr-missing-popup');
+        var qrAidMissingText = document.getElementById('qr-missing-text');
+
+        qrAidMissingPopup.style.display = 'block';
+        qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
+        document.getElementById('id').value = decodeText;
+        document.getElementById('qr').value = true;
 
         cancelQrAid.addEventListener('click', function () {
             qrAidMissingPopup.style.display = 'none';
@@ -366,13 +425,12 @@
                 selectElement.value = unitId;
             }
         });
+    }
 
-        cancelQrButton.addEventListener('click', function () {
-            qrContainer.style.display = 'none';
-        });
-    });
 
     function displayQrAid(aid) {
+        console.log(aid);
+
         document.getElementById('qr-popup').style.display = 'none';
         document.getElementById('update-aid-popup').style.display = 'block';
 
@@ -387,7 +445,6 @@
         var selectElement = document.getElementById('update-category-list');
         var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
         if (categoryOption) {
-
             selectElement.value = category;
         }
 

@@ -14,6 +14,7 @@ namespace Hjalpmedelskollen.Data
         public DbSet<UnitModel> Units { get; set; }
         public DbSet<AidModel> Aids { get; set; }
         public DbSet<NoteBoardModel> NoteBoards { get; set; }
+        public DbSet<PatientModel> Patients { get; set; }
     }
 }
 

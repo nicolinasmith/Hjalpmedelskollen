@@ -35,6 +35,7 @@ namespace Hjalpmedelskollen.Controllers
             var selectedUnit = await _dbRepository.GetUnit(unitId);
             var units = await _dbRepository.GetUnits();
             var noteBoards = await _dbRepository.GetNotes(unitId);
+            var patients = await _dbRepository.GetPatients(unitId);
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -52,7 +53,8 @@ namespace Hjalpmedelskollen.Controllers
                 Aids = aidsByUnit,
                 Categories = categories,
                 Units = units,
-                NoteBoards = noteBoards
+                NoteBoards = noteBoards,
+                Patients = patients
             };
 
             return viewModel;

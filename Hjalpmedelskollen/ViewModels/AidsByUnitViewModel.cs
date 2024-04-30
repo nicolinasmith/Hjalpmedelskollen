@@ -10,6 +10,8 @@ namespace Hjalpmedelskollen.ViewModels
 
         public IEnumerable<UnitModel> Units { get; set; }
 
+        public IEnumerable<PatientModel> Patients { get; set; }
+
         public UnitModel SelectedUnit { get; set; }
 
         public List<NoteBoardModel> NoteBoards { get; set; }

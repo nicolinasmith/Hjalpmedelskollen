@@ -9,6 +9,7 @@
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
         <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
+        <li id="display-patients" class="small-li">Hantera patienter</li>
     </ul>
 </div>
 <div id="aids-by-unit">
@@ -41,6 +42,16 @@
                         <option value="Alla">Alla</option>
                         <option value="Ledigt">Ledigt</option>
                         <option value="Upptaget">Upptaget</option>
+                    </select>
+                </div>
+                <div class="selection">
+                    <label for="patient">Patient:</label>
+                    <select id="select-patient" name="patient">
+                        <option value="Alla">Alla</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id">@patient.Name (@patient.Id)</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -131,6 +142,122 @@
         </div>
     </aside>
 </div>
+
+<div id="patients-popup">
+    <div class="l-pop-up">
+        <h3>Patienter på @Model.SelectedUnit.Name</h3>
+            <table class="table-style" id="patient-table">
+                <tr class="table-header">
+					<th>Patientnummer</th>
+					<th>Namn</th>
+				</tr>
+				@foreach (var patient in Model.Patients)
+				{
+					<tr class="patient-row" data-id="@patient.Id" data-name="@patient.Name">
+						<td>@patient.Id</td>
+						<td>@patient.Name</td>
+					</tr>
+				}
+            </table>
+        <div class="popup-buttons">
+            <button id="add-patient-button">Lägg till patient</button>
+			<button id="close-patients-popup">Stäng</button>
+        </div>
+    </div>
+</div>
+
+<div id="update-patient-popup">
+<div class="pop-up">
+        <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form"></form>
+		<h3>Uppdatera patient</h3>
+		<div class="add-form">
+			<label for="update-patient-id">Patientnummer:</label>
+			<input type="text" id="update-patient-id" name="Id" required">
+		</div>
+		<div class="add-form">
+			<label for="update-patient-name">Namn:</label>
+			<input type="text" id="update-patient-name" name="Name" required>
+		</div>
+        <div class="add-form">
+            <b>Hjälpmedel:</b>
+			<div id="patient-aid">
+				@foreach (var aid in Model.Aids)
+				{
+					if(aid.PatientId == 1)
+                    {
+                        <p>@aid.Category: @aid.ProductName (@aid.Id)</p>
+                    }
+                }
+            </div>
+        </div>
+		<div class="popup-buttons">
+            <input type="hidden" name="formAction" id="formActionPatient" value="">
+            <button type="submit" id="update-patient-button">Spara</button>
+            <button type="submit" id="delete-patient-button">Ta bort</button>
+            <button type="button" id="cancel-update-patient">Avbryt</button>
+		</div>
+	</div>
+</div>
+
+
+<div id="patients-popup">
+    <div class="l-pop-up">
+        <h3>Patienter på @Model.SelectedUnit.Name</h3>
+            <table class="table-style" id="patient-table">
+                <tr class="table-header">
+					<th>Patientnummer</th>
+					<th>Namn</th>
+				</tr>
+				@foreach (var patient in Model.Patients)
+				{
+					<tr class="patient-row" data-id="@patient.Id" data-name="@patient.Name">
+						<td>@patient.Id</td>
+						<td>@patient.Name</td>
+					</tr>
+				}
+            </table>
+        <div class="popup-buttons">
+            <button id="add-patient-button">Lägg till patient</button>
+			<button id="close-patients-popup">Stäng</button>
+        </div>
+    </div>
+</div>
+
+<div id="update-patient-popup">
+<div class="pop-up">
+        <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form"></form>
+		<h3>Uppdatera patient</h3>
+		<div class="add-form">
+			<label for="update-patient-id">Patientnummer:</label>
+			<input type="text" id="update-patient-id" name="Id" required">
+		</div>
+		<div class="add-form">
+			<label for="update-patient-name">Namn:</label>
+			<input type="text" id="update-patient-name" name="Name" required>
+		</div>
+        <div class="add-form">
+            <b>Hjälpmedel:</b>
+            <div id="patient-aid">
+                @foreach (var aid in Model.Aids)
+                {
+                    if(aid.PatientId == 1)
+					{
+						<div>
+							<p>@aid.Category: @aid.ProductName (@aid.Id)</p>
+						</div>
+					}
+				}
+            </div>
+        </div>
+		<div class="popup-buttons">
+            <input type="hidden" name="formAction" id="formActionPatient" value="">
+            <button type="submit" id="update-patient-button">Spara</button>
+            <button type="submit" id="delete-patient-button">Ta bort</button>
+            <button type="button" id="cancel-update-patient">Avbryt</button>
+		</div>
+	</div>
+</div>
+
 
 <partial name="_AddAidPopup" model="Model" />
 <partial name ="_NotePopup" model = "Model" />

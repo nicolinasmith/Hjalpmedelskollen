@@ -95,5 +95,12 @@ namespace Hjalpmedelskollen.DAL
             _context.NoteBoards.Remove(note);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<PatientModel>> GetPatients(int unitId)
+        {
+            return await _context.Patients
+                .Where(p => p.UnitId == unitId)
+                .ToListAsync();
+        }
     }
 }
