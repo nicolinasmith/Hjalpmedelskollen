@@ -124,6 +124,10 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     margin-left: 10px;
 }
 
+label {
+    font-weight: bold;
+}
+
 #aids-overview {
     width: 75%;
     padding: 10px;
@@ -254,6 +258,7 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     font-size: 14px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
+    background-color: #ffffff;
 }
 
 .table-style th, .table-style td {
@@ -269,13 +274,9 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     cursor: pointer;
 }
 
-.aid-row:hover {
+.aid-row:hover, .patient-row:hover {
     cursor: pointer;
     background-color: #f2f2f2;
-}
-
-.patient-row:hover {
-    cursor: pointer;
 }
 
 .red-background {
@@ -484,6 +485,17 @@ video {
     margin-bottom: 10px;
     font-size: 18px;
 }
+
+@media only screen and (max-width: 1024px) {
+   
+    #unit-aside {
+        display: none;
+    }
+
+    #aids-overview {
+        width: 100%;
+    }
+} 
 
 @media only screen and (max-width: 768px) {
 

@@ -359,8 +359,9 @@
                         aidId: decodeText
                     },
                     success: function (response) {
-                        displayQrAid(response);
-                        console.log(response);
+                        if (response) {
+                            displayQrAid(response);
+                        }
                     },
                     error: function (xhr, status, error) {
                         if (xhr.status === 404) {
@@ -409,8 +410,10 @@
     });
 
     function displayQrAid(aid) {
+ 
         document.getElementById('qr-popup').style.display = 'none';
         document.getElementById('update-aid-popup').style.display = 'block';
+        var cancelUpdate = document.getElementById('cancel-update-aid');
 
         var unitId = aid.unitId;
         var unitSelectElement = document.getElementById('update-aid-unit');
@@ -423,7 +426,6 @@
         var selectElement = document.getElementById('update-category-list');
         var categoryOption = document.querySelector('#update-category-list option[value="' + category + '"]');
         if (categoryOption) {
-
             selectElement.value = category;
         }
 
@@ -451,8 +453,11 @@
         document.getElementById('update-location').value = aid.location;
         document.getElementById('update-inspection').value = inspectionDate;
         document.getElementById('update-comment').value = aid.comment;
-    }
 
+        cancelUpdate.addEventListener('click', function () {
+            document.getElementById('update-aid-popup').style.display = 'none';
+        });
+    }
     /*AIDS BY UNIT - NOTE BOARD*/
     var displayAddNote = document.getElementById('display-new-note-button');
     var addNotePopup = document.getElementById('add-note-popup');

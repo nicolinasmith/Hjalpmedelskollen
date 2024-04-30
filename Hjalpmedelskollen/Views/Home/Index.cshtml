@@ -170,14 +170,26 @@
 <div class="pop-up">
         <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form"></form>
 		<h3>Uppdatera patient</h3>
-		<div>
+		<div class="add-form">
 			<label for="update-patient-id">Patientnummer:</label>
 			<input type="text" id="update-patient-id" name="Id" required">
 		</div>
-		<div>
+		<div class="add-form">
 			<label for="update-patient-name">Namn:</label>
 			<input type="text" id="update-patient-name" name="Name" required>
 		</div>
+        <div class="add-form">
+            <b>Hjälpmedel:</b>
+			<div id="patient-aid">
+				@foreach (var aid in Model.Aids)
+				{
+					if(aid.PatientId == 1)
+                    {
+                        <p>@aid.Category: @aid.ProductName (@aid.Id)</p>
+                    }
+                }
+            </div>
+        </div>
 		<div class="popup-buttons">
             <input type="hidden" name="formAction" id="formActionPatient" value="">
             <button type="submit" id="update-patient-button">Spara</button>
