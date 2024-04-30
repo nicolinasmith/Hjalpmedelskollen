@@ -48,7 +48,7 @@
 							<option value="Avdelning">Avdelning</option>
 							@foreach (var patient in Model.Patients)
 							{
-								<option value="@patient.Id @patient.Name">@patient.Id @patient.Name</option>
+								<option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
 							}
 						</select>
 					</div>
