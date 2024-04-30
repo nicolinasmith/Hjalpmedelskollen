@@ -44,6 +44,12 @@
     var patientRow = document.querySelectorAll('.patient-row');
     var updatePatient = document.getElementById('update-patient-popup');
     var cancelUpdatePatient = document.getElementById('cancel-update-patient');
+    var addPatientPopup = document.getElementById('add-patient-popup');
+    var addPatientButton = document.getElementById('add-patient-button');
+
+    addPatientButton.addEventListener('click', function () {
+        addPatientPopup.style.display = 'block';
+    });
 
     displayPatients.addEventListener('click', function () {
         patientPopup.style.display = 'block';
@@ -53,6 +59,7 @@
         row.addEventListener('click', function () {
             var id = this.getAttribute('data-id');
             var name = this.getAttribute('data-name');
+            
             document.getElementById('update-patient-id').value = id;
             document.getElementById('update-patient-name').value = name;
 
@@ -67,9 +74,6 @@
     closePatientPopup.addEventListener('click', function () {
         patientPopup.style.display = 'none';
     });
-
-
-
 
 
     /*AIDS BY UNIT - FILTER*/

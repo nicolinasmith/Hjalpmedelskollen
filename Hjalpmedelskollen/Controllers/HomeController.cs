@@ -28,7 +28,6 @@ namespace Hjalpmedelskollen.Controllers
             return View(viewModel);
         }
 
-
         private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
         {
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
@@ -68,7 +67,7 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAidToDatabaseAsync(AidModel aid, int unitId)
+        public async Task<IActionResult> AddAidToDatabase(AidModel aid, int unitId)
         {
             if (ModelState.IsValid)
             {
@@ -201,6 +200,28 @@ namespace Hjalpmedelskollen.Controllers
             {
                 _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
                 return BadRequest($"Ett fel inträffade när en anteckning togs bort från databasen: {ex.Message}.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPatientToDatabase(PatientModel newPatient)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _dbRepository.AddPatient(newPatient);
+                    return RedirectToAction("Index", new { unitId = newPatient.UnitId });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när en patient lades till i databasen.");
+                    return BadRequest($"Ett fel inträffade när en patient lades till i databasen: {ex.Message}.");
+                }
+            }
+            else
+            {
+                return View("Index", newPatient);
             }
         }
 

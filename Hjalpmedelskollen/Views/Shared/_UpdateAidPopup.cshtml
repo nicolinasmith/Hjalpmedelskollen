@@ -1,5 +1,5 @@
 ﻿
-<div id="update-aid-popup">
+<div id="update-aid-popup" class="popup-container">
     <div class="l-pop-up" id="show-aid">
         <form method="post" action="/Home/UpdateAidToDatabase" id="update-aid-form">
             <h3>Uppdatera hjälpmedel</h3>
@@ -42,8 +42,15 @@
                 </div>
                 <div>
                     <div class="add-form">
-                        <label for="location">Plats:</label>
-                        <input type="text" id="update-location" name="Location">
+                        <label for="location">Plats eller patient: *</label>
+                        <select id="update-location" name="location">
+                            <option value="Förråd">Förråd</option>
+                            <option value="Avdelning">Avdelning</option>
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <option value="@patient.Id @patient.Name">@patient.Id @patient.Name</option>
+                            }
+                        </select>
                     </div>
                     <div class="add-form">
                         <label for="inspection">Nästa besiktning:</label>
@@ -77,7 +84,7 @@
 </div>
 
 
-<div id="confirm-popup">
+<div id="confirm-popup" class="popup-container">
     <div class="pop-up">
         <h3>Bekräfta</h3>
         <div>

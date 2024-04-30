@@ -1,9 +1,9 @@
 ﻿
-<div id="add-note-popup">
+<div id="add-note-popup" class="popup-container">
     <div class="pop-up">
         <form method="post" action="/Home/AddNoteToDatabase" id="add-note-form">
             <h3>Lägg till anteckning på Anslagstavlan</h3>
-            <div>
+            <div class="add-form">
                 <label for="Note"></label>
                 <input type="text" id="Note" name="Note" required>
                 <input type="hidden" id="UnitId" name="UnitId" value="@Model.SelectedUnit.Id" />
@@ -15,7 +15,7 @@
         </form>
     </div>
 </div>
-<div id="show-all-notes">
+<div id="show-all-notes" class="popup-container">
     <div class="pop-up">
         <form method="post" action="/Home/DeleteNoteFromDatabase" id="delete-note-form">
             <h3>Anslagstavlan</h3>
