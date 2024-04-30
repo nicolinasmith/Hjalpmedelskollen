@@ -225,6 +225,28 @@ namespace Hjalpmedelskollen.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _dbRepository.UpdatePatient(patient);
+                    return RedirectToAction("Index", new { unitId = patient.UnitId });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ett fel inträffade när en patient uppdaterades i databasen.");
+                    return BadRequest($"Ett fel inträffade när en patient uppdaterades i databasen: {ex.Message}.");
+                }
+            }
+            else
+            {
+                return View("Index", patient);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

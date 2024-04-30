@@ -11,6 +11,7 @@ namespace Hjalpmedelskollen.DAL
 
         Task<IEnumerable<PatientModel>> GetPatients(int unitId);
         Task AddPatient(PatientModel patient);
+        Task UpdatePatient(PatientModel patient);
 
         Task<AidModel> GetAid (string aidId);
         Task AddAid(AidModel aid, int? selectedMonth);

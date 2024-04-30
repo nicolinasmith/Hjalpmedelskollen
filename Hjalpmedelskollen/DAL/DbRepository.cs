@@ -110,5 +110,11 @@ namespace Hjalpmedelskollen.DAL
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdatePatient(PatientModel patient)
+        {
+            _context.Patients.Update(patient);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
