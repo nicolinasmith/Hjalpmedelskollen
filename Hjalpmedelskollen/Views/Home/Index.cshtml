@@ -52,7 +52,7 @@
                         <option value="Avdelning">Avdelning</option>
                         @foreach (var patient in Model.Patients)
                         {
-                            <option value="@patient.Id @patient.Name">@patient.Id @patient.Name</option>
+                            <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
                         }
                     </select>
                 </div>
@@ -155,8 +155,8 @@
 				</tr>
 				@foreach (var patient in Model.Patients)
 				{
-					<tr class="patient-row" data-id="@patient.Id" data-name="@patient.Name">
-						<td>@patient.Id</td>
+					<tr class="patient-row" data-patient-number="@patient.PatientNumber" data-name="@patient.Name">
+						<td>@patient.PatientNumber</td>
 						<td>@patient.Name</td>
 					</tr>
 				}
@@ -173,8 +173,8 @@
         <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form">
 		<h3>Uppdatera patient</h3>
 		<div class="add-form">
-			<label for="update-patient-id">Patientnummer:</label>
-			<input type="text" id="update-patient-id" name="Id" required>
+			<label for="update-patient-number">Patientnummer:</label>
+			<input type="text" id="update-patient-number" name="PatientNumber" required>
 		</div>
 		<div class="add-form">
 			<label for="update-patient-name">Namn:</label>
@@ -194,8 +194,8 @@
         <form method="post" action="/Home/AddPatientToDatabase" id="add-patient-form">
             <h3>Lägg till patient på @Model.SelectedUnit.Name</h3>
             <div class="add-form">
-				<label for="patient-id">Patientnummer:</label>
-				<input type="text" id="patient-id" name="Id" required>
+				<label for="patient-number">Patientnummer:</label>
+				<input type="text" id="patient-number" name="PatientNumber" required>
             </div>
             <div class="add-form">
                 <label for="patient-name">Namn:</label>

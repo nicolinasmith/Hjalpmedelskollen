@@ -62,10 +62,10 @@
 
     patientRow.forEach(function (row) {
         row.addEventListener('click', function () {
-            var id = this.getAttribute('data-id');
+            var patientNumber = this.getAttribute('data-patient-number');
             var name = this.getAttribute('data-name');
             
-            document.getElementById('update-patient-id').value = id;
+            document.getElementById('update-patient-number').value = patientNumber;
             document.getElementById('update-patient-name').value = name;
 
             updatePatient.style.display = 'block';
