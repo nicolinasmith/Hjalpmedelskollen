@@ -100,7 +100,21 @@ namespace Hjalpmedelskollen.DAL
         {
             return await _context.Patients
                 .Where(p => p.UnitId == unitId)
+                .OrderBy(p => p.Id)
                 .ToListAsync();
         }
+
+        public async Task AddPatient (PatientModel patient)
+        {
+            _context.Patients.Add(patient);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdatePatient(PatientModel patient)
+        {
+            _context.Patients.Update(patient);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

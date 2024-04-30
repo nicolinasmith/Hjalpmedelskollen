@@ -44,6 +44,17 @@
     var patientRow = document.querySelectorAll('.patient-row');
     var updatePatient = document.getElementById('update-patient-popup');
     var cancelUpdatePatient = document.getElementById('cancel-update-patient');
+    var addPatientPopup = document.getElementById('add-patient-popup');
+    var addPatientButton = document.getElementById('add-patient-button');
+    var cancelAddPatient = document.getElementById('cancel-add-patient');
+
+    cancelAddPatient.addEventListener('click', function () {
+        addPatientPopup.style.display = 'none';
+    });
+
+    addPatientButton.addEventListener('click', function () {
+        addPatientPopup.style.display = 'block';
+    });
 
     displayPatients.addEventListener('click', function () {
         patientPopup.style.display = 'block';
@@ -53,6 +64,7 @@
         row.addEventListener('click', function () {
             var id = this.getAttribute('data-id');
             var name = this.getAttribute('data-name');
+            
             document.getElementById('update-patient-id').value = id;
             document.getElementById('update-patient-name').value = name;
 
@@ -69,32 +81,33 @@
     });
 
 
-
-
-
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
     document.getElementById('select-status').addEventListener('change', filterAids);
+    document.getElementById('select-location').addEventListener('change', filterAids);
 
     function filterAids() {
         var selectedCategory = document.getElementById('select-category').value;
         var selectedStatus = document.getElementById('select-status').value;
+        var selectedLocation = document.getElementById('select-location').value;
         var aidRows = document.querySelectorAll('.aid-row');
 
         aidRows.forEach(function (row) {
             var category = row.dataset.category;
             var status = row.dataset.status;
+            var location = row.dataset.location;
 
             var statusBool = status === 'True' ? 'Ledigt' : 'Upptaget';
 
             if ((selectedCategory === 'Alla' || category === selectedCategory) &&
-                (selectedStatus === 'Alla' || statusBool === selectedStatus)) {
+                (selectedStatus === 'Alla' || statusBool === selectedStatus) &&
+                (selectedLocation === 'Alla' || location === selectedLocation)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
             }
-        });
-    }
+            });
+        }
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
@@ -153,7 +166,6 @@
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
-    //var addAidFeedback = document.getElementById('add-aid-feedback');
 
     function handleAddAidClick() {
         addAidPopup.style.display = 'block';
@@ -426,7 +438,6 @@
             }
         });
     }
-
 
     function displayQrAid(aid) {
         console.log(aid);
