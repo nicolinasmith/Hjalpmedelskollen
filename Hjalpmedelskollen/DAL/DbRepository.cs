@@ -100,6 +100,7 @@ namespace Hjalpmedelskollen.DAL
         {
             return await _context.Patients
                 .Where(p => p.UnitId == unitId)
+                .OrderBy(p => p.Id)
                 .ToListAsync();
         }
     }

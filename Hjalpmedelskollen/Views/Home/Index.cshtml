@@ -50,7 +50,7 @@
                         <option value="Alla">Alla</option>
                         @foreach (var patient in Model.Patients)
                         {
-                            <option value="@patient.Id">@patient.Name (@patient.Id)</option>
+                            <option value="@patient.Id">@patient.Id @patient.Name</option>
                         }
                     </select>
                 </div>

@@ -42,8 +42,15 @@
 				</div>
 				<div>
 					<div class="add-form">
-						<label for="location">Plats:</label>
-						<input type="text" id="location" name="location">
+						<label for="location">Plats eller patient:</label>
+						<select id="location-list" name="location">
+							<option value="Förråd">Förråd</option>
+							<option value="Avdelning">Avdelning</option>
+							@foreach (var patient in Model.Patients)
+							{
+								<option value="@patient.Id">@patient.Id @patient.Name</option>
+							}
+						</select>
 					</div>
 					<div class="add-form">
 						<label for="inspection">Nästa besiktning:</label>
