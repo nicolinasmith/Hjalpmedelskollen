@@ -46,6 +46,11 @@
     var cancelUpdatePatient = document.getElementById('cancel-update-patient');
     var addPatientPopup = document.getElementById('add-patient-popup');
     var addPatientButton = document.getElementById('add-patient-button');
+    var cancelAddPatient = document.getElementById('cancel-add-patient');
+
+    cancelAddPatient.addEventListener('click', function () {
+        addPatientPopup.style.display = 'none';
+    });
 
     addPatientButton.addEventListener('click', function () {
         addPatientPopup.style.display = 'block';
@@ -161,7 +166,6 @@
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
-    //var addAidFeedback = document.getElementById('add-aid-feedback');
 
     function handleAddAidClick() {
         addAidPopup.style.display = 'block';
@@ -434,7 +438,6 @@
             }
         });
     }
-
 
     function displayQrAid(aid) {
         console.log(aid);
