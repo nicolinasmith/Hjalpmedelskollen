@@ -18,9 +18,10 @@ namespace Hjalpmedelskollen.DAL
         {
             var aids = await _context.Aids
                 .Where(a => a.UnitId == unitId)
+                .OrderByDescending(a => a.Registered)
                 .ToListAsync();
 
-            return aids.OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase);
+            return aids;
         }
 
         public Task<UnitModel> GetUnit(int unitId)
