@@ -33,7 +33,7 @@ namespace Hjalpmedelskollen.Models
         public SectionModel Section { get; set; }
 
         [ForeignKey("PatientId")]
-        public PatientModel Patient { get; set; }
+        public PatientModel? Patient { get; set; }
 
     }
 }

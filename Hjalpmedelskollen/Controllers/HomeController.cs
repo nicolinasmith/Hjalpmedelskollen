@@ -176,7 +176,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddNote(newNote);
-                    return RedirectToAction("Index", new { unitId = newNote.UnitId });
+                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
                 }
                 catch (Exception ex)
                 {
