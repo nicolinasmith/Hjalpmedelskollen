@@ -15,7 +15,7 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(50)]
         public string? Address { get; set; }
 
-        [ForeignKey ("InstitutionModel")]
-        public int InstitutionId { get; set; }
+        [ForeignKey ("InstitutionId")]
+        public InstitutionModel Institution { get; set; }
     }
 }

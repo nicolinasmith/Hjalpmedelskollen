@@ -17,7 +17,7 @@ namespace Hjalpmedelskollen.DAL
         public async Task<IEnumerable<AidModel>> GetAidsByUnit(int? unitId)
         {
             var aids = await _context.Aids
-                .Where(a => a.UnitId == unitId)
+                .Where(a => a.Section.UnitId == unitId)
                 .OrderByDescending(a => a.Registered)
                 .ToListAsync();
 
@@ -100,7 +100,7 @@ namespace Hjalpmedelskollen.DAL
         public async Task<IEnumerable<PatientModel>> GetPatients(int unitId)
         {
             return await _context.Patients
-                .Where(p => p.UnitId == unitId)
+                .Where(p => p.Section.UnitId == unitId)
                 .OrderBy(p => p.Id)
                 .ToListAsync();
         }

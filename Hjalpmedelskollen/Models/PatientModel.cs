@@ -14,7 +14,7 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [ForeignKey ("UnitModel")]
-        public int UnitId { get; set; }
+        [ForeignKey ("SectionId")]
+        public SectionModel Section { get; set; }
     }
 }

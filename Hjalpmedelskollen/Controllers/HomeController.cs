@@ -14,6 +14,7 @@ namespace Hjalpmedelskollen.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDbRepository _dbRepository;
+        private UnitModel _selectedUnit;
 
         public HomeController(ILogger<HomeController> logger, IDbRepository dbRepository)
         {
@@ -24,6 +25,7 @@ namespace Hjalpmedelskollen.Controllers
         public async Task<IActionResult> Index(int? unitId)
         {
             int defaultUnitId = unitId ?? 1;
+            _selectedUnit = await _dbRepository.GetUnit(defaultUnitId);
             var viewModel = await GetAidsByUnitViewModel(defaultUnitId);
             return View(viewModel);
         }
@@ -31,7 +33,7 @@ namespace Hjalpmedelskollen.Controllers
         private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
         {
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
-            var selectedUnit = await _dbRepository.GetUnit(unitId);
+            var selectedUnit = _selectedUnit;
             var units = await _dbRepository.GetUnits();
             var noteBoards = await _dbRepository.GetNotes(unitId);
             var patients = await _dbRepository.GetPatients(unitId);
@@ -77,7 +79,7 @@ namespace Hjalpmedelskollen.Controllers
                     {
                         string[] parts = aid.Location.Split(' ');
                         int patientNumber = int.Parse(parts[0]);
-                        aid.PatientId = patientNumber;
+                        aid.Patient.Id = patientNumber;
                     }
 
                     string inspection = Request.Form["Inspection"].ToString();
@@ -119,7 +121,7 @@ namespace Hjalpmedelskollen.Controllers
                     try
                     {
                         await _dbRepository.UpdateAid(aid);
-                        return RedirectToAction("Index", new { unitId = aid.UnitId });
+                        return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
                     }
                     catch (Exception ex)
                     {
@@ -137,7 +139,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.DeleteAid(aid);
-                    return RedirectToAction("Index", new { unitId = aid.UnitId });
+                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
                 }
                 catch (Exception ex)
                 {
@@ -211,7 +213,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddPatient(newPatient);
-                    return RedirectToAction("Index", new { unitId = newPatient.UnitId });
+                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
                 }
                 catch (Exception ex)
                 {
@@ -233,7 +235,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.UpdatePatient(patient);
-                    return RedirectToAction("Index", new { unitId = patient.UnitId });
+                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
                 }
                 catch (Exception ex)
                 {
