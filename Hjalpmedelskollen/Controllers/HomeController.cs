@@ -32,11 +32,12 @@ namespace Hjalpmedelskollen.Controllers
 
         private async Task<AidsByUnitViewModel> GetAidsByUnitViewModel(int unitId)
         {
-            var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
             var selectedUnit = _selectedUnit;
             var units = await _dbRepository.GetUnits();
             var noteBoards = await _dbRepository.GetNotes(unitId);
-            var patients = await _dbRepository.GetPatients(unitId);
+            var sections = await _dbRepository.GetSections(unitId);
+            var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
+            //var patients = await _dbRepository.GetPatients(unitId);
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -55,7 +56,8 @@ namespace Hjalpmedelskollen.Controllers
                 Categories = categories,
                 Units = units,
                 NoteBoards = noteBoards,
-                Patients = patients
+                Sections = sections,
+                Patients = new List<PatientModel>()
             };
 
             return viewModel;

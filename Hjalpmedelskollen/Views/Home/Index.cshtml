@@ -26,10 +26,10 @@
             <h2>Hjälpmedelsöversikt</h2>
             <div id="section-buttons">
                 <button>Alla</button>
-                <button>Avdelning x</button>
-                <button>Avdelning y</button>
-                <button>Avdelning z</button>
-                <button>Förråd</button>
+                @foreach (var unitSection in Model.Sections)
+				{
+					<button data-section-id="@unitSection.Id">@unitSection.Name</button>
+				}
             </div>
             <div class="filter-selections">
                 <div class="selection">
@@ -56,6 +56,7 @@
                         <option value="Alla">Alla</option>
                         <option value="Förråd">Förråd</option>
                         <option value="Avdelning">Avdelning</option>
+                        
                         @foreach (var patient in Model.Patients)
                         {
                             <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>

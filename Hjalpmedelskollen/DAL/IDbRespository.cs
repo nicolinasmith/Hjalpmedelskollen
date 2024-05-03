@@ -8,6 +8,7 @@ namespace Hjalpmedelskollen.DAL
 
         Task<IEnumerable<UnitModel>> GetUnits();
         Task<UnitModel> GetUnit(int unitId);
+        Task<IEnumerable<SectionModel>> GetSections(int unitId);
 
         Task<IEnumerable<PatientModel>> GetPatients(int unitId);
         Task AddPatient(PatientModel patient);
