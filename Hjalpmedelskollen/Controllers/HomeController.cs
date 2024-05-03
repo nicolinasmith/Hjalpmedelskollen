@@ -79,7 +79,7 @@ namespace Hjalpmedelskollen.Controllers
                     {
                         string[] parts = aid.Location.Split(' ');
                         int patientNumber = int.Parse(parts[0]);
-                        aid.Patient.Id = patientNumber;
+                        //aid.Patient.SectionId = patientNumber;
                     }
 
                     string inspection = Request.Form["Inspection"].ToString();
