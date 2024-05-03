@@ -12,9 +12,10 @@ namespace Hjalpmedelskollen.Data
 
         public DbSet<InstitutionModel> Institutions { get; set; }
         public DbSet<UnitModel> Units { get; set; }
+        public DbSet<SectionModel> Sections { get; set; }
         public DbSet<AidModel> Aids { get; set; }
-        public DbSet<NoteBoardModel> NoteBoards { get; set; }
         public DbSet<PatientModel> Patients { get; set; }
+        public DbSet<NoteBoardModel> NoteBoards { get; set; }
     }
 }
 

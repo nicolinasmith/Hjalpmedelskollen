@@ -29,8 +29,8 @@ namespace Hjalpmedelskollen.Models
 
         public bool QrCode { get; set; }
 
-        [ForeignKey("UnitModel")]
-        public int UnitId { get; set; }
+        [ForeignKey("SectionModel")]
+        public int SectionId { get; set; }
 
         [ForeignKey("PatientModel")]
         public int? PatientId { get; set; }
