@@ -10,7 +10,6 @@ namespace Hjalpmedelskollen.DAL
         Task<UnitModel> GetUnit(int unitId);
         Task<IEnumerable<SectionModel>> GetSections(int unitId);
 
-        Task<IEnumerable<PatientModel>> GetPatients(int unitId);
         Task AddPatient(PatientModel patient);
         Task UpdatePatient(PatientModel patient);
 
@@ -22,5 +21,6 @@ namespace Hjalpmedelskollen.DAL
         Task<List<NoteBoardModel>> GetNotes(int unitId);
         Task AddNote(NoteBoardModel note);
         Task DeleteNote(int noteId);
+        Task<IEnumerable<PatientModel>> GetPatients(List<int> sectionIds);
     }
 }

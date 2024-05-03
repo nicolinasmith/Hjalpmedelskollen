@@ -36,8 +36,11 @@ namespace Hjalpmedelskollen.Controllers
             var units = await _dbRepository.GetUnits();
             var noteBoards = await _dbRepository.GetNotes(unitId);
             var sections = await _dbRepository.GetSections(unitId);
+
+            var sectionIds = sections.Select(s => s.Id).ToList();
+
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
-            //var patients = await _dbRepository.GetPatients(unitId);
+            var patients = await _dbRepository.GetPatients(sectionIds);
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -57,7 +60,7 @@ namespace Hjalpmedelskollen.Controllers
                 Units = units,
                 NoteBoards = noteBoards,
                 Sections = sections,
-                Patients = new List<PatientModel>()
+                Patients = patients
             };
 
             return viewModel;

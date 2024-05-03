@@ -64,7 +64,12 @@
         row.addEventListener('click', function () {
             var patientNumber = this.getAttribute('data-patient-number');
             var name = this.getAttribute('data-name');
-            
+            var section = this.getAttribute('data-section');
+            var sectionOption = document.querySelector('#update-patient-section option[value="' + section + '"]');
+            if (sectionOption) {
+                document.getElementById('update-patient-section').value = section;
+            }
+
             document.getElementById('update-patient-number').value = patientNumber;
             document.getElementById('update-patient-name').value = name;
 

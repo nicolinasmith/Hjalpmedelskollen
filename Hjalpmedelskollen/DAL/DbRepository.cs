@@ -2,6 +2,7 @@
 using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Hjalpmedelskollen.DAL
@@ -98,10 +99,13 @@ namespace Hjalpmedelskollen.DAL
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PatientModel>> GetPatients(int unitId)
+        public async Task<IEnumerable<PatientModel>> GetPatients(List<int> sectionIds)
         {
-            return null;
+            var patients = await _context.Patients
+                .Where(p => sectionIds.Contains(p.SectionId))
+                .ToListAsync();
 
+            return patients;
         }
 
         public async Task AddPatient (PatientModel patient)

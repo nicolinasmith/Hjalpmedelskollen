@@ -7,7 +7,7 @@ namespace Hjalpmedelskollen.Models
     public class PatientModel
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public int PatientNumber { get; set; }
 
