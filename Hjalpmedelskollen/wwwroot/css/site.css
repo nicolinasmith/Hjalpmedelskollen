@@ -100,8 +100,8 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     width: 100px;
     height: 30px;
     border-radius: 0px;
-    background-color: #eaebed;
-    color: #000000;
+    background-color: #454a4f;
+    color: #ffffff;
 }
 
 .small-nav ul {
@@ -127,6 +127,11 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     margin-top: 15px;
     margin-bottom: 80px;
     width: 100%;
+}
+
+.filter-design {
+    background-color: #eaebed;
+    padding: 10px;
 }
 
 #aids-by-unit label {

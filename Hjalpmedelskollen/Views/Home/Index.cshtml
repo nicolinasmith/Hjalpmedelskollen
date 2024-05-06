@@ -24,44 +24,46 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
-            <div id="section-buttons">
-                <button>Alla</button>
-                @foreach (var unitSection in Model.Sections)
-				{
-					<button data-section-id="@unitSection.Id">@unitSection.Name</button>
-				}
-            </div>
-            <div class="filter-selections">
-                <div class="selection">
-                    <label for="category">Kategori:</label>
-                    <select id="select-category" name="category">
-                        <option value="Alla">Alla</option>
-                        @foreach (var category in Model.Categories)
-                        {
-                            <option value="@category.Name">@category.Name</option>
-                        }
-                    </select>
+            <div class="filter-design">
+                <div id="section-buttons">
+                    <button>Alla</button>
+                    @foreach (var unitSection in Model.Sections)
+				    {
+					    <button data-section-id="@unitSection.Id">@unitSection.Name</button>
+				    }
                 </div>
-                <div class="selection">
-                    <label for="status">Status:</label>
-                    <select id="select-status" name="status">
-                        <option value="Alla">Alla</option>
-                        <option value="Ledigt">Ledigt</option>
-                        <option value="Upptaget">Upptaget</option>
-                    </select>
-                </div>
-                <div class="selection">
-                    <label for="location">Plats / patient:</label>
-                    <select id="select-location" name="location">
-                        <option value="Alla">Alla</option>
-                        <option value="Förråd">Förråd</option>
-                        <option value="Avdelning">Avdelning</option>
+                <div class="filter-selections">
+                    <div class="selection">
+                        <label for="category">Kategori:</label>
+                        <select id="select-category" name="category">
+                            <option value="Alla">Alla</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="selection">
+                        <label for="status">Status:</label>
+                        <select id="select-status" name="status">
+                            <option value="Alla">Alla</option>
+                            <option value="Ledigt">Ledigt</option>
+                            <option value="Upptaget">Upptaget</option>
+                        </select>
+                    </div>
+                    <div class="selection">
+                        <label for="location">Plats / patient:</label>
+                        <select id="select-location" name="location">
+                            <option value="Alla">Alla</option>
+                            <option value="Förråd">Förråd</option>
+                            <option value="Avdelning">Avdelning</option>
                         
-                        @foreach (var patient in Model.Patients)
-                        {
-                            <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
-                        }
-                    </select>
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
+                            }
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="table-container">
