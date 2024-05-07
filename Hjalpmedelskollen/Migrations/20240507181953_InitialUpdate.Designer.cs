@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hjalpmedelskollen.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240503133910_Initial")]
-    partial class Initial
+    [Migration("20240507181953_InitialUpdate")]
+    partial class InitialUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,20 +42,13 @@ namespace Hjalpmedelskollen.Migrations
                     b.Property<DateTime?>("Inspection")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Location")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("PatientId")
-                        .HasColumnType("text");
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<bool>("QrCode")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("Registered")
                         .HasColumnType("timestamp with time zone");
@@ -121,8 +114,11 @@ namespace Hjalpmedelskollen.Migrations
 
             modelBuilder.Entity("Hjalpmedelskollen.Models.PatientModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -136,8 +132,6 @@ namespace Hjalpmedelskollen.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SectionId");
 
                     b.ToTable("Patients");
                 });
@@ -218,17 +212,6 @@ namespace Hjalpmedelskollen.Migrations
                         .IsRequired();
 
                     b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Hjalpmedelskollen.Models.PatientModel", b =>
-                {
-                    b.HasOne("Hjalpmedelskollen.Models.SectionModel", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Section");
                 });
 
             modelBuilder.Entity("Hjalpmedelskollen.Models.SectionModel", b =>
