@@ -15,6 +15,7 @@ namespace Hjalpmedelskollen.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDbRepository _dbRepository;
         private UnitModel _selectedUnit;
+        private SectionModel _selectedSection;
 
         public HomeController(ILogger<HomeController> logger, IDbRepository dbRepository)
         {
@@ -74,7 +75,7 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAidToDatabase(AidModel aid, int unitId)
+        public async Task<IActionResult> AddAidToDatabase(AidModel aid)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +103,7 @@ namespace Hjalpmedelskollen.Controllers
                     }
 
                     await _dbRepository.AddAid(aid, selectedMonth);
-                    return RedirectToAction("Index", new { unitId });
+                    return RedirectToAction("Index", new { _selectedUnit });
                 }
                 catch (Exception ex)
                 {

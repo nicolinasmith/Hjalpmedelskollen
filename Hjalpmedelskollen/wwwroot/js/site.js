@@ -111,8 +111,8 @@
             } else {
                 row.style.display = 'none';
             }
-            });
-        }
+        });
+    }
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/

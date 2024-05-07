@@ -99,7 +99,7 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     padding: 2px;
     width: 100px;
     height: 30px;
-    border-radius: 0px;
+    border-radius: 5px;
     background-color: #454a4f;
     color: #ffffff;
 }
@@ -129,7 +129,7 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     width: 100%;
 }
 
-.filter-design {
+.selection-background {
     background-color: #eaebed;
     padding: 10px;
 }
