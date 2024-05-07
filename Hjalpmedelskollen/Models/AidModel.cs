@@ -15,8 +15,6 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(50)]
         public string ProductName { get; set; }
 
-        public bool Status { get; set; }
-
         public DateTime? Inspection { get; set; }
 
         [MaxLength(80)]
