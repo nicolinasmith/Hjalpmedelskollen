@@ -28,9 +28,9 @@
                 <div id="section-buttons">
                     <button data-section-id="all">Alla</button>
                     @foreach (var unitSection in Model.Sections)
-				    {
-                        <a href="@Url.Action("", "HomeController", new { sectionId = unitSection.Id })">@unitSection.Name</a>
-				    }
+                    {
+					    <button data-section-id="@unitSection.Id">@unitSection.Name</button>
+                    }
                 </div>
                 <div class="filter-selections">
                     <div class="selection">

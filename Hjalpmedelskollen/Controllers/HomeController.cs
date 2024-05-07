@@ -78,7 +78,6 @@ namespace Hjalpmedelskollen.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAidToDatabase(AidModel aid)
         {
-
             if (ModelState.IsValid)
             {
                 try

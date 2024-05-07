@@ -23,13 +23,6 @@
 						<label for="product-name">Produktnamn: *</label>
 						<input type="text" id="product-name" name="productName" required>
 					</div>
-					<div class="add-form">
-						<label for="status">Status: *</label>
-						<select id="status" name="status">
-							<option value="true">Ledigt</option>
-							<option value="false">Upptaget</option>
-						</select>
-					</div>
 				</div>
 				<div>
 					<div class="add-form">
@@ -42,9 +35,9 @@
 						</select>
 					</div>
 					<div class="add-form">
-						<label for="patientId">Patient:</label>
+						<label for="patientId">Koppla till patient:</label>
 						<select id="patient-list" name="patientId">
-							<option value="Null"> </option>
+							<option value="">-</option>
 							@foreach (var patient in Model.Patients)
 							{
 								<option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
