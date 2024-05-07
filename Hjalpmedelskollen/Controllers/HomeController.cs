@@ -70,6 +70,7 @@ namespace Hjalpmedelskollen.Controllers
         [HttpPost]
         public async Task<IActionResult> DisplayAidsByUnit(int unitId)
         {
+            _selectedUnit = await _dbRepository.GetUnit(unitId);
             var viewModel = await GetAidsByUnitViewModel(unitId);
             return View("Index", viewModel);
         }
@@ -82,15 +83,6 @@ namespace Hjalpmedelskollen.Controllers
             {
                 try
                 {
-
-                    /*
-                    if (aid.Location != "Förråd" && aid.Location != "Avdelning")
-                    {
-                        string[] parts = aid.Location.Split(' ');
-                        int patientNumber = int.Parse(parts[0]);
-                        //aid.Patient.SectionId = patientNumber;
-                    }*/
-
                     string inspection = Request.Form["Inspection"].ToString();
                     int? selectedMonth = null;
 
@@ -123,6 +115,8 @@ namespace Hjalpmedelskollen.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction)
         {
+            if (ModelState.IsValid) { 
+
             if (formAction == "update")
             {
                 if (ModelState.IsValid)
@@ -159,6 +153,11 @@ namespace Hjalpmedelskollen.Controllers
             else
             {
                 return BadRequest("Ett fel inträffade.");
+            }
+        }
+            else
+            {
+                return View("Index", aid);
             }
         }
 

@@ -42,12 +42,12 @@
 						</select>
 					</div>
 					<div class="add-form">
-						<label for="patient">Patient:</label>
-						<select id="patient-list" name="patient">
+						<label for="patientId">Patient:</label>
+						<select id="patient-list" name="patientId">
 							<option value="Null"> </option>
 							@foreach (var patient in Model.Patients)
 							{
-								<option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
+								<option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
 							}
 						</select>
 					</div>

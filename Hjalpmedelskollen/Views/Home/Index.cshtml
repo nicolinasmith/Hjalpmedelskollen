@@ -72,7 +72,6 @@
                         <th title="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
                         <th title="Samlingskategorin som hjälpmedlet tillhör (exempelvis rollator, rullstol)">Kategori</th>
                         <th title="Produktnamn för hjälpmedlet (exempelvis Futura 600, Cross)">Produktnamn</th>
-                        <th title="Om hjälpmedlet är ledigt eller upptaget">Status</th>
                         <th title="Plats där hjälpmedlet finns på enheten">Plats</th>
                         <th title="Tidpunkt för hjälpmedel behöver besiktigas nästa gång">Nästa besiktning</th>
                         <th title="Övrig kommentar om hjälpmedlet">Kommentar</th>
@@ -81,8 +80,6 @@
 				    {
                         string backgroundColor = "";
                         string inspectionDate = string.Empty;
-                        string status = aid.Status == true ? "Ledigt" : "Upptaget";
-                        string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
 
                         if (aid.Inspection.HasValue)
@@ -111,14 +108,20 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
-                            <td class="m-column @statusBackgroundColor">@status</td>
-						    <td class="m-column">@aid.Section.Name 
+						    <td class="l-column">
                                 @if (aid.Patient != null)
-                                { @aid.Patient.Name }
+                                {
+                                    <i class="fa-solid fa-circle red-circle"></i> @aid.Patient.Name @:| @aid.Section.Name
+                                }
+                                else
+								{
+                                    <i class="fa-solid fa-circle green-circle"></i> @aid.Section.Name
+								}
+                              
                             </td>
                             <td class="@backgroundColor s-column">
                                 <div class="inspection-layout">

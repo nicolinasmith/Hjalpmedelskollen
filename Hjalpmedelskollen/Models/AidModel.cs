@@ -20,7 +20,7 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(80)]
         public string? Comment { get; set; }
 
-        public DateTime Registered { get; set; }
+        public DateTime Registered { get; set; } 
 
         [ForeignKey("SectionId")]
         public int SectionId { get; set; }
