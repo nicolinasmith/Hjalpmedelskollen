@@ -81,12 +81,13 @@ namespace Hjalpmedelskollen.Controllers
             {
                 try
                 {
+                    /*
                     if (aid.Location != "Förråd" && aid.Location != "Avdelning")
                     {
                         string[] parts = aid.Location.Split(' ');
                         int patientNumber = int.Parse(parts[0]);
                         //aid.Patient.SectionId = patientNumber;
-                    }
+                    }*/
 
                     string inspection = Request.Form["Inspection"].ToString();
                     int? selectedMonth = null;

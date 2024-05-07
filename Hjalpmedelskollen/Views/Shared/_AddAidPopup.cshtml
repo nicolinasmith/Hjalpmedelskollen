@@ -6,11 +6,11 @@
 			<div class="add-aid-row">
 				<div>
 					<div class="add-form">
-						<label for="unit">Enhet: *</label>
-						<select id="unit-list" name="unitId">
-							@foreach (var unit in Model.Units)
+						<label for="section">Avdelning: *</label>
+						<select id="section-list" name="sectionId">
+							@foreach (var s in Model.Sections)
 							{
-								<option value="@unit.Id">@unit.Name</option>
+								<option value="@s.Id">@s.Name</option>
 							}
 						</select>
 					</div>
@@ -59,13 +59,6 @@
 					<div class="add-form">
 						<label for="comment">Övrigt:</label>
 						<input id="comment" name="comment">
-					</div>
-					<div class="add-form">
-						<label for="qr">QR-kod: *</label>
-						<select id="qr" name="qr">
-							<option value="false">Nej</option>
-							<option value="true">Ja</option>
-						</select>
 					</div>
 				</div>
 			</div>

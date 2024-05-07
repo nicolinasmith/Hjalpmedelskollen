@@ -17,17 +17,12 @@ namespace Hjalpmedelskollen.Models
 
         public bool Status { get; set; }
 
-        [MaxLength(50)]
-        public string? Location { get; set; }
-
         public DateTime? Inspection { get; set; }
 
         [MaxLength(80)]
         public string? Comment { get; set; }
 
         public DateTime Registered { get; set; }
-
-        public bool QrCode { get; set; }
 
         [ForeignKey("SectionId")]
         public SectionModel Section { get; set; }

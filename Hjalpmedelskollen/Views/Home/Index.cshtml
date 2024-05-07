@@ -111,12 +111,12 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id" data-location="@aid.Location">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
                             <td class="m-column @statusBackgroundColor">@status</td>
-						    <td class="m-column">@aid.Location 
+						    <td class="m-column">@aid.Section.Name 
                                 @if (aid.Patient != null)
                                 { @aid.Patient.Name }
                             </td>
