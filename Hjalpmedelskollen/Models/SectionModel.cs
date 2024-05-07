@@ -13,6 +13,8 @@ namespace Hjalpmedelskollen.Models
         public string Name { get; set; }
 
         [ForeignKey("UnitId")]
-        public UnitModel Unit { get; set; }
+        public int UnitId { get; set; }
+
+        public UnitModel? Unit { get; set; }
     }
 }

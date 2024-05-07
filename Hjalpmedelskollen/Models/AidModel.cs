@@ -25,9 +25,13 @@ namespace Hjalpmedelskollen.Models
         public DateTime Registered { get; set; }
 
         [ForeignKey("SectionId")]
-        public SectionModel Section { get; set; }
+        public int SectionId { get; set; }
+
+        public SectionModel? Section { get; set; }
 
         [ForeignKey("PatientId")]
+        public int? PatientId { get; set; }
+
         public PatientModel? Patient { get; set; }
 
     }

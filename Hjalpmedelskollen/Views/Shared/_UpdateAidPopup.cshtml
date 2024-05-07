@@ -6,13 +6,8 @@
             <div class="update-aid-row">
                 <div>
                     <div class="add-form">
-                        <label for="unitId">Enhet: *</label>
-                        <select id="update-aid-unit" name="unitId">
-                            @foreach (var unit in Model.Units)
-                            {
-                                <option value="@unit.Id">@unit.Name</option>
-                            }
-                        </select>
+                        <label for="registered">Registrerad *</label>
+                        <input type="text" id="update-registered" name="registered" value="" readonly class="disabled-input">
                     </div>
                     <div class="add-form">
                         <label for="update-id">Registreringsnummer: *</label>
@@ -42,6 +37,24 @@
                 </div>
                 <div>
                     <div class="add-form">
+                        <label for="unitId">Enhet: *</label>
+                        <select id="update-aid-unit" name="unitId">
+                            @foreach (var unit in Model.Units)
+                            {
+                                <option value="@unit.Id">@unit.Name</option>
+                            }
+                        </select>
+                        <div class="add-form">
+                            <label for="unitId">Avdelning: *</label>
+                            <select id="update-aid-section" name="sectionId">
+                                @foreach (var unit in Model.Units)
+                                {
+                                    <option value="@unit.Id">@unit.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="add-form">
                         <label for="location">Plats eller patient: *</label>
                         <select id="update-location" name="location">
                             <option value="Förråd">Förråd</option>
@@ -57,12 +70,8 @@
                         <input type="month" id="update-inspection" name="Inspection">
                     </div>
                     <div class="add-form">
-                        <label for="comment">Övrigt:</label>
+                        <label for="comment">Kommentar:</label>
                         <input id="update-comment" name="Comment">
-                    </div>
-                    <div class="add-form">
-                        <label for="registered">Registrerad *</label>
-                        <input type="text" id="update-registered" name="registered" value="" readonly class="disabled-input">
                     </div>
                 </div>
             </div>

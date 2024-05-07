@@ -2,18 +2,9 @@
 <div id="add-aid-popup" class="popup-container">
 	<div class="l-pop-up" id="add-aid">
 		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
-			<h3>Registrera hjälpmedel</h3>
+			<h3>Registrera hjälpmedel på @Model.SelectedUnit.Name</h3>
 			<div class="add-aid-row">
 				<div>
-					<div class="add-form">
-						<label for="section">Avdelning: *</label>
-						<select id="section-list" name="sectionId">
-							@foreach (var s in Model.Sections)
-							{
-								<option value="@s.Id">@s.Name</option>
-							}
-						</select>
-					</div>
 					<div class="add-form">
 						<label for="id">Registreringsnummer: *</label>
 						<input type="text" id="id" name="id" required>
@@ -42,10 +33,18 @@
 				</div>
 				<div>
 					<div class="add-form">
-						<label for="location">Plats eller patient: *</label>
-						<select id="location-list" name="location">
-							<option value="Förråd">Förråd</option>
-							<option value="Avdelning">Avdelning</option>
+						<label for="sectionId">Avdelning: *</label>
+						<select id="section-list" name="sectionId">
+							@foreach (var s in Model.Sections)
+							{
+								<option value="@s.Id">@s.Name</option>
+							}
+						</select>
+					</div>
+					<div class="add-form">
+						<label for="patient">Patient:</label>
+						<select id="patient-list" name="patient">
+							<option value="Null"> </option>
 							@foreach (var patient in Model.Patients)
 							{
 								<option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
@@ -57,7 +56,7 @@
 						<input type="month" id="inspection" name="inspection">
 					</div>
 					<div class="add-form">
-						<label for="comment">Övrigt:</label>
+						<label for="comment">Kommentar:</label>
 						<input id="comment" name="comment">
 					</div>
 				</div>
