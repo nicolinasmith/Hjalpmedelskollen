@@ -15,25 +15,22 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(50)]
         public string ProductName { get; set; }
 
-        public bool Status { get; set; }
-
-        [MaxLength(50)]
-        public string? Location { get; set; }
-
         public DateTime? Inspection { get; set; }
 
         [MaxLength(80)]
         public string? Comment { get; set; }
 
-        public DateTime Registered { get; set; }
+        public DateTime Registered { get; set; } 
 
-        public bool QrCode { get; set; }
+        [ForeignKey("SectionId")]
+        public int SectionId { get; set; }
 
-        [ForeignKey("UnitModel")]
-        public int UnitId { get; set; }
+        public SectionModel? Section { get; set; }
 
-        [ForeignKey("PatientModel")]
+        [ForeignKey("PatientId")]
         public int? PatientId { get; set; }
+
+        public PatientModel? Patient { get; set; }
 
     }
 }

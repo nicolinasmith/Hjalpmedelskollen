@@ -24,37 +24,46 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
-            <p>Antal registrerade hjälpmedel: @Model.Aids.Count()</p>
-            <div class="filter-selections">
-                <div class="selection">
-                    <label for="category">Kategori:</label>
-                    <select id="select-category" name="category">
-                        <option value="Alla">Alla</option>
-                        @foreach (var category in Model.Categories)
-                        {
-                            <option value="@category.Name">@category.Name</option>
-                        }
-                    </select>
+            <div class="selection-background">
+                <div id="section-buttons">
+                    <button data-section-id="all">Alla</button>
+                    @foreach (var unitSection in Model.Sections)
+                    {
+					    <button data-section-id="@unitSection.Id">@unitSection.Name</button>
+                    }
                 </div>
-                <div class="selection">
-                    <label for="status">Status:</label>
-                    <select id="select-status" name="status">
-                        <option value="Alla">Alla</option>
-                        <option value="Ledigt">Ledigt</option>
-                        <option value="Upptaget">Upptaget</option>
-                    </select>
-                </div>
-                <div class="selection">
-                    <label for="location">Plats / patient:</label>
-                    <select id="select-location" name="location">
-                        <option value="Alla">Alla</option>
-                        <option value="Förråd">Förråd</option>
-                        <option value="Avdelning">Avdelning</option>
-                        @foreach (var patient in Model.Patients)
-                        {
-                            <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
-                        }
-                    </select>
+                <div class="filter-selections">
+                    <div class="selection">
+                        <label for="category">Kategori:</label>
+                        <select id="select-category" name="category">
+                            <option value="Alla">Alla</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="selection">
+                        <label for="status">Status:</label>
+                        <select id="select-status" name="status">
+                            <option value="Alla">Alla</option>
+                            <option value="Ledigt">Ledigt</option>
+                            <option value="Upptaget">Upptaget</option>
+                        </select>
+                    </div>
+                    <div class="selection">
+                        <label for="location">Plats / patient:</label>
+                        <select id="select-location" name="location">
+                            <option value="Alla">Alla</option>
+                            <option value="Förråd">Förråd</option>
+                            <option value="Avdelning">Avdelning</option>
+                        
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
+                            }
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="table-container">
@@ -63,8 +72,7 @@
                         <th title="Unikt nummer på hjälpmedlet">Registreringsnummer</th>
                         <th title="Samlingskategorin som hjälpmedlet tillhör (exempelvis rollator, rullstol)">Kategori</th>
                         <th title="Produktnamn för hjälpmedlet (exempelvis Futura 600, Cross)">Produktnamn</th>
-                        <th title="Om hjälpmedlet är ledigt eller upptaget">Status</th>
-                        <th title="Plats där hjälpmedlet finns på enheten">Plats / patient</th>
+                        <th title="Plats där hjälpmedlet finns på enheten">Plats</th>
                         <th title="Tidpunkt för hjälpmedel behöver besiktigas nästa gång">Nästa besiktning</th>
                         <th title="Övrig kommentar om hjälpmedlet">Kommentar</th>
                     </tr>
@@ -72,8 +80,6 @@
 				    {
                         string backgroundColor = "";
                         string inspectionDate = string.Empty;
-                        string status = aid.Status == true ? "Ledigt" : "Upptaget";
-                        string statusBackgroundColor = aid.Status == true ? "green-background" : "red-background";
                         string icon = "";
 
                         if (aid.Inspection.HasValue)
@@ -102,12 +108,21 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-status="@aid.Status" data-qr="@aid.QrCode" data-registered="@aid.Registered" data-unit-id="@aid.UnitId" data-location="@aid.Location">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
-                            <td class="m-column @statusBackgroundColor">@status</td>
-						    <td class="m-column">@aid.Location</td>
+						    <td class="l-column">
+                                @if (aid.Patient != null)
+                                {
+                                    <i class="fa-solid fa-circle red-circle"></i> @aid.Patient.Name @:| @aid.Section.Name
+                                }
+                                else
+								{
+                                    <i class="fa-solid fa-circle green-circle"></i> @aid.Section.Name
+								}
+                              
+                            </td>
                             <td class="@backgroundColor s-column">
                                 <div class="inspection-layout">
                                     @inspectionDate<i class="@icon"></i>
@@ -148,45 +163,56 @@
 <div id="patients-popup" class="popup-container">
     <div class="l-pop-up">
         <h3>Patienter på @Model.SelectedUnit.Name</h3>
-            <table class="table-style" id="patient-table">
-                <tr class="table-header">
-					<th>Patientnummer</th>
-					<th>Namn</th>
-				</tr>
-				@foreach (var patient in Model.Patients)
-				{
-					<tr class="patient-row" data-patient-number="@patient.PatientNumber" data-name="@patient.Name">
-						<td>@patient.PatientNumber</td>
-						<td>@patient.Name</td>
-					</tr>
-				}
-            </table>
+        <table class="table-style" id="patient-table">
+            <tr class="table-header">
+                <th>Patientnummer</th>
+                <th>Namn</th>
+                <th>Avdelning</th>
+            </tr>
+            @foreach (var patient in Model.Patients)
+            {
+                <tr class="patient-row" data-patient-number="@patient.PatientNumber" data-name="@patient.Name" data-section="@patient.SectionId">
+                    <td>@patient.PatientNumber</td>
+                    <td>@patient.Name</td>
+                    <td>@Model.Sections.FirstOrDefault(s => s.Id == patient.SectionId).Name</td>
+                </tr>
+            }
+        </table>
         <div class="popup-buttons">
             <button id="add-patient-button">Lägg till patient</button>
-			<button id="close-patients-popup">Stäng</button>
+            <button id="close-patients-popup">Stäng</button>
         </div>
     </div>
 </div>
 
 <div id="update-patient-popup" class="popup-container">
-<div class="pop-up">
+    <div class="pop-up">
         <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form">
-		<h3>Uppdatera patient</h3>
-		<div class="add-form">
-			<label for="update-patient-number">Patientnummer:</label>
-			<input type="text" id="update-patient-number" name="PatientNumber" required>
-		</div>
-		<div class="add-form">
-			<label for="update-patient-name">Namn:</label>
-			<input type="text" id="update-patient-name" name="Name" required>
-		</div>
-		<div class="popup-buttons">
-            <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id"/>
-            <button type="submit" id="update-patient-button">Spara</button>
-            <button type="button" id="cancel-update-patient">Avbryt</button>
-		</div>
+            <h3>Uppdatera patient</h3>
+            <div class="add-form">
+                <label for="update-patient-number">Patientnummer:</label>
+                <input type="text" id="update-patient-number" name="PatientNumber" required>
+            </div>
+            <div class="add-form">
+                <label for="update-patient-name">Namn:</label>
+                <input type="text" id="update-patient-name" name="Name" required>
+            </div>
+            <div class="add-form">
+                <label for="update-patient-section">Avdelning:</label>
+                <select id="update-patient-section" name="SectionId">
+                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                    {
+                        <option value="@ssection.Id">@ssection.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="popup-buttons">
+                <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id" />
+                <button type="submit" id="update-patient-button">Spara</button>
+                <button type="button" id="cancel-update-patient">Avbryt</button>
+            </div>
         </form>
-	</div>
+    </div>
 </div>
 
 <div id="add-patient-popup" class="popup-container">
@@ -194,15 +220,24 @@
         <form method="post" action="/Home/AddPatientToDatabase" id="add-patient-form">
             <h3>Lägg till patient på @Model.SelectedUnit.Name</h3>
             <div class="add-form">
-				<label for="patient-number">Patientnummer:</label>
-				<input type="text" id="patient-number" name="PatientNumber" required>
+                <label for="patient-number">Patientnummer:</label>
+                <input type="text" id="patient-number" name="PatientNumber" required>
             </div>
             <div class="add-form">
                 <label for="patient-name">Namn:</label>
                 <input type="text" id="patient-name" name="Name" required>
             </div>
+            <div class="add-form">
+                <label for="patient-section">Avdelning:</label>
+                <select>
+                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                    {
+                        <option value="@ssection.Id">@ssection.Name</option>
+                    }
+                </select>
+            </div>
+
             <div class="popup-buttons">
-                <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id">
                 <button type="submit" id="add-patient-button">Spara</button>
                 <button type="button" id="cancel-add-patient">Avbryt</button>
             </div>
@@ -217,5 +252,6 @@
 <partial name="_ScanQrPopup" model="Model" />
 <partial name="_SelectUnitPopup" model="Model" />
 <partial name="_NewCategoryPopup" model="Model" />
+<!--<partial name="_PatientPopup" model="Model" />-->
 
 

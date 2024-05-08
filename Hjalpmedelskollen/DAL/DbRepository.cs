@@ -2,6 +2,8 @@
 using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Hjalpmedelskollen.DAL
 {
@@ -17,7 +19,7 @@ namespace Hjalpmedelskollen.DAL
         public async Task<IEnumerable<AidModel>> GetAidsByUnit(int? unitId)
         {
             var aids = await _context.Aids
-                .Where(a => a.UnitId == unitId)
+                .Where(a => a.Section.Unit.Id == unitId)
                 .OrderByDescending(a => a.Registered)
                 .ToListAsync();
 
@@ -37,7 +39,7 @@ namespace Hjalpmedelskollen.DAL
         public async Task<List<NoteBoardModel>> GetNotes(int unitId)
         {
             var notes = await _context.NoteBoards
-                        .Where(n => n.UnitId == unitId)
+                        .Where(n => n.Unit.Id == unitId)
                         .ToListAsync();
             return notes.OrderByDescending(n => n.Date).ToList();
         }
@@ -97,12 +99,13 @@ namespace Hjalpmedelskollen.DAL
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PatientModel>> GetPatients(int unitId)
+        public async Task<IEnumerable<PatientModel>> GetPatients(List<int> sectionIds)
         {
-            return await _context.Patients
-                .Where(p => p.UnitId == unitId)
-                .OrderBy(p => p.Id)
+            var patients = await _context.Patients
+                .Where(p => sectionIds.Contains(p.SectionId))
                 .ToListAsync();
+
+            return patients;
         }
 
         public async Task AddPatient (PatientModel patient)
@@ -115,6 +118,13 @@ namespace Hjalpmedelskollen.DAL
         {
             _context.Patients.Update(patient);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SectionModel>> GetSections(int unitId)
+        {
+            return await _context.Sections
+                .Where(s => s.Unit.Id == unitId)
+                .ToListAsync();
         }
 
     }

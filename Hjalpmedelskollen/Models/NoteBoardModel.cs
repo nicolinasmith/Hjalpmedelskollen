@@ -14,7 +14,9 @@ namespace Hjalpmedelskollen.Models
         [MaxLength(200)]
         public string Note { get; set; }
 
-        [ForeignKey("UnitModel")]
+        [ForeignKey("UnitId")]
         public int UnitId { get; set; }
+
+        public UnitModel? Unit { get; set; }
     }
 }

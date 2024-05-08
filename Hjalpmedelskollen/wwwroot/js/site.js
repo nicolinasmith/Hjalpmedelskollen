@@ -64,7 +64,12 @@
         row.addEventListener('click', function () {
             var patientNumber = this.getAttribute('data-patient-number');
             var name = this.getAttribute('data-name');
-            
+            var section = this.getAttribute('data-section');
+            var sectionOption = document.querySelector('#update-patient-section option[value="' + section + '"]');
+            if (sectionOption) {
+                document.getElementById('update-patient-section').value = section;
+            }
+
             document.getElementById('update-patient-number').value = patientNumber;
             document.getElementById('update-patient-name').value = name;
 
@@ -106,8 +111,8 @@
             } else {
                 row.style.display = 'none';
             }
-            });
-        }
+        });
+    }
 
     /*AIDS BY UNIT - SORT TABLE*/
     /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
@@ -255,29 +260,12 @@
                 selectElement.value = category;
             }
 
-            var status = this.getAttribute('data-status');
-            status = status.toLowerCase();
-            var statusElement = document.getElementById('update-status');
-            var statusOption = document.querySelector('#update-status option[value="' + status + '"]');
-            if (statusOption) {
-                statusElement.value = status;
-            }
-
-            var qr = this.getAttribute('data-qr');
-            qr = qr.toLowerCase();
-            var qrElement = document.getElementById('update-qr');
-            var qrOption = document.querySelector('#update-qr option[value="' + qr + '"]');
-            if (qrOption) {
-                qrElement.value = qr;
-            }
-
             var registered = this.getAttribute('data-registered');
             var registeredDate = registered.split(' ')[0];
             document.getElementById('update-registered').value = registeredDate;
 
             var id = this.getAttribute('data-id');
             var productName = this.querySelector('.m-column:nth-child(3)').textContent;
-            var location = this.querySelector('.m-column:nth-child(5)').textContent;
 
             var inspectionContainer = this.querySelector('.s-column');
             var inspectionDate = inspectionContainer.textContent.trim();
@@ -289,7 +277,6 @@
             document.getElementById('update-id').value = id;
             document.getElementById('category-list').value = category;
             document.getElementById('update-product-name').value = productName;
-            document.getElementById('update-location').value = location;
             document.getElementById('update-inspection').value = inspectionDate;
             document.getElementById('update-comment').value = comment;
 

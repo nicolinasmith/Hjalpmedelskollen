@@ -95,6 +95,15 @@ footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+#section-buttons button {
+    padding: 2px;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #454a4f;
+    color: #ffffff;
+}
+
 .small-nav ul {
     display: flex;
     flex-direction: row;
@@ -273,6 +282,14 @@ label {
 
 .green-background {
     background-color: rgba(144, 238, 144, 0.7);
+}
+
+.green-circle {
+    color: rgba(144, 238, 144, 0.7);
+}
+
+.red-circle {
+    color: rgba(255, 0, 0, 0.5);
 }
 
 .yellow-background {

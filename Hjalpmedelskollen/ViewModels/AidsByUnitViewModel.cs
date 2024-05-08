@@ -12,7 +12,11 @@ namespace Hjalpmedelskollen.ViewModels
 
         public IEnumerable<PatientModel> Patients { get; set; }
 
+        public IEnumerable<SectionModel> Sections { get; set; }
+
         public UnitModel SelectedUnit { get; set; }
+
+        public SectionModel SelectedSection { get; set; }
 
         public List<NoteBoardModel> NoteBoards { get; set; }
 

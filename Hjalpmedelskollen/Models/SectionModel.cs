@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hjalpmedelskollen.Models
 {
-    [Table("Patients")]
-    public class PatientModel
+    [Table("Sections")]
+    public class SectionModel
     {
         [Key]
         public int Id { get; set; }
 
-        public int PatientNumber { get; set; }
-
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [ForeignKey ("SectionModel")]
-        public int SectionId { get; set; }
+        [ForeignKey("UnitId")]
+        public int UnitId { get; set; }
+
+        public UnitModel? Unit { get; set; }
     }
 }
