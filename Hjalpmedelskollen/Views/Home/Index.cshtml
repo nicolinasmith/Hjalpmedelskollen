@@ -9,7 +9,7 @@
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
         <li id="display-sections" class="small-li">Avdelningar</li>
-        <li id="display-patients" class="small-li">Patienter</li>
+        <li id="display-patients" class="small-li">Hantera patienter</li>
         <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
     </ul>
 </div>
@@ -195,9 +195,9 @@
             <div class="add-form">
                 <label for="update-patient-section">Avdelning:</label>
                 <select id="update-patient-section" name="SectionId">
-                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                    @foreach (var s in Model.Sections.Where(s => s.Name != "Förråd"))
                     {
-                        <option value="@ssection.Id">@ssection.Name</option>
+                        <option value="@s.Id">@s.Name</option>
                     }
                 </select>
             </div>
@@ -224,15 +224,16 @@
             </div>
             <div class="add-form">
                 <label for="patient-section">Avdelning:</label>
-                <select>
-                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                <select id="patient-section" name="sectionId">
+                    @foreach (var s in Model.Sections.Where(s => s.Name != "Förråd"))
                     {
-                        <option value="@ssection.Id">@ssection.Name</option>
+                        <option value="@s.Id">@s.Name</option>
                     }
                 </select>
             </div>
 
             <div class="popup-buttons">
+                <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id" />
                 <button type="submit" id="add-patient-button">Spara</button>
                 <button type="button" id="cancel-add-patient">Avbryt</button>
             </div>

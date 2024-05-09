@@ -176,7 +176,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddNote(newNote);
-                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
+                    return RedirectToAction("Index", new { unitId = newNote.UnitId });
                 }
                 catch (Exception ex)
                 {
@@ -196,7 +196,7 @@ namespace Hjalpmedelskollen.Controllers
             try
             {
                 await _dbRepository.DeleteNote(noteId);
-                return RedirectToAction("Index", new { unitId = unitId });
+                return RedirectToAction("Index", new { unitId });
             }
             catch (Exception ex)
             {
@@ -206,14 +206,14 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPatientToDatabase(PatientModel newPatient)
+        public async Task<IActionResult> AddPatientToDatabase(PatientModel newPatient, int unitId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     await _dbRepository.AddPatient(newPatient);
-                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
+                    return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
                 {
@@ -228,14 +228,14 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient)
+        public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient, int unitId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     await _dbRepository.UpdatePatient(patient);
-                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
+                    return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
                 {
