@@ -112,10 +112,8 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction)
+        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction, int unitId)
         {
-            if (ModelState.IsValid) { 
-
             if (formAction == "update")
             {
                 if (ModelState.IsValid)
@@ -123,7 +121,7 @@ namespace Hjalpmedelskollen.Controllers
                     try
                     {
                         await _dbRepository.UpdateAid(aid);
-                        return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
+                        return RedirectToAction("Index", new { unitId });
                     }
                     catch (Exception ex)
                     {
@@ -141,7 +139,7 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.DeleteAid(aid);
-                    return RedirectToAction("Index", new { unitId = _selectedUnit.Id });
+                    return RedirectToAction("Index", new { unitId });
                 }
                 catch (Exception ex)
                 {
@@ -152,11 +150,6 @@ namespace Hjalpmedelskollen.Controllers
             else
             {
                 return BadRequest("Ett fel inträffade.");
-            }
-        }
-            else
-            {
-                return View("Index", aid);
             }
         }
 

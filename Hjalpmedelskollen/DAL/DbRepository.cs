@@ -103,6 +103,7 @@ namespace Hjalpmedelskollen.DAL
         {
             var patients = await _context.Patients
                 .Where(p => sectionIds.Contains(p.SectionId))
+                .OrderBy(p => p.PatientNumber)
                 .ToListAsync();
 
             return patients;

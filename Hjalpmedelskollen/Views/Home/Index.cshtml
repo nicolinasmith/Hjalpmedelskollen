@@ -24,48 +24,38 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
-            <div class="selection-background">
-                <div id="section-buttons">
-                    <button data-section-id="all">Alla</button>
-                    @foreach (var unitSection in Model.Sections)
-                    {
-					    <button data-section-id="@unitSection.Id">@unitSection.Name</button>
-                    }
-                </div>
                 <div class="filter-selections">
+                <div class="selection">
+                    <label for="section">Avdelning:</label>
+                    <select id="select-section" name="section">
+                        <option value="all">Alla</option>
+                        @foreach (var s in Model.Sections)
+                        {
+                            <option value="@s.Id">@s.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="selection">
+                    <label for="patient">Patient:</label>
+                    <select id="select-patient" name="patient">
+                        <option value="all">Alla</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
+                        }
+                    </select>
+                </div>
                     <div class="selection">
                         <label for="category">Kategori:</label>
                         <select id="select-category" name="category">
-                            <option value="Alla">Alla</option>
+                            <option value="all">Alla</option>
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Name">@category.Name</option>
                             }
                         </select>
                     </div>
-                    <div class="selection">
-                        <label for="status">Status:</label>
-                        <select id="select-status" name="status">
-                            <option value="Alla">Alla</option>
-                            <option value="Ledigt">Ledigt</option>
-                            <option value="Upptaget">Upptaget</option>
-                        </select>
-                    </div>
-                    <div class="selection">
-                        <label for="location">Plats / patient:</label>
-                        <select id="select-location" name="location">
-                            <option value="Alla">Alla</option>
-                            <option value="Förråd">Förråd</option>
-                            <option value="Avdelning">Avdelning</option>
-                        
-                            @foreach (var patient in Model.Patients)
-                            {
-                                <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
-                            }
-                        </select>
-                    </div>
                 </div>
-            </div>
             <div class="table-container">
                 <table class="table-style" id="aid-table">
                     <tr class="table-header">
@@ -108,7 +98,10 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" 
+                                            data-unit-id="@aid.Section.UnitId" data-section-id="@aid.SectionId" data-patient="@aid.PatientId" 
+                                            data-product-name="@aid.ProductName" data-comment="@aid.Comment" data-inspection="@inspectionDate"
+                                            data-patient="@aid.PatientId" data-section="@aid.SectionId">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>

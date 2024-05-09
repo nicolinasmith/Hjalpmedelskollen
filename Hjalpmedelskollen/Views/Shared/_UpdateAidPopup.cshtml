@@ -39,20 +39,21 @@
                         </select>
                     </div>
                         <div class="add-form">
-                            <label for="unitId">Avdelning: *</label>
+                            <label for="sectionId">Avdelning: *</label>
                             <select id="update-aid-section" name="sectionId">
-                                @foreach (var unit in Model.Units)
+                                @foreach (var s in Model.Sections)
                                 {
-                                    <option value="@unit.Id">@unit.Name</option>
+                                    <option value="@s.Id">@s.Name</option>
                                 }
                             </select>
                         </div>
                     <div class="add-form">
-                        <label for="patient">Plats eller patient: *</label>
+                        <label for="patient">Patient: *</label>
                         <select id="update-patient" name="patient">
+                            <option value="">-</option>
                             @foreach (var patient in Model.Patients)
                             {
-                                <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
+                                <option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
                             }
                         </select>
                     </div>

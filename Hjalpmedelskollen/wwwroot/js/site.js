@@ -88,29 +88,29 @@
 
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
-    document.getElementById('select-status').addEventListener('change', filterAids);
-    document.getElementById('select-location').addEventListener('change', filterAids);
+    document.getElementById('select-section').addEventListener('change', filterAids);
+    document.getElementById('select-patient').addEventListener('change', filterAids);
 
     function filterAids() {
         var selectedCategory = document.getElementById('select-category').value;
-        var selectedStatus = document.getElementById('select-status').value;
-        var selectedLocation = document.getElementById('select-location').value;
+        var selectedSection = document.getElementById('select-section').value;
+        var selectedPatient = document.getElementById('select-patient').value;
+
         var aidRows = document.querySelectorAll('.aid-row');
 
         aidRows.forEach(function (row) {
             var category = row.dataset.category;
-            var status = row.dataset.status;
-            var location = row.dataset.location;
+            var section = row.dataset.section;
+            var patient = row.dataset.patient;
 
-            var statusBool = status === 'True' ? 'Ledigt' : 'Upptaget';
-
-            if ((selectedCategory === 'Alla' || category === selectedCategory) &&
-                (selectedStatus === 'Alla' || statusBool === selectedStatus) &&
-                (selectedLocation === 'Alla' || location === selectedLocation)) {
+            if ((selectedCategory === 'all' || selectedCategory === category) &&
+                (selectedSection === 'all' || selectedSection === section) &&
+                (selectedPatient === 'all' || selectedPatient === patient)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
             }
+
         });
     }
 
@@ -242,12 +242,25 @@
     aidRows.forEach(function (row) {
         row.addEventListener('click', function () {
 
+            var id = this.getAttribute('data-id');
+            document.getElementById('update-id').value = id;
+
             var unitId = this.getAttribute('data-unit-id');
             var unitSelectElement = document.getElementById('update-aid-unit');
 
             for (var i = 0; i < unitSelectElement.options.length; i++) {
                 if (unitSelectElement.options[i].value === unitId) {
                     unitSelectElement.selectedIndex = i;
+                    break;
+                }
+            }
+
+            var sectionId = this.getAttribute('data-section-id');
+            var sectionSelectElement = document.getElementById('update-aid-section');
+
+            for (var i = 0; i < sectionSelectElement.options.length; i++) {
+                if (sectionSelectElement.options[i].value === sectionId) {
+                    sectionSelectElement.selectedIndex = i;
                     break;
                 }
             }
@@ -264,22 +277,22 @@
             var registeredDate = registered.split(' ')[0];
             document.getElementById('update-registered').value = registeredDate;
 
-            var id = this.getAttribute('data-id');
-            var productName = this.querySelector('.m-column:nth-child(3)').textContent;
-
-            var inspectionContainer = this.querySelector('.s-column');
-            var inspectionDate = inspectionContainer.textContent.trim();
-            var iconClass = inspectionContainer.querySelector('i').className;
-            inspectionDate = inspectionDate.replace(iconClass, '').trim();
-
-            var comment = this.querySelector('.l-column').textContent;
-
-            document.getElementById('update-id').value = id;
-            document.getElementById('category-list').value = category;
+            var productName = this.getAttribute('data-product-name');
             document.getElementById('update-product-name').value = productName;
-            document.getElementById('update-inspection').value = inspectionDate;
+
+            var comment = this.getAttribute('data-comment');
             document.getElementById('update-comment').value = comment;
 
+            var inspection = this.getAttribute('data-inspection');
+            document.getElementById('update-inspection').value = inspection;
+
+            var patient = this.getAttribute('data-patient');
+            var patientElement = document.getElementById('update-patient');
+            var patientOption = document.querySelector('#update-patient option[value="' + patient + '"]');
+            if (patientOption) {
+                patientElement.value = patient;
+            }
+            
             aidPopup.style.display = 'block';
         });
     });
