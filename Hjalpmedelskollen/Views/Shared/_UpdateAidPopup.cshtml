@@ -39,7 +39,7 @@
                         </select>
                     </div>
                         <div class="add-form">
-                            <label for="sectionId">Avdelning: *</label>
+                            <label for="sectionId">Avdelning eller förråd: *</label>
                             <select id="update-aid-section" name="sectionId">
                                 @foreach (var s in Model.Sections)
                                 {
@@ -48,8 +48,8 @@
                             </select>
                         </div>
                     <div class="add-form">
-                        <label for="patient">Patient:</label>
-                        <select id="update-patient" name="patient">
+                        <label for="patientId">Patient:</label>
+                        <select id="update-patient" name="patientId">
                             <option value="">-</option>
                             @foreach (var patient in Model.Patients)
                             {

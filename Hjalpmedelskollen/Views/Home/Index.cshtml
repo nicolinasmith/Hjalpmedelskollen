@@ -15,7 +15,7 @@
 </div>
 <div id="aids-by-unit">
     <div id="mobile-buttons">
-        <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
+        <h1>@Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
         <button id="mobile-add-new-aid" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
@@ -25,9 +25,10 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
+            <p>Antal registrerade hjälpmedel: @Model.Aids.Count()</p>
                 <div class="filter-selections">
                 <div class="selection">
-                    <label for="section">Avdelning:</label>
+                    <label for="section">Avdelning & förråd:</label>
                     <select id="select-section" name="section">
                         <option value="all">Alla</option>
                         @foreach (var s in Model.Sections)
