@@ -501,4 +501,40 @@
     cancelShowNotes.addEventListener('click', function () {
         showAllNotes.style.display = 'none';
     });
+
+   
+
+
+    $(document).ready(function () {
+        $("#add-note-button").click(function () {
+
+            document.getElementById('add-note-popup').style.display = 'none';
+
+            var note = $("#Note").val();
+            var unitId = $("#UnitId").val();
+
+            $.post("/Home/AddNoteToDatabase", { Note: note, UnitId: unitId }, function (response) {
+                if (response.success) {
+                    $("#note-aside").load("/Home/Index #note-aside");
+                    $("#all-notes-container").load("/Home/Index #all-notes-container");
+                } else {
+                    alert("Det gick inte att lägga till anteckningen.");
+                }
+            });
+        });
+
+        $(".delete-note").click(function () {
+            var noteId = $(this).closest(".note-container").data("note-id");
+            var unitId = $("#UnitId").val();
+
+            $.post("/Home/DeleteNoteFromDatabase", { noteId: noteId, unitId: unitId }, function (response) {
+                if (response.success) {
+                    $(`[data-note-id=${noteId}]`).remove();
+                    $("#note-aside").load("/Home/Index #note-aside");
+                } else {
+                    alert("Det gick inte att ta bort anteckningen.");
+                }
+            });
+        });
+    });
 });

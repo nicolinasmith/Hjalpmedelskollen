@@ -133,14 +133,14 @@
     <aside id="unit-aside">
         <div class="unit-noteboard">
             <h3>Anslagstavlan</h3>
-				<div>
+				<div id="note-aside">
                 @for (int i = 0; i < Model.NoteBoards.Count && i < 5; i++)
                 {
                     var note = Model.NoteBoards[i];
                     var trimmedDate = note.Date.ToString("yyyy-MM-dd");
 
                     <div class="note-container">
-                        <div class="note">
+                        <div class="note" data-note-id="@note.Id">
                             <b>@trimmedDate</b>
                             <p class="long-message">@note.Note</p>
                         </div>

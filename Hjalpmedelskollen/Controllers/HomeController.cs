@@ -176,32 +176,34 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddNote(newNote);
-                    return RedirectToAction("Index", new { unitId = newNote.UnitId });
+                    var updatedNotes = await _dbRepository.GetNotes(newNote.UnitId);
+                    return Json(new { success = true, notes = updatedNotes });
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när en anteckning lades till i databasen.");
-                    return BadRequest($"Ett fel inträffade när en anteckning lades till i databasen: {ex.Message}.");
+                    return Json(new { success = false, error = $"Ett fel inträffade när en anteckning lades till i databasen: {ex.Message}" });
                 }
             }
             else
             {
-                return View("Index", newNote);
+                return BadRequest(ModelState);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteNoteFromDatabase(int noteId, int unitId)
+        public async Task<IActionResult> DeleteNoteFromDatabase(int noteId)
         {
             try
             {
                 await _dbRepository.DeleteNote(noteId);
-                return RedirectToAction("Index", new { unitId });
+                var response = new { success = true };
+                return Json(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ett fel inträffade när en anteckning togs bort från databasen.");
-                return BadRequest($"Ett fel inträffade när en anteckning togs bort från databasen: {ex.Message}.");
+                return Json(new { success = false, error = $"Ett fel inträffade när en anteckning togs bortill i databasen: {ex.Message}" });
             }
         }
 
