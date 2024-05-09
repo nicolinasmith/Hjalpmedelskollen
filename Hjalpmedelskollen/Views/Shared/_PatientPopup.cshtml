@@ -9,7 +9,7 @@
             </tr>
             @foreach (var patient in Model.Patients)
             {
-                <tr class="patient-row" data-patient-number="@patient.PatientNumber" data-name="@patient.Name" data-section="@patient.SectionId">
+                <tr class="patient-row" data-patient-id="@patient.Id" data-patient-number="@patient.PatientNumber" data-name="@patient.Name" data-section="@patient.SectionId">
                     <td>@patient.PatientNumber</td>
                     <td>@patient.Name</td>
                     <td>@patient.Section.Name</td>
@@ -25,7 +25,6 @@
 
 <div id="update-patient-popup" class="popup-container">
     <div class="pop-up">
-        <form method="post" action="/Home/UpdatePatientToDatabase" id="update-patient-form">
             <h3>Uppdatera patient</h3>
             <div class="add-form">
                 <label for="update-patient-number">Patientnummer:</label>
@@ -38,36 +37,34 @@
             <div class="add-form">
                 <label for="update-patient-section">Avdelning:</label>
                 <select id="update-patient-section" name="SectionId">
-                    @foreach (var ssection in Model.Sections)
+                    @foreach (var s in Model.Sections)
                     {
-                        <option value="@ssection.Id">@ssection.Name</option>
+                        <option value="@s.Id">@s.Name</option>
                     }
                 </select>
             </div>
             <div class="popup-buttons">
-                <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id" />
+                <input type="hidden" id="update-patient-id" name="Id">
                 <button type="submit" id="update-patient-button">Spara</button>
                 <button type="button" id="cancel-update-patient">Avbryt</button>
             </div>
-        </form>
     </div>
 </div>
 
 <div id="add-patient-popup" class="popup-container">
     <div class="pop-up">
-        <form method="post" action="/Home/AddPatientToDatabase" id="add-patient-form">
             <h3>Lägg till patient på @Model.SelectedUnit.Name</h3>
             <div class="add-form">
-                <label for="patient-number">Patientnummer:</label>
-                <input type="text" id="patient-number" name="PatientNumber" required>
+                <label for="add-patient-number">Patientnummer:</label>
+                <input type="text" id="add-patient-number" name="PatientNumber" required>
             </div>
             <div class="add-form">
-                <label for="patient-name">Namn:</label>
-                <input type="text" id="patient-name" name="Name" required>
+                <label for="add-patient-name">Namn:</label>
+                <input type="text" id="add-patient-name" name="Name" required>
             </div>
             <div class="add-form">
-                <label for="patient-section">Avdelning:</label>
-                <select>
+                <label for="add-patient-section">Avdelning:</label>
+                <select id="add-patient-section" name="SectionId">
                     @foreach (var s in Model.Sections)
                     {
                         <option value="@s.Id">@s.Name</option>
@@ -76,9 +73,9 @@
             </div>
 
             <div class="popup-buttons">
-                <button type="submit" id="add-patient-button">Spara</button>
+                <input type="hidden" id="add-patient-unit-id" name="UnitId" value="@Model.SelectedUnit.Id">
+                <button type="submit" id="add-new-patient">Spara</button>
                 <button type="button" id="cancel-add-patient">Avbryt</button>
             </div>
-        </form>
     </div>
 </div>

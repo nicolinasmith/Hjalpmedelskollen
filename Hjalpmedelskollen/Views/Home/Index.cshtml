@@ -8,8 +8,9 @@
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
+        <li class="small-li">Avdelningar</li>
         <li id="display-patients" class="small-li">Hantera patienter</li>
+        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
 </div>
 <div id="aids-by-unit">
@@ -24,9 +25,10 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
+            <p>Antal registrerade hjälpmedel på enheten: @Model.Aids.Count()</p>
                 <div class="filter-selections">
                 <div class="selection">
-                    <label for="section">Avdelning:</label>
+                    <label for="section">Avdelning & förråd:</label>
                     <select id="select-section" name="section">
                         <option value="all">Alla</option>
                         @foreach (var s in Model.Sections)
@@ -98,8 +100,8 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
-                            <td class="m-column">@aid.Id</td>
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-patient="@aid.PatientId" data-unit-id="@aid.Section.UnitId">
+                            <td class="s-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
 						    <td class="l-column">

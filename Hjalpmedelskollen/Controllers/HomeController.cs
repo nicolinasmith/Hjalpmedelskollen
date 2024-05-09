@@ -41,7 +41,7 @@ namespace Hjalpmedelskollen.Controllers
             var sectionIds = sections.Select(s => s.Id).ToList();
 
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
-            var patients = await _dbRepository.GetPatients(sectionIds);
+            var patients = await _dbRepository.GetPatients(unitId);
 
             var categories = aidsByUnit
                 .Select(a => a.Category)
@@ -176,8 +176,8 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddNote(newNote);
-                    var updatedNotes = await _dbRepository.GetNotes(newNote.UnitId);
-                    return Json(new { success = true, notes = updatedNotes });
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
@@ -208,46 +208,48 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPatientToDatabase(PatientModel newPatient, int unitId)
+        public async Task<IActionResult> AddPatientToDatabase(PatientModel patient)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _dbRepository.AddPatient(newPatient);
-                    return RedirectToAction("Index", new { unitId });
+                    await _dbRepository.AddPatient(patient);
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när en patient lades till i databasen.");
-                    return BadRequest($"Ett fel inträffade när en patient lades till i databasen: {ex.Message}.");
+                    return Json(new { success = false, error = $"Ett fel inträffade när en patien lades till i databasen: {ex.Message}" });
                 }
             }
             else
             {
-                return View("Index", newPatient);
+                return BadRequest(ModelState);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient, int unitId)
+        public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     await _dbRepository.UpdatePatient(patient);
-                    return RedirectToAction("Index", new { unitId });
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när en patient uppdaterades i databasen.");
-                    return BadRequest($"Ett fel inträffade när en patient uppdaterades i databasen: {ex.Message}.");
+                    return Json(new { success = false, error = $"Ett fel inträffade när en patient skulle uppdateras i databasen: {ex.Message}" });
                 }
             }
             else
             {
-                return View("Index", patient);
+                return BadRequest(ModelState);
             }
         }
 
