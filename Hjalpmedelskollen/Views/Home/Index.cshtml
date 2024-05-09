@@ -8,8 +8,9 @@
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
-        <li id="display-patients" class="small-li">Hantera patienter</li>
+        <li id="display-sections" class="small-li">Avdelningar</li>
+        <li id="display-patients" class="small-li">Patienter</li>
+        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
     </ul>
 </div>
 <div id="aids-by-unit">
@@ -102,7 +103,7 @@
                                             data-unit-id="@aid.Section.UnitId" data-section-id="@aid.SectionId" data-patient="@aid.PatientId" 
                                             data-product-name="@aid.ProductName" data-comment="@aid.Comment" data-inspection="@inspectionDate"
                                             data-patient="@aid.PatientId" data-section="@aid.SectionId">
-                            <td class="m-column">@aid.Id</td>
+                            <td class="s-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
 						    <td class="l-column">
