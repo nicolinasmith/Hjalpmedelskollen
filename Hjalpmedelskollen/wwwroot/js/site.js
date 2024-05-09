@@ -32,12 +32,35 @@
         document.getElementById('unit-popup').style.display = 'none';
     });
 
+    document.getElementById('select-unit-button').addEventListener('change', function () {
+
+        var unitId = document.getElementById('select-unit-list').value;
+
+        $.ajax({
+            url: '/Home/DisplayAidsByUnit',
+            method: 'POST',
+            data: {
+                unitId
+            },
+            success: function (response) {
+                if (response.success) {
+
+                } else {
+                    alert('Det gick inte att byta enhet.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+    });
+
     /*AIDS BY UNIT - HANDLE PATIENTS*/
     var patientPopup = document.getElementById('patients-popup');
     var closePatientPopup = document.getElementById('close-patients-popup');
     var updatePatient = document.getElementById('update-patient-popup');
     var cancelUpdatePatient = document.getElementById('cancel-update-patient');
-
 
     document.getElementById('display-patients').addEventListener('click', function () {
         document.getElementById('patients-popup').style.display = 'block';
@@ -79,7 +102,31 @@
         });
     }
 
-    function UpdatePatient() {
+    document.getElementById('cancel-add-patient').addEventListener('click', function () {
+        document.getElementById('add-patient-popup').style.display = 'none';
+    });
+
+    var patientRow = document.querySelectorAll('.patient-row');
+    patientRow.forEach(function (row) {
+        row.addEventListener('click', function () {
+            var patientId = this.getAttribute('data-patient-id');
+            var patientNumber = this.getAttribute('data-patient-number');
+            var name = this.getAttribute('data-name');
+            var section = this.getAttribute('data-section');
+            var sectionOption = document.querySelector('#update-patient-section option[value="' + section + '"]');
+            if (sectionOption) {
+                document.getElementById('update-patient-section').value = section;
+            }
+
+            document.getElementById('update-patient-id').value = patientId;
+            document.getElementById('update-patient-number').value = patientNumber;
+            document.getElementById('update-patient-name').value = name;
+
+            updatePatient.style.display = 'block';
+        });
+    });
+
+    document.getElementById('update-patient-button').addEventListener('click', function () {
 
         var patientId = document.getElementById('update-patient-id').value;
         var patientNumber = document.getElementById('update-patient-number').value;
@@ -107,38 +154,10 @@
                 console.error(xhr.responseText);
             }
         });
-    }
-
-    document.getElementById('cancel-add-patient').addEventListener('click', function () {
-        document.getElementById('add-patient-popup').style.display = 'none';
-    });
-
-    var patientRow = document.querySelectorAll('.patient-row');
-    patientRow.forEach(function (row) {
-        row.addEventListener('click', function () {
-            var patientId = this.getAttribute('data-patient-id');
-            var patientNumber = this.getAttribute('data-patient-number');
-            var name = this.getAttribute('data-name');
-            var section = this.getAttribute('data-section');
-            var sectionOption = document.querySelector('#update-patient-section option[value="' + section + '"]');
-            if (sectionOption) {
-                document.getElementById('update-patient-section').value = section;
-            }
-
-            document.getElementById('update-patient-id').value = patientId;
-            document.getElementById('update-patient-number').value = patientNumber;
-            document.getElementById('update-patient-name').value = name;
-
-            updatePatient.style.display = 'block';
-        });
-    });
-
-    document.getElementById('update-patient-button').addEventListener('click', function () {
-        UpdatePatient();
     });
 
     cancelUpdatePatient.addEventListener('click', function () {
-            updatePatient.style.display = 'none';
+        updatePatient.style.display = 'none';
     });
 
     closePatientPopup.addEventListener('click', function () {
@@ -214,42 +233,78 @@
     }
 
     function addSortEventToHeader(tableId) {
-    var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
-    headers.forEach(function (header, index) {
-        header.addEventListener('click', function () {
-            sortTable(index, tableId);
+        var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
+        headers.forEach(function (header, index) {
+            header.addEventListener('click', function () {
+                sortTable(index, tableId);
+            });
         });
-    });
     }
 
     addSortEventToHeader('aid-table');
     addSortEventToHeader('patient-table');
 
     /*AIDS BY UNIT - ADD AID*/
-    var addAidPopup = document.getElementById('add-aid-popup');
-    var addNewAid = document.getElementById('add-new-aid');
-    var addNewAidMobile = document.getElementById('mobile-add-new-aid');
-    var cancelAddAid = document.getElementById('cancel-add-aid');
-
     function handleAddAidClick() {
-        addAidPopup.style.display = 'block';
-        document.getElementById('registered-today').value = new Date().toLocaleDateString('sv-SE');
+        document.getElementById('add-aid-popup').style.display = 'block';
+        document.getElementById('add-aid-registered').value = new Date().toLocaleDateString('sv-SE');
     }
 
-    addNewAid.addEventListener('click', handleAddAidClick);
-    addNewAidMobile.addEventListener('click', handleAddAidClick);
+    document.getElementById('add-new-aid').addEventListener('click', handleAddAidClick);
+    document.getElementById('mobile-add-new-aid').addEventListener('click', handleAddAidClick);
 
-    cancelAddAid.addEventListener('click', function () {
-        addAidPopup.style.display = 'none';
+    document.getElementById('cancel-add-aid').addEventListener('click', function () {
+        document.getElementById('add-aid-popup').style.display = 'none';
     });
 
+    document.getElementById('add-aid-button').addEventListener('click', function () {
+        addAid();
+    });
+
+    function addAid() {
+
+        var aidId = document.getElementById('add-aid-id').value
+        var sectionId = document.getElementById('add-section-list').value;
+        var category = document.getElementById('add-category-list').value;
+        var productName = document.getElementById('add-product-name').value;
+        var registered = document.getElementById('add-aid-registered').value;
+        var inspection = document.getElementById('add-inspection').value;
+        var patient = document.getElementById('add-patient-list').value;
+        var comment = document.getElementById('add-comment').value;
+
+            $.ajax({
+            url: '/Home/AddAidToDatabase',
+            method: 'POST',
+            data: {
+                Id: aidId,
+                SectionId: sectionId,
+                Category: category,
+                ProductName: productName,
+                Registered: registered,
+                Inspection: inspection,
+                PatientId: patient,
+                Comment: comment
+            },
+            success: function (response) {
+                if (response.success) {
+                    document.getElementById('add-aid-popup').style.display = 'none';
+                    location.reload(true);
+                } else {
+                    alert('Det gick inte att lägga till hjälpmedlet.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
     /*NEW CATEGORY*/
-    var categoryList = document.getElementById('category-list');
+    var categoryList = document.getElementById('add-category-list');
     var updateCategoryList = document.getElementById('update-category-list');
     var newCategoryPopup = document.getElementById('new-category-popup');
     var addCategoryButton = document.getElementById('add-category-button');
     var cancelAddCategory = document.getElementById('cancel-add-category');
-
 
     function addNewCategoryToList(categoryName, list) {
         if (categoryName.trim() !== '') {
@@ -307,7 +362,7 @@
                 }
             }
 
-            var sectionId = this.getAttribute('data-section-id');
+            var sectionId = this.getAttribute('data-section');
             var sectionSelectElement = document.getElementById('update-aid-section');
 
             for (var i = 0; i < sectionSelectElement.options.length; i++) {
@@ -353,41 +408,48 @@
         aidPopup.style.display = 'none';
     });
 
-    var confirmPopup = document.getElementById('confirm-popup');
-    var confirmYes = document.getElementById('confirm-yes');
-    var confirmNo = document.getElementById('confirm-no');
-    var confirmText = document.getElementById('confirm-text');
+    document.getElementById('update-aid-button').addEventListener('click', function () {
 
-    document.getElementById('update-aid-button').addEventListener('click', function (event) {
-        event.preventDefault();
-        confirmPopup.style.display = 'block';
-        confirmYes.dataset.action = 'update';
-        confirmText.textContent = 'Vill du spara ändringarna på detta hjälpmedel?';
-    });
+        var id = document.getElementById('update-id').value;
+        var unitId = document.getElementById('update-aid-unit').value;
+        var sectionId = document.getElementById('update-aid-section').value;
+        var category = document.getElementById('update-category-list').value;
+        var productName = document.getElementById('update-product-name').value;
+        var registered = document.getElementById('update-registered').value;
+        var inspection = document.getElementById('update-inspection').value;
+        var patient = document.getElementById('update-patient').value;
+        var comment = document.getElementById('update-comment').value;
 
-    document.getElementById('delete-aid-button').addEventListener('click', function (event) {
-        event.preventDefault();
-        confirmPopup.style.display = 'block';
-        confirmYes.dataset.action = 'delete';
-        confirmText.textContent = 'Vill du ta bort detta hjälpmedel?';
-    });
+        console.log(productName);
 
-    confirmNo.addEventListener('click', function (event) {
-        event.preventDefault();
-        confirmPopup.style.display = 'none';
-    });
+        $.ajax({
+            url: '/Home/UpdateAidToDatabase',
+            method: 'POST',
+            data: {
+                Id: id,
+                UnitId: unitId,
+                SectionId: sectionId,
+                Category: category,
+                ProductName: productName,
+                Registered: registered,
+                Inspection: inspection,
+                PatientId: patient,
+                Comment: comment,
+                FormAction: 'update'
+            },
+            success: function (response) {
+                if (response.success) {
+                    aidPopup.style.display = 'none';
+                    location.reload(true);
 
-    confirmYes.addEventListener('click', function () {
-        var action = this.dataset.action;
-        var form = document.getElementById('update-aid-form');
-
-        if (action === 'update') {
-            form.formAction.value = 'update';
-        } else if (action === 'delete') {
-            form.formAction.value = 'delete';
-        }
-
-        form.submit();
+                } else {
+                    alert('Det gick inte att uppdatera hjälpmedlet.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 
     /*SCAN QR*/

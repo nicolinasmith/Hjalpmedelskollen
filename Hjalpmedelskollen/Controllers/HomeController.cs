@@ -97,22 +97,23 @@ namespace Hjalpmedelskollen.Controllers
                     }
 
                     await _dbRepository.AddAid(aid, selectedMonth);
-                    return RedirectToAction("Index", new { _selectedUnit });
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel lades till i databasen.");
-                    return BadRequest($"Ett fel inträffade när ett hjälpmedel lades till i databasen: {ex.Message}.");
+                    return Json(new { success = false, error = $"Ett fel inträffade när ett hjälpmedel lades till i databasen: {ex.Message}" });
                 }
             }
             else
             {
-                return View("Index", aid);
+                return BadRequest(ModelState);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction, int unitId)
+        public async Task<IActionResult> UpdateAidToDatabase(AidModel aid, string formAction)
         {
             if (formAction == "update")
             {
@@ -121,17 +122,18 @@ namespace Hjalpmedelskollen.Controllers
                     try
                     {
                         await _dbRepository.UpdateAid(aid);
-                        return RedirectToAction("Index", new { unitId });
+                        var response = new { success = true };
+                        return Json(response);
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel uppdaterades i databasen.");
-                        return BadRequest($"Ett fel inträffade när ett hjälpmedel uppdaterades i databasen: {ex.Message}.");
+                        return Json(new { success = false, error = $"Ett fel inträffade när ett hjälpmedel uppdaterades i databasen: {ex.Message}." });
                     }
                 }
                 else
                 {
-                    return View("Index", aid);
+                    return BadRequest(ModelState);
                 }
             }
             else if (formAction == "delete")
@@ -139,17 +141,18 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.DeleteAid(aid);
-                    return RedirectToAction("Index", new { unitId });
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Ett fel inträffade när ett hjälpmedel togs bort från databasen.");
-                    return BadRequest($"Ett fel inträffade när ett hjälpmedel togs bort från databasen: {ex.Message}.");
+                    return BadRequest(new { success = false, error = $"Ett fel inträffade när ett hjälpmedel togs bort från databasen: {ex.Message}." });
                 }
             }
             else
             {
-                return BadRequest("Ett fel inträffade.");
+                return BadRequest(ModelState);
             }
         }
 

@@ -1,21 +1,20 @@
 ﻿
 <div id="add-aid-popup" class="popup-container">
 	<div class="l-pop-up" id="add-aid">
-		<form method="post" action="/Home/AddAidToDatabase" id="add-aid-form">
 			<h3>Registrera hjälpmedel på @Model.SelectedUnit.Name</h3>
 			<div class="add-aid-row">
 				<div>
 					<div class="add-form">
 						<label for="registered">Registreringsdatum</label>
-						<input type="text" id="registered-today" name="registered" value="" readonly class="disabled-input">
+						<input type="text" id="add-aid-registered" name="registered" value="" readonly class="disabled-input">
 					</div>
 					<div class="add-form">
 						<label for="id">Registreringsnummer: *</label>
-						<input type="text" id="id" name="id" required>
+						<input type="text" id="add-aid-id" name="id" required>
 					</div>
 					<div class="add-form">
 						<label for="category">Kategori: *</label>
-						<select id="category-list" name="category">
+						<select id="add-category-list" name="category">
 							@foreach (var category in Model.Categories)
 							{
 								<option value="@category.Name">@category.Name</option>
@@ -25,13 +24,13 @@
 					</div>
 					<div class="add-form">
 						<label for="product-name">Produktnamn: *</label>
-						<input type="text" id="product-name" name="productName" required>
+						<input type="text" id="add-product-name" name="productName" required>
 					</div>
 				</div>
 				<div>
 					<div class="add-form">
 						<label for="sectionId">Avdelning eller förråd: *</label>
-						<select id="section-list" name="sectionId">
+						<select id="add-section-list" name="sectionId">
 							@foreach (var s in Model.Sections)
 							{
 								<option value="@s.Id">@s.Name</option>
@@ -40,7 +39,7 @@
 					</div>
 					<div class="add-form">
 						<label for="patientId">Koppla till patient:</label>
-						<select id="patient-list" name="patientId">
+						<select id="add-patient-list" name="patientId">
 							<option value="">-</option>
 							@foreach (var patient in Model.Patients)
 							{
@@ -50,11 +49,11 @@
 					</div>
 					<div class="add-form">
 						<label for="inspection">Nästa besiktning:</label>
-						<input type="month" id="inspection" name="inspection">
+						<input type="month" id="add-inspection" name="inspection">
 					</div>
 					<div class="add-form">
 						<label for="comment">Kommentar:</label>
-						<input id="comment" name="comment">
+						<input id="add-comment" name="comment">
 					</div>
 				</div>
 			</div>
@@ -62,17 +61,5 @@
 				<button type="submit" id="add-aid-button">Registrera</button>
 				<button type="button" id="cancel-add-aid">Avbryt</button>
 			</div>
-		</form>
-	</div>
-</div>
-
-<div id="add-aid-feedback" class="popup-container">
-	<div class="pop-up">
-		<div>
-			<p id="add-feedback-text"></p>
-		</div>
-		<div class="popup-buttons">
-			<button type="button" id="ok-add-feedback">OK</button>
-		</div>
 	</div>
 </div>
