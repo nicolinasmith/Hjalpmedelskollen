@@ -20,48 +20,103 @@
     });
 
     /*AIDS BY UNIT - SELECT UNIT*/
-    var changeUnit = document.getElementById('change-unit');
-    var changeUnitMobile = document.getElementById('mobile-change-unit');
-    var unitPopup = document.getElementById('unit-popup');
-    var cancelSelectUnit = document.getElementById('cancel-select-unit');
-
-    changeUnit.addEventListener('click', function () {
-        unitPopup.style.display = 'block';
+    document.getElementById('change-unit').addEventListener('click', function () {
+        document.getElementById('unit-popup').style.display = 'block';
     });
 
-    changeUnitMobile.addEventListener('click', function () {
-        unitPopup.style.display = 'block';
+    document.getElementById('mobile-change-unit').addEventListener('click', function () {
+        document.getElementById('unit-popup').style.display = 'block';
     });
 
-    cancelSelectUnit.addEventListener('click', function () {
-        unitPopup.style.display = 'none';
+    document.getElementById('cancel-select-unit').addEventListener('click', function () {
+        document.getElementById('unit-popup').style.display = 'none';
     });
 
     /*AIDS BY UNIT - HANDLE PATIENTS*/
-    var displayPatients = document.getElementById('display-patients');
     var patientPopup = document.getElementById('patients-popup');
     var closePatientPopup = document.getElementById('close-patients-popup');
-    var patientRow = document.querySelectorAll('.patient-row');
     var updatePatient = document.getElementById('update-patient-popup');
     var cancelUpdatePatient = document.getElementById('cancel-update-patient');
-    var addPatientPopup = document.getElementById('add-patient-popup');
-    var addPatientButton = document.getElementById('add-patient-button');
-    var cancelAddPatient = document.getElementById('cancel-add-patient');
 
-    cancelAddPatient.addEventListener('click', function () {
-        addPatientPopup.style.display = 'none';
+
+    document.getElementById('display-patients').addEventListener('click', function () {
+        document.getElementById('patients-popup').style.display = 'block';
     });
 
-    addPatientButton.addEventListener('click', function () {
-        addPatientPopup.style.display = 'block';
+    document.getElementById('add-patient-button').addEventListener('click', function () {
+        document.getElementById('add-patient-popup').style.display = 'block';
     });
 
-    displayPatients.addEventListener('click', function () {
-        patientPopup.style.display = 'block';
+    document.getElementById('add-new-patient').addEventListener('click', function () {
+        addPatient();
     });
 
+    function addPatient() {
+
+        var patientNumber = document.getElementById('add-patient-number').value;
+        var patientName = document.getElementById('add-patient-name').value;
+        var sectionId = document.getElementById('add-patient-section').value;
+
+        $.ajax({
+            url: '/Home/AddPatientToDatabase',
+            method: 'POST',
+            data: {
+                PatientNumber: patientNumber,
+                Name: patientName,
+                SectionId: sectionId,
+            },
+            success: function (response) {
+                if (response.success) {
+                    document.getElementById('add-patient-popup').style.display = 'none';
+                    $("#patient-table").load("/Home/Index #patient-table");
+                } else {
+                    alert('Det gick inte att lägga till patienten.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    function UpdatePatient() {
+
+        var patientId = document.getElementById('update-patient-id').value;
+        var patientNumber = document.getElementById('update-patient-number').value;
+        var name = document.getElementById('update-patient-name').value;
+        var section = document.getElementById('update-patient-section').value;
+
+        $.ajax({
+            url: '/Home/UpdatePatientToDatabase',
+            method: 'POST',
+            data: {
+                PatientNumber: patientNumber,
+                Name: name,
+                SectionId: section,
+                Id: patientId
+            },
+            success: function (response) {
+                if (response.success) {
+                    updatePatient.style.display = 'none';
+                    $("#patient-table").load("/Home/Index #patient-table");
+                } else {
+                    alert('Det gick inte att uppdatera patienten.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    document.getElementById('cancel-add-patient').addEventListener('click', function () {
+        document.getElementById('add-patient-popup').style.display = 'none';
+    });
+
+    var patientRow = document.querySelectorAll('.patient-row');
     patientRow.forEach(function (row) {
         row.addEventListener('click', function () {
+            var patientId = this.getAttribute('data-patient-id');
             var patientNumber = this.getAttribute('data-patient-number');
             var name = this.getAttribute('data-name');
             var section = this.getAttribute('data-section');
@@ -70,11 +125,16 @@
                 document.getElementById('update-patient-section').value = section;
             }
 
+            document.getElementById('update-patient-id').value = patientId;
             document.getElementById('update-patient-number').value = patientNumber;
             document.getElementById('update-patient-name').value = name;
 
             updatePatient.style.display = 'block';
         });
+    });
+
+    document.getElementById('update-patient-button').addEventListener('click', function () {
+        UpdatePatient();
     });
 
     cancelUpdatePatient.addEventListener('click', function () {
@@ -432,7 +492,6 @@
     }
 
     function displayQrAid(aid) {
-        console.log(aid);
 
         document.getElementById('qr-popup').style.display = 'none';
         document.getElementById('update-aid-popup').style.display = 'block';
@@ -478,27 +537,75 @@
     }
 
     /*AIDS BY UNIT - NOTE BOARD*/
-    var displayAddNote = document.getElementById('display-new-note-button');
-    var addNotePopup = document.getElementById('add-note-popup');
-    var cancelAddNote = document.getElementById('cancel-add-note');
-    var showAllNotesButton = document.getElementById('show-all-notes-button');
-    var cancelShowNotes = document.getElementById('cancel-show-notes');
-    var showAllNotes = document.getElementById('show-all-notes');
-    var deleteNote = document.querySelector('delete-note');
-
-    displayAddNote.addEventListener('click', function () {
-        addNotePopup.style.display = 'block';
+    document.getElementById('display-new-note-button').addEventListener('click', function () {
+        document.getElementById('add-note-popup').style.display = 'block';
     });
 
-    cancelAddNote.addEventListener('click', function () {
-        addNotePopup.style.display = 'none';
+    document.getElementById('cancel-add-note').addEventListener('click', function () {
+        document.getElementById('add-note-popup').style.display = 'none';
     });
 
-    showAllNotesButton.addEventListener('click', function () {
-        showAllNotes.style.display = 'block';
+    document.getElementById('cancel-show-notes').addEventListener('click', function () {
+        document.getElementById('show-all-notes').style.display = 'none';
     });
 
-    cancelShowNotes.addEventListener('click', function () {
-        showAllNotes.style.display = 'none';
+    document.getElementById('show-all-notes-button').addEventListener('click', function () {
+        document.getElementById('show-all-notes').style.display = 'block';
+    });
+
+    function addNote() {
+        var note = document.getElementById('Note').value;
+        var unitId = document.getElementById('UnitId').value;
+
+        $.ajax({
+            url: '/Home/AddNoteToDatabase',
+            method: 'POST',
+            data: {
+                Note: note,
+                UnitId: unitId
+            },
+            success: function (response) {
+                if (response.success) {
+                    document.getElementById('add-note-popup').style.display = 'none';
+                    $("#note-aside").load("/Home/Index #note-aside");
+                    $("#all-notes-container").load("/Home/Index #all-notes-container");
+                } else {
+                    alert('Det gick inte att lägga till anteckningen.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    document.getElementById('add-note-button').addEventListener('click', function () {
+        addNote()
+    });
+
+    document.querySelectorAll('.delete-note').forEach(function (button) {
+        button.addEventListener('click', function () {
+
+            var noteId = this.getAttribute('data-note-id');
+
+            $.ajax({
+                url: '/Home/DeleteNoteFromDatabase',
+                method: 'POST',
+                data: {
+                    noteId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $(`[data-note-id=${noteId}]`).remove();
+                        $("#note-aside").load("/Home/Index #note-aside");
+                    } else {
+                        alert("Det gick inte att ta bort anteckningen.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
     });
 });

@@ -99,10 +99,10 @@ namespace Hjalpmedelskollen.DAL
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PatientModel>> GetPatients(List<int> sectionIds)
+        public async Task<IEnumerable<PatientModel>> GetPatients(int unitId)
         {
             var patients = await _context.Patients
-                .Where(p => sectionIds.Contains(p.SectionId))
+                .Where(p => p.Section.UnitId == unitId)
                 .OrderBy(p => p.PatientNumber)
                 .ToListAsync();
 
