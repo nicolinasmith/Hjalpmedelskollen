@@ -167,21 +167,13 @@
 
     /*AIDS BY UNIT - ADD AID*/
     var addAidPopup = document.getElementById('add-aid-popup');
-    var addAidUnit = document.getElementById('unit-list');
     var addNewAid = document.getElementById('add-new-aid');
     var addNewAidMobile = document.getElementById('mobile-add-new-aid');
     var cancelAddAid = document.getElementById('cancel-add-aid');
 
     function handleAddAidClick() {
         addAidPopup.style.display = 'block';
-
-        var unitId = this.getAttribute('data-selected-unit');
-        var selectElement = document.getElementById('unit-list');
-        var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
-
-        if (unitOption) {
-            selectElement.value = unitId;
-        }
+        document.getElementById('registered-today').value = new Date().toLocaleDateString('sv-SE');
     }
 
     addNewAid.addEventListener('click', handleAddAidClick);
