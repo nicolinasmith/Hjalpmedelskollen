@@ -108,7 +108,10 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" 
+                                            data-unit-id="@aid.Section.UnitId" data-section-id="@aid.SectionId" data-patient="@aid.PatientId" 
+                                            data-product-name="@aid.ProductName" data-comment="@aid.Comment" data-inspection="@inspectionDate"
+                                            data-patient="@aid.PatientId">
                             <td class="m-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
