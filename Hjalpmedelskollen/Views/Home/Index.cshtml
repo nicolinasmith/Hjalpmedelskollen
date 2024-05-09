@@ -8,13 +8,14 @@
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
+        <li id="display-sections" class="small-li">Avdelningar</li>
         <li id="display-patients" class="small-li">Hantera patienter</li>
+        <li id="add-new-aid" class="small-li">Registrera hjälpmedel</li>
     </ul>
 </div>
 <div id="aids-by-unit">
     <div id="mobile-buttons">
-        <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
+        <h1>@Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
         <button id="mobile-add-new-aid" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
@@ -24,48 +25,39 @@
         <div class="overview-content">
             <h1 class="headline">@Model.SelectedUnit.Name</h1>
             <h2>Hjälpmedelsöversikt</h2>
-            <div class="selection-background">
-                <div id="section-buttons">
-                    <button data-section-id="all">Alla</button>
-                    @foreach (var unitSection in Model.Sections)
-                    {
-					    <button data-section-id="@unitSection.Id">@unitSection.Name</button>
-                    }
-                </div>
+            <p>Antal registrerade hjälpmedel: @Model.Aids.Count()</p>
                 <div class="filter-selections">
+                <div class="selection">
+                    <label for="section">Avdelning & förråd:</label>
+                    <select id="select-section" name="section">
+                        <option value="all">Alla</option>
+                        @foreach (var s in Model.Sections)
+                        {
+                            <option value="@s.Id">@s.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="selection">
+                    <label for="patient">Patient:</label>
+                    <select id="select-patient" name="patient">
+                        <option value="all">Alla</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
+                        }
+                    </select>
+                </div>
                     <div class="selection">
                         <label for="category">Kategori:</label>
                         <select id="select-category" name="category">
-                            <option value="Alla">Alla</option>
+                            <option value="all">Alla</option>
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Name">@category.Name</option>
                             }
                         </select>
                     </div>
-                    <div class="selection">
-                        <label for="status">Status:</label>
-                        <select id="select-status" name="status">
-                            <option value="Alla">Alla</option>
-                            <option value="Ledigt">Ledigt</option>
-                            <option value="Upptaget">Upptaget</option>
-                        </select>
-                    </div>
-                    <div class="selection">
-                        <label for="location">Plats / patient:</label>
-                        <select id="select-location" name="location">
-                            <option value="Alla">Alla</option>
-                            <option value="Förråd">Förråd</option>
-                            <option value="Avdelning">Avdelning</option>
-                        
-                            @foreach (var patient in Model.Patients)
-                            {
-                                <option value="@patient.PatientNumber @patient.Name">@patient.PatientNumber @patient.Name</option>
-                            }
-                        </select>
-                    </div>
                 </div>
-            </div>
             <div class="table-container">
                 <table class="table-style" id="aid-table">
                     <tr class="table-header">
@@ -108,14 +100,17 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-unit-id="@aid.Section.Unit.Id">
-                            <td class="m-column">@aid.Id</td>
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" 
+                                            data-unit-id="@aid.Section.UnitId" data-section-id="@aid.SectionId" data-patient="@aid.PatientId" 
+                                            data-product-name="@aid.ProductName" data-comment="@aid.Comment" data-inspection="@inspectionDate"
+                                            data-patient="@aid.PatientId" data-section="@aid.SectionId">
+                            <td class="s-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>
 						    <td class="l-column">
                                 @if (aid.Patient != null)
                                 {
-                                    <i class="fa-solid fa-circle red-circle"></i> @aid.Patient.Name @:| @aid.Section.Name
+                                    <i class="fa-solid fa-circle red-circle"></i>@aid.Patient.Name @:| @aid.Section.Name
                                 }
                                 else
 								{
@@ -172,9 +167,9 @@
             @foreach (var patient in Model.Patients)
             {
                 <tr class="patient-row" data-patient-number="@patient.PatientNumber" data-name="@patient.Name" data-section="@patient.SectionId">
-                    <td>@patient.PatientNumber</td>
-                    <td>@patient.Name</td>
-                    <td>@Model.Sections.FirstOrDefault(s => s.Id == patient.SectionId).Name</td>
+                    <td class="s-column">@patient.PatientNumber</td>
+                    <td class="m-column">@patient.Name</td>
+                    <td class="m-column">@Model.Sections.FirstOrDefault(s => s.Id == patient.SectionId).Name</td>
                 </tr>
             }
         </table>
@@ -200,9 +195,9 @@
             <div class="add-form">
                 <label for="update-patient-section">Avdelning:</label>
                 <select id="update-patient-section" name="SectionId">
-                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                    @foreach (var s in Model.Sections.Where(s => s.Name != "Förråd"))
                     {
-                        <option value="@ssection.Id">@ssection.Name</option>
+                        <option value="@s.Id">@s.Name</option>
                     }
                 </select>
             </div>
@@ -229,15 +224,16 @@
             </div>
             <div class="add-form">
                 <label for="patient-section">Avdelning:</label>
-                <select>
-                    @foreach (var ssection in Model.Sections.Where(s => s.Name != "Förråd"))
+                <select id="patient-section" name="sectionId">
+                    @foreach (var s in Model.Sections.Where(s => s.Name != "Förråd"))
                     {
-                        <option value="@ssection.Id">@ssection.Name</option>
+                        <option value="@s.Id">@s.Name</option>
                     }
                 </select>
             </div>
 
             <div class="popup-buttons">
+                <input type="hidden" name="unitId" value="@Model.SelectedUnit.Id" />
                 <button type="submit" id="add-patient-button">Spara</button>
                 <button type="button" id="cancel-add-patient">Avbryt</button>
             </div>

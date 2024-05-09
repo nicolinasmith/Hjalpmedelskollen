@@ -286,10 +286,14 @@ label {
 
 .green-circle {
     color: rgba(144, 238, 144, 0.7);
+    font-size: 8px;
+    margin-right: 3px;
 }
 
 .red-circle {
     color: rgba(255, 0, 0, 0.5);
+    font-size: 8px;
+    margin-right: 3px;
 }
 
 .yellow-background {
@@ -569,8 +573,8 @@ video {
         margin-top: 20px;
     }
 
-    .table-style th:nth-child(1),
-    .table-style td:nth-child(1),
+    .table-style th:nth-child(4),
+    .table-style td:nth-child(4),
     .table-style th:nth-child(5),
     .table-style td:nth-child(5),
     .table-style th:nth-child(6),
@@ -578,10 +582,6 @@ video {
     .table-style th:nth-child(7),
     .table-style td:nth-child(7) {
         display: none;
-    }
-
-    .table-style td:nth-child(4) {
-        color: transparent;
     }
 
     .selection {

@@ -6,6 +6,10 @@
 			<div class="add-aid-row">
 				<div>
 					<div class="add-form">
+						<label for="registered">Registreringsdatum</label>
+						<input type="text" id="registered-today" name="registered" value="" readonly class="disabled-input">
+					</div>
+					<div class="add-form">
 						<label for="id">Registreringsnummer: *</label>
 						<input type="text" id="id" name="id" required>
 					</div>
@@ -26,7 +30,7 @@
 				</div>
 				<div>
 					<div class="add-form">
-						<label for="sectionId">Avdelning: *</label>
+						<label for="sectionId">Avdelning eller förråd: *</label>
 						<select id="section-list" name="sectionId">
 							@foreach (var s in Model.Sections)
 							{
