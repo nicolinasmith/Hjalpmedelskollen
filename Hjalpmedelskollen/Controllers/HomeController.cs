@@ -176,8 +176,8 @@ namespace Hjalpmedelskollen.Controllers
                 try
                 {
                     await _dbRepository.AddNote(newNote);
-                    var updatedNotes = await _dbRepository.GetNotes(newNote.UnitId);
-                    return Json(new { success = true, notes = updatedNotes });
+                    var response = new { success = true };
+                    return Json(response);
                 }
                 catch (Exception ex)
                 {
@@ -225,7 +225,7 @@ namespace Hjalpmedelskollen.Controllers
             }
             else
             {
-                return View("Index", newPatient);
+                return BadRequest(ModelState);
             }
         }
 
