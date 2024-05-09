@@ -135,7 +135,7 @@
                     var trimmedDate = note.Date.ToString("yyyy-MM-dd");
 
                     <div class="note-container">
-                        <div class="note">
+                        <div class="note" data-note-id="@note.Id">
                             <b>@trimmedDate</b>
                             <p class="long-message">@note.Note</p>
                         </div>
