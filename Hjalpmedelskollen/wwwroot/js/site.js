@@ -164,6 +164,25 @@
         patientPopup.style.display = 'none';
     });
 
+    /*AIDS BY UNIT - PATIENT BY SECTION*/
+    document.getElementById('select-patient-section').addEventListener('change', filterPatients);
+
+    function filterPatients() {
+        var selectedSection = document.getElementById('select-patient-section').value;
+
+        var patientRows = document.querySelectorAll('.patient-row');
+
+        patientRows.forEach(function (row) {
+            var section = row.dataset.section;
+
+            if (selectedSection === 'all' || selectedSection === section) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
 
     /*AIDS BY UNIT - FILTER*/
     document.getElementById('select-category').addEventListener('change', filterAids);
