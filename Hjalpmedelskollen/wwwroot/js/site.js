@@ -432,7 +432,6 @@
     }
 
     function displayQrAid(aid) {
-        console.log(aid);
 
         document.getElementById('qr-popup').style.display = 'none';
         document.getElementById('update-aid-popup').style.display = 'block';
@@ -478,27 +477,76 @@
     }
 
     /*AIDS BY UNIT - NOTE BOARD*/
-    var displayAddNote = document.getElementById('display-new-note-button');
-    var addNotePopup = document.getElementById('add-note-popup');
-    var cancelAddNote = document.getElementById('cancel-add-note');
-    var showAllNotesButton = document.getElementById('show-all-notes-button');
-    var cancelShowNotes = document.getElementById('cancel-show-notes');
-    var showAllNotes = document.getElementById('show-all-notes');
-    var deleteNote = document.querySelector('delete-note');
-
-    displayAddNote.addEventListener('click', function () {
-        addNotePopup.style.display = 'block';
+    document.getElementById('display-new-note-button').addEventListener('click', function () {
+        document.getElementById('add-note-popup').style.display = 'block';
     });
 
-    cancelAddNote.addEventListener('click', function () {
-        addNotePopup.style.display = 'none';
+    document.getElementById('cancel-add-note').addEventListener('click', function () {
+        document.getElementById('add-note-popup').style.display = 'none';
     });
 
-    showAllNotesButton.addEventListener('click', function () {
-        showAllNotes.style.display = 'block';
+    document.getElementById('cancel-show-notes').addEventListener('click', function () {
+        document.getElementById('show-all-notes').style.display = 'none';
     });
 
-    cancelShowNotes.addEventListener('click', function () {
-        showAllNotes.style.display = 'none';
+    document.getElementById('show-all-notes-button').addEventListener('click', function () {
+        document.getElementById('show-all-notes').style.display = 'block';
     });
+
+    function addNote() {
+        var note = document.getElementById('Note').value;
+        var unitId = document.getElementById('UnitId').value;
+
+        $.ajax({
+            url: '/Home/AddNoteToDatabase',
+            method: 'POST',
+            data: {
+                Note: note,
+                UnitId: unitId
+            },
+            success: function (response) {
+                if (response.success) {
+                    document.getElementById('add-note-popup').style.display = 'none';
+                    $("#note-aside").load("/Home/Index #note-aside");
+                    $("#all-notes-container").load("/Home/Index #all-notes-container");
+                } else {
+                    alert('Det gick inte att lägga till anteckningen.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    document.getElementById('add-note-button').addEventListener('click', function () {
+        addNote()
+    });
+
+    document.querySelectorAll('.delete-note').forEach(function (button) {
+        button.addEventListener('click', function () {
+
+            var noteId = this.getAttribute('data-note-id');
+
+            $.ajax({
+                url: '/Home/DeleteNoteFromDatabase',
+                method: 'POST',
+                data: {
+                    noteId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $(`[data-note-id=${noteId}]`).remove();
+                        $("#note-aside").load("/Home/Index #note-aside");
+                    } else {
+                        alert("Det gick inte att ta bort anteckningen.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
 });

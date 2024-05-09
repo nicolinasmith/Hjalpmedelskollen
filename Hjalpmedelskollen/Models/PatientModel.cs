@@ -16,5 +16,7 @@ namespace Hjalpmedelskollen.Models
 
         [ForeignKey ("SectionModel")]
         public int SectionId { get; set; }
+
+        public SectionModel? Section { get; set; }
     }
 }
