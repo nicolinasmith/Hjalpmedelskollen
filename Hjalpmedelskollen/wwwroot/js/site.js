@@ -92,7 +92,7 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-patient-popup').style.display = 'none';
-                    $("#patient-table").load("/Home/Index?unitId=" + unitId +" #patient-table");
+                    $("#patient-table").load("/Home/Index?unitId=" + unitId + " #patient-table");
                 } else {
                     alert('Det gick inte att lägga till patienten.');
                 }
@@ -227,7 +227,6 @@
             } else {
                 row.style.display = 'none';
             }
-
         });
     }
 
@@ -334,6 +333,17 @@
             }
         });
     });
+
+
+    $('#add-section-list').change(function () {
+
+        var sectionId = $(this).val();
+        var patientList = $('#add-patient-list');
+
+
+
+    });
+
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('add-category-list');
@@ -504,7 +514,9 @@
             success: function (response) {
                 if (response.success) {
                     $('#update-aid-popup').hide();
-                    $('#aid-table').load("/Home/Index #aid-table");
+                    $('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
+                    });
 
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');

@@ -321,7 +321,7 @@ label {
 }
 
 .highlight-aid {
-    border: 2px solid #fac212;
+    border: 2px solid rgba(144, 238, 144, 0.7);
 }
 
 .filter-selections {
