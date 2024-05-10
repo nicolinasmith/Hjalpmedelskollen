@@ -79,6 +79,7 @@
         var patientNumber = document.getElementById('add-patient-number').value;
         var patientName = document.getElementById('add-patient-name').value;
         var sectionId = document.getElementById('add-patient-section').value;
+        var unitId = document.getElementById('add-patient-unit-id').value;
 
         $.ajax({
             url: '/Home/AddPatientToDatabase',
@@ -91,7 +92,7 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-patient-popup').style.display = 'none';
-                    $("#patient-table").load("/Home/Index #patient-table");
+                    $("#patient-table").load("/Home/Index?unitId=" + unitId +" #patient-table");
                 } else {
                     alert('Det gick inte att lägga till patienten.');
                 }

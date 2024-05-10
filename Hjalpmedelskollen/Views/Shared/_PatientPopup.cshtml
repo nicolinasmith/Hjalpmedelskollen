@@ -52,7 +52,11 @@
                 <select id="update-patient-section" name="SectionId">
                     @foreach (var s in Model.Sections)
                     {
-                        <option value="@s.Id">@s.Name</option>
+                        @if(s.Name != "Förråd")
+						{
+							<option value="@s.Id">@s.Name</option>
+						
+						}
                     }
                 </select>
             </div>
@@ -80,7 +84,11 @@
                 <select id="add-patient-section" name="SectionId">
                     @foreach (var s in Model.Sections)
                     {
-                        <option value="@s.Id">@s.Name</option>
+                        @if(s.Name != "Förråd")
+                        {
+                            <option value="@s.Id">@s.Name</option>
+                        
+                        }
                     }
                 </select>
             </div>

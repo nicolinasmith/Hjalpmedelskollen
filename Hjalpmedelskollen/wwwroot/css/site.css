@@ -584,6 +584,12 @@ video {
         display: none;
     }
 
+    .table-style th:nth-child(1),
+    .table-style th:nth-child(2),
+    .table-style th:nth-child(3) {
+        color: transparent;
+    }
+
     .selection {
         display: flex;
         flex-direction: column;
@@ -608,8 +614,8 @@ video {
         margin: 0;
     }
 
-    .m-column {
-        width: 50%;
+    #aid-row-id {
+        width: 20%;
     }
 
     #mobile-buttons {
