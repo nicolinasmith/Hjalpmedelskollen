@@ -92,7 +92,7 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-patient-popup').style.display = 'none';
-                    $("#patient-table").load("/Home/Index?unitId=" + unitId +" #patient-table");
+                    $("#patient-table").load("/Home/Index?unitId=" + unitId + " #patient-table");
                 } else {
                     alert('Det gick inte att lägga till patienten.');
                 }
@@ -107,6 +107,7 @@
         document.getElementById('add-patient-popup').style.display = 'none';
     });
 
+    /*
     var patientRow = document.querySelectorAll('.patient-row');
     patientRow.forEach(function (row) {
         row.addEventListener('click', function () {
@@ -125,7 +126,24 @@
 
             updatePatient.style.display = 'block';
         });
+    });*/
+
+    $('#patient-table').on('click', '.patient-row', function () {
+
+        var patientId = $(this).data('patient-id');
+        var patientNumber = $(this).data('patient-number');
+        var name = $(this).data('name');
+        var section = $(this).data('section');
+
+        $('#update-patient-id').val(patientId);
+        $('#update-patient-number').val(patientNumber);
+        $('#update-patient-name').val(name);
+        $('#update-patient-section').val(section);
+
+        $('#update-patient-popup').show();
     });
+
+
 
     document.getElementById('update-patient-button').addEventListener('click', function () {
 
@@ -145,7 +163,7 @@
             },
             success: function (response) {
                 if (response.success) {
-                    updatePatient.style.display = 'none';
+                    $('#update-patient-popup').hide();
                     $("#patient-table").load("/Home/Index #patient-table");
                 } else {
                     alert('Det gick inte att uppdatera patienten.');
@@ -165,7 +183,7 @@
         patientPopup.style.display = 'none';
     });
 
-    /*AIDS BY UNIT - PATIENT BY SECTION*/
+    /*AIDS BY UNIT - FILTER PATIENT BY SECTION*/
     document.getElementById('select-patient-section').addEventListener('change', filterPatients);
 
     function filterPatients() {
@@ -209,7 +227,6 @@
             } else {
                 row.style.display = 'none';
             }
-
         });
     }
 
@@ -278,10 +295,6 @@
     });
 
     document.getElementById('add-aid-button').addEventListener('click', function () {
-        addAid();
-    });
-
-    function addAid() {
 
         var aidId = document.getElementById('add-aid-id').value
         var sectionId = document.getElementById('add-section-list').value;
@@ -292,7 +305,7 @@
         var patient = document.getElementById('add-patient-list').value;
         var comment = document.getElementById('add-comment').value;
 
-            $.ajax({
+        $.ajax({
             url: '/Home/AddAidToDatabase',
             method: 'POST',
             data: {
@@ -308,7 +321,9 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-aid-popup').style.display = 'none';
-                    location.reload(true);
+                    $('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
+                    });
                 } else {
                     alert('Det gick inte att lägga till hjälpmedlet.');
                 }
@@ -317,7 +332,18 @@
                 console.error(xhr.responseText);
             }
         });
-    }
+    });
+
+
+    $('#add-section-list').change(function () {
+
+        var sectionId = $(this).val();
+        var patientList = $('#add-patient-list');
+
+
+
+    });
+
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('add-category-list');
@@ -362,10 +388,37 @@
     });
 
     /*AIDS BY UNIT - UPDATE AID*/
-    var aidRows = document.querySelectorAll('.aid-row');
-    var aidPopup = document.getElementById('update-aid-popup');
-    var cancelUpdateAid = document.getElementById('cancel-update-aid');
+    //var aidRows = document.querySelectorAll('.aid-row');
+    //var aidPopup = document.getElementById('update-aid-popup');
+    //var cancelUpdateAid = document.getElementById('cancel-update-aid');
 
+    $('#aid-table').on('click', '.aid-row', function () {
+
+        var id = $(this).data('id');
+        var unitId = $(this).data('unit-id');
+        var sectionId = $(this).data('section');
+        var category = $(this).data('category');
+        var productName = $(this).data('product-name');
+        var registered = $(this).data('registered');
+        var registeredDate = registered.split(' ')[0];
+        var inspection = $(this).data('inspection');
+        var patient = $(this).data('patient');
+        var comment = $(this).data('comment');
+
+        $('#update-id').val(id);
+        $('#update-aid-unit').val(unitId);
+        $('#update-aid-section').val(sectionId);
+        $('#update-category-list').val(category);
+        $('#update-product-name').val(productName);
+        $('#update-registered').val(registeredDate);
+        $('#update-inspection').val(inspection);
+        $('#update-patient').val(patient);
+        $('#update-comment').val(comment);
+
+        $('#update-aid-popup').show();
+    });
+
+    /*
     aidRows.forEach(function (row) {
         row.addEventListener('click', function () {
 
@@ -422,11 +475,12 @@
             
             aidPopup.style.display = 'block';
         });
+    });*/
+
+    $('#cancel-update-aid').click(function () {
+        $('#update-aid-popup').hide();
     });
 
-    cancelUpdateAid.addEventListener('click', function () {
-        aidPopup.style.display = 'none';
-    });
 
     document.getElementById('update-aid-button').addEventListener('click', function () {
 
@@ -459,8 +513,10 @@
             },
             success: function (response) {
                 if (response.success) {
-                    aidPopup.style.display = 'none';
-                    location.reload(true);
+                    $('#update-aid-popup').hide();
+                    $('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
+                    });
 
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
@@ -635,7 +691,8 @@
         document.getElementById('show-all-notes').style.display = 'block';
     });
 
-    function addNote() {
+    document.getElementById('add-note-button').addEventListener('click', function () {
+
         var note = document.getElementById('Note').value;
         var unitId = document.getElementById('UnitId').value;
 
@@ -659,12 +716,33 @@
                 console.error(xhr.responseText);
             }
         });
-    }
-
-    document.getElementById('add-note-button').addEventListener('click', function () {
-        addNote()
     });
 
+    $('#all-notes-container').on('click', '.delete-note', function () {
+        var noteId = $(this).data('note-id');
+
+        $.ajax({
+            url: '/Home/DeleteNoteFromDatabase',
+            method: 'POST',
+            data: {
+                noteId
+            },
+            success: function (response) {
+                if (response.success) {
+                    $(`[data-note-id=${noteId}]`).remove();
+                    $("#note-aside").load("/Home/Index #note-aside");
+                    $("#all-notes-container").load("/Home/Index #all-notes-container");
+                } else {
+                    alert("Det gick inte att ta bort anteckningen.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+    /*
     document.querySelectorAll('.delete-note').forEach(function (button) {
         button.addEventListener('click', function () {
 
@@ -689,5 +767,5 @@
                 }
             });
         });
-    });
+    });*/
 });
