@@ -107,6 +107,7 @@
         document.getElementById('add-patient-popup').style.display = 'none';
     });
 
+    /*
     var patientRow = document.querySelectorAll('.patient-row');
     patientRow.forEach(function (row) {
         row.addEventListener('click', function () {
@@ -125,7 +126,24 @@
 
             updatePatient.style.display = 'block';
         });
+    });*/
+
+    $('#patient-table').on('click', '.patient-row', function () {
+
+        var patientId = $(this).data('patient-id');
+        var patientNumber = $(this).data('patient-number');
+        var name = $(this).data('name');
+        var section = $(this).data('section');
+
+        $('#update-patient-id').val(patientId);
+        $('#update-patient-number').val(patientNumber);
+        $('#update-patient-name').val(name);
+        $('#update-patient-section').val(section);
+
+        $('#update-patient-popup').show();
     });
+
+
 
     document.getElementById('update-patient-button').addEventListener('click', function () {
 
