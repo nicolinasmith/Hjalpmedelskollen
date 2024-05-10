@@ -323,10 +323,7 @@
                 if (response.success) {
                     document.getElementById('add-aid-popup').style.display = 'none';
                     $('#aid-table').load("/Home/Index #aid-table", function () {
-                        // Efter att tabellen har laddats om, lys upp den senaste raden
-                        $('#aid-table tbody tr:last-child').addClass('highlight-aid'); // Lägger till en klass
-                        // Eller:
-                        // $('#aid-table tbody tr:last-child').css('background-color', 'yellow'); // Ändra bakgrundsfärg
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
                     });
                 } else {
                     alert('Det gick inte att lägga till hjälpmedlet.');
@@ -506,8 +503,8 @@
             },
             success: function (response) {
                 if (response.success) {
-                    aidPopup.style.display = 'none';
-                    location.reload(true);
+                    $('#update-aid-popup').hide();
+                    $('#aid-table').load("/Home/Index #aid-table");
 
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
