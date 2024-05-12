@@ -19,7 +19,6 @@ function searchAid() {
             unitId: unitId
         },
         success: function (data) {
-            console.log(data);
             updateSearchTable(data);
             $('#search-result').show();
             $('#result-text').text(data.length + ' träffar.');
@@ -92,7 +91,7 @@ function updateSearchTable(aids) {
                 sortTable(index, tableId);
             });
         });
-    }
+}
 
     addSortEventToHeader('search-table');
 }
