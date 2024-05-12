@@ -466,6 +466,10 @@ video {
     border-radius: 0.25em;
 }
 
+.highlight-aid {
+    border: 2px solid #f3a035;
+}
+
 /*SEARCH*/
 #search-view {
     display: flex;

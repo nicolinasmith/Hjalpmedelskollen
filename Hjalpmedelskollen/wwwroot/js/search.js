@@ -207,8 +207,7 @@ function updateSearchTable(aids) {
             },
             success: function (response) {
                 if (response.success) {
-                    aidPopup.style.display = 'none';
-                    location.reload(true);
+                    alert('Hjälpmedlet har uppdaterats.');
 
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');

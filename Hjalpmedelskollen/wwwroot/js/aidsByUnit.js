@@ -289,7 +289,10 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-aid-popup').style.display = 'none';
-                    location.reload(true);
+                    $('#aid-table').load("/Home/Index #aid-table");
+                    /*$('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
+                    })*/;
                 } else {
                     alert('Det gick inte att lägga till hjälpmedlet.');
                 }
@@ -440,9 +443,11 @@
             },
             success: function (response) {
                 if (response.success) {
-                    aidPopup.style.display = 'none';
-                    location.reload(true);
-
+                    $('#update-aid-popup').hide();
+                    $('#aid-table').load("/Home/Index #aid-table");
+                    /*$('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table tbody tr:first-child').css('border', '2px solid #f3a035');
+                    });*/
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
                 }
