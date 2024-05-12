@@ -219,4 +219,29 @@ function updateSearchTable(aids) {
         });
     });
 
+    document.getElementById('delete-aid-button').addEventListener('click', function () {
+
+        var id = document.getElementById('update-id').value;
+
+        $.ajax({
+            url: '/Home/UpdateAidToDatabase',
+            method: 'POST',
+            data: {
+                Id: id,
+                FormAction: 'delete'
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#update-aid-popup').hide();
+                    $('.aid-row[data-id="' + id + '"]').remove();
+                    alert('Hjälpmedlet har tagits bort.');
+                } else {
+                    alert('Det gick inte att ta bort hjälpmedlet.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
 }

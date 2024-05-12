@@ -286,7 +286,7 @@
                 if (response.success) {
                     document.getElementById('add-aid-popup').style.display = 'none';
                     $('#aid-table').load("/Home/Index #aid-table", function () {
-                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
+                        $('#aid-table tbody tr.aid-row:first').addClass('highlight-aid');
                     });
                 } else {
                     alert('Det gick inte att lägga till hjälpmedlet.');
@@ -350,9 +350,6 @@
     });
 
     /*AIDS BY UNIT - UPDATE AID*/
-    var aidPopup = document.getElementById('update-aid-popup');
-    var cancelUpdateAid = document.getElementById('cancel-update-aid');
-
     $('#aid-table').on('click', '.aid-row', function () {
 
         var id = $(this).data('id');
@@ -416,10 +413,7 @@
             success: function (response) {
                 if (response.success) {
                     $('#update-aid-popup').hide();
-                    $('#aid-table').load("/Home/Index #aid-table", function () {
-                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
-                    });
-
+                    alert('Hjälpmedlet har uppdaterats.');
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
                 }
