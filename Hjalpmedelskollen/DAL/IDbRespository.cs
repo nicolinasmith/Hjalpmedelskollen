@@ -14,7 +14,7 @@ namespace Hjalpmedelskollen.DAL
         Task UpdatePatient(PatientModel patient);
 
         Task<AidModel> GetAid (string aidId);
-        Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, List<int> unitIds);
+        Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId);
         Task AddAid(AidModel aid, int? selectedMonth);
         Task UpdateAid(AidModel aid);
         Task DeleteAid(AidModel aid);

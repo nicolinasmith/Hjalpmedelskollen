@@ -15,57 +15,26 @@ namespace Hjalpmedelskollen.Controllers
 
 		public async Task <IActionResult> Index()
 		{
-			var viewModel = await GetSearchViewModel();
-			return View(viewModel);
-			//return View();
-		}
-		
-		public async Task<SearchViewModel> GetSearchViewModel()
-		{
-			var units = await _dbRepository.GetUnits();
 			var viewModel = new SearchViewModel()
 			{
-				Units = units
-			};
-
-			return viewModel;
+                Units = await _dbRepository.GetUnits()
+            };
+			return View(viewModel);
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> SearchAidInDatabase(string searchInput, string searchType, List<int> unitIds)
+		public async Task<IActionResult> SearchAidInDatabase(string searchInput, string searchType, string unitId)
 		{
 			try
 			{
-				var aids = await _dbRepository.GetAidsBySearch(searchInput, searchType, unitIds);
-				var units = await _dbRepository.GetUnits();
-
-				var categories = aids
-					.Select(a => a.Category)
-					.Distinct()
-					.OrderBy(c => c, StringComparer.OrdinalIgnoreCase)
-					.Select(c => new SearchViewModel.Category()
-					{
-						Name = c
-					})
-					.ToList();
-
-				var viewModel = new SearchViewModel()
-				{
-					Aids = aids,
-					Units = units,
-					Categories = categories
-				};
-
-				return View("Index", viewModel);
+				var aids = await _dbRepository.GetAidsBySearch(searchInput, searchType, unitId);
+				return Json(aids);
 			}
 			catch (Exception ex)
 			{
-				// Logga fel eller gör annan hantering här
-				return View("Error"); // Om det uppstår ett fel, returnera en felvy
+				return Json(new { error = ex.Message });
 			}
 		}
-
-
 
 	}
 }

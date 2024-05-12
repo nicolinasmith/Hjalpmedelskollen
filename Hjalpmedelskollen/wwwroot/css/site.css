@@ -483,6 +483,7 @@ video {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
 }
 
 .search-form {
@@ -503,6 +504,14 @@ video {
     margin-left: 30px;
 }
 
+#search-table {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
 
 /*ABOUT*/
 #about {
