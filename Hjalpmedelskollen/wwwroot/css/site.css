@@ -562,6 +562,77 @@ video {
     font-size: 18px;
 }
 
+/*DOCUMENT*/
+.document-nav {
+    display: flex;
+    flex-direction: row;
+    background-color: #454a4f;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.document-nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 5px;
+}
+
+.document-nav li {
+    list-style-type: none;
+    color: #ffffff;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.fa-folder, .fa-gear, .fa-file-pdf {
+    margin-right: 8px;
+}
+
+#document-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+    padding: 20px;
+    background-color: #eaebed;
+    border-radius: 10px;
+}
+
+#document-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+#document-aside li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+#document-displayer {
+    margin-right: 60px;
+    padding: 10px;
+}
+
+#document-show {
+    background-color: #454a4f;
+    padding: 10px;
+}
+
+#document-show img {
+    width: 70%;
+    height: auto;
+}
+
 @media only screen and (max-width: 1024px) {
    
     #unit-aside {
