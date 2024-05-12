@@ -15,11 +15,11 @@
 					<div class="add-form">
 						<label for="category">Kategori: *</label>
 						<select id="add-category-list" name="category">
-						@foreach (var category in Model.Categories)
-						{
-							<option value="@category.Name">@category.Name</option>
-						}
-						<option value="new-category" id="add-new-category">LÄGG TILL NY</option>
+							@foreach (var category in Model.Categories)
+							{
+								<option value="@category">@category</option>
+							}
+							<option value="new-category" id="add-new-category">LÄGG TILL NY</option>
 						</select>
 					</div>
 					<div class="add-form">

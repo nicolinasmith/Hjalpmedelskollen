@@ -40,18 +40,10 @@ namespace Hjalpmedelskollen.Controllers
 
             var sectionIds = sections.Select(s => s.Id).ToList();
 
+            var categories = await _dbRepository.GetCategories();
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
             var patients = await _dbRepository.GetPatients(unitId);
 
-            var categories = aidsByUnit
-                .Select(a => a.Category)
-                .Distinct()
-                .OrderBy(c => c, StringComparer.OrdinalIgnoreCase)
-                .Select(c => new AidsByUnitViewModel.Category()
-                {
-                    Name = c
-                })
-                .ToList();
 
             var viewModel = new AidsByUnitViewModel()
             {

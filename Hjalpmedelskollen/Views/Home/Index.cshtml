@@ -4,6 +4,10 @@
     ViewData["Title"] = "Översikt";
 }
 
+@section Scripts {
+    <script src="~/js/aidsByUnit.js"></script>
+}
+
 <div class="small-nav">
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
@@ -53,7 +57,7 @@
                             <option value="all">Alla</option>
                             @foreach (var category in Model.Categories)
                             {
-                                <option value="@category.Name">@category.Name</option>
+                                <option value="@category">@category</option>
                             }
                         </select>
                     </div>
@@ -100,8 +104,11 @@
                             inspectionDate = " ";
                         }
 
-                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-product-name="@aid.ProductName"
-                                            data-patient="@aid.PatientId" data-unit-id="@aid.Section.UnitId" data-section="@aid.SectionId" data-comment="@aid.Comment" data-inspection="@inspectionDate">
+                        <tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" 
+                                            data-registered="@aid.Registered" data-product-name="@aid.ProductName"
+                                            data-patient="@aid.PatientId" data-unit-id="@aid.Section.UnitId" 
+                                            data-section="@aid.SectionId" data-comment="@aid.Comment" 
+                                            data-inspection="@inspectionDate">
                             <td id="aid-row-id" class="s-column">@aid.Id</td>
                             <td class="m-column">@aid.Category</td>
                             <td class="m-column">@aid.ProductName</td>

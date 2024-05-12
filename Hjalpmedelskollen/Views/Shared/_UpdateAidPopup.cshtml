@@ -17,7 +17,7 @@
                         <select id="update-category-list" name="Category">
                             @foreach (var category in Model.Categories)
                             {
-                                <option value="@category.Name">@category.Name</option>
+                                <option value="@category">@category</option>
                             }
                             <option value="new-category" id="update-new-category">LÄGG TILL NY</option>
                         </select>
