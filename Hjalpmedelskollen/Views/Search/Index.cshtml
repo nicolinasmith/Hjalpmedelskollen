@@ -3,10 +3,14 @@
 @{
 	ViewData["Title"] = "Sök";
 }
+
+@section Scripts {
+	<script src="~/js/search.js"></script>
+}
+
 <div id="search-view">
 	<div id="search-container">
 		<h3>Sök efter hjälpmedel</h3>
-		<form id="search-form" action="Search/SearchAidInDatabase" method="get">
 			<label for="searchInput"><input type="text" id="search-input" name="searchInput"/></label>
 			<div id="search-selections">
 				<div>
@@ -22,47 +26,28 @@
 					<div id="search-unit" class="search-form">
 						@foreach (var unit in Model.Units)
 						{
-							<label for="unitIds">
-								<input type="checkbox" id="unitId@(unit.Id)" name="unitIds" value="@unit.Id">
+							<label for="unit">
+								<input type="checkbox" id="unitId@(unit.Id)" name="unit" value="@unit.Id">
 								@unit.Name
 							</label>
 						}
 					</div>
 				</div>
 			</div>
-			<button id="search-button" type="submit">Sök</button>
-			</form>
+			<button id="search-button">Sök</button>
 	</div>
 	<div id="search-result">
-		@if (Model.Aids != null && Model.Aids.Any())
-		{
-			<h3>Sökresultat:</h3>
-			<table class="table-style">
-				<thead>
-					<tr>
-						<th>Registreringsnummer</th>
-						<th>Produktnamn</th>
-						<th>Kategori</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var aid in Model.Aids)
-					{
-						string inspectionDate = "";
-						if(aid.Inspection != null)
-						{
-							inspectionDate = aid.Inspection.Value.ToString("yyyy-MM");
-						}
-
-						<tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-product-name="@aid.ProductName"
-							data-patient="@aid.PatientId" data-unit-id="@aid.Section.UnitId" data-section="@aid.SectionId" data-comment="@aid.Comment" data-inspection="@inspectionDate">
-							<td class="m-column">@aid.Id</td>
-							<td class="m-column">@aid.ProductName</td>
-							<td class="m-column">@aid.Category</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		}
+		<h3>Sökresultat:</h3>
+		<i id="result-text"></i>
+		<table class="table-style">
+			<thead>
+				<tr>
+					<th>Registreringsnummer</th>
+					<th>Produktnamn</th>
+					<th>Kategori</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
 	</div>
 </div>

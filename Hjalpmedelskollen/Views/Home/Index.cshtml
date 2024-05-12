@@ -4,6 +4,10 @@
     ViewData["Title"] = "Översikt";
 }
 
+@section Scripts {
+    <script src="~/js/aidsByUnit.js"></script>
+}
+
 <div class="small-nav">
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
