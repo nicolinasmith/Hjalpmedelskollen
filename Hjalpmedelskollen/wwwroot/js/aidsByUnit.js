@@ -413,6 +413,9 @@
             success: function (response) {
                 if (response.success) {
                     $('#update-aid-popup').hide();
+                    $('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('.aid-row[data-id="' + id + '"]').addClass('highlight-aid');
+                    });
                     alert('Hjälpmedlet har uppdaterats.');
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
@@ -437,7 +440,9 @@
             success: function (response) {
                 if (response.success) {
                     $('#update-aid-popup').hide();
-                    $('#aid-table').load("/Home/Index #aid-table");
+                    $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
+                    $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
+                    alert('Hjälpmedlet har tagits bort.');
                 } else {
                     alert('Det gick inte att ta bort hjälpmedlet.');
                 }

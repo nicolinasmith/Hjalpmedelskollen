@@ -109,7 +109,7 @@ function updateSearchTable(aids) {
 
     addSortEventToHeader('search-table');
 
-
+    /*UPDATE AID*/
     var aidRows = document.querySelectorAll('.aid-row');
     var aidPopup = document.getElementById('update-aid-popup');
     var cancelUpdateAid = document.getElementById('cancel-update-aid');
@@ -208,7 +208,7 @@ function updateSearchTable(aids) {
             success: function (response) {
                 if (response.success) {
                     alert('Hjälpmedlet har uppdaterats.');
-
+                    $('#update-aid-popup').hide();
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
                 }
@@ -233,7 +233,8 @@ function updateSearchTable(aids) {
             success: function (response) {
                 if (response.success) {
                     $('#update-aid-popup').hide();
-                    $('.aid-row[data-id="' + id + '"]').remove();
+                    $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
+                    $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
                     alert('Hjälpmedlet har tagits bort.');
                 } else {
                     alert('Det gick inte att ta bort hjälpmedlet.');

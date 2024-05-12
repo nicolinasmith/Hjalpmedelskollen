@@ -474,6 +474,12 @@ video {
     border: 2px solid #f3a035 !important;
 }
 
+.disabled-aid-row {
+    border: 1px solid #eaebed !important;
+    background-color: #9d9e9f !important;
+    color: #c4bfbf;
+}
+
 /*SEARCH*/
 #search-view {
     display: flex;
