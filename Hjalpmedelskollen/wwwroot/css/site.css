@@ -467,7 +467,7 @@ video {
 }
 
 .highlight-aid {
-    border: 2px solid #f3a035;
+    border: 2px solid #f3a035 !important;
 }
 
 /*SEARCH*/
