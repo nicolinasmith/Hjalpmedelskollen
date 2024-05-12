@@ -109,6 +109,13 @@ namespace Hjalpmedelskollen.DAL
             return patients;
         }
 
+        public async Task<IEnumerable<PatientModel>> GetAllPatients()
+        {
+			return await _context.Patients
+				.OrderBy(p => p.SectionId)
+				.ToListAsync();
+		}
+
         public async Task AddPatient (PatientModel patient)
         {
             _context.Patients.Add(patient);
@@ -127,6 +134,20 @@ namespace Hjalpmedelskollen.DAL
                 .Where(s => s.Unit.Id == unitId)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<SectionModel>> GetAllSections()
+        {
+			return await _context.Sections.ToListAsync();
+		}
+
+        public async Task<List<string>> GetCategories()
+        {
+			return await _context.Aids
+				.Select(a => a.Category)
+				.Distinct()
+				.ToListAsync();
+		}
+
 
         public async Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId)
         {

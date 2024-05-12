@@ -8,7 +8,7 @@ namespace Hjalpmedelskollen.ViewModels
 
         public IEnumerable<AidModel> Aids { get; set; }
 
-        public List<Category> Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         public IEnumerable<PatientModel> Patients { get; set; }
 

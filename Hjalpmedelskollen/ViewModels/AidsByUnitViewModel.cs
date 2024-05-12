@@ -6,7 +6,7 @@ namespace Hjalpmedelskollen.ViewModels
     {
         public IEnumerable<AidModel> Aids { get; set; }
 
-        public List<Category> Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         public IEnumerable<UnitModel> Units { get; set; }
 
@@ -23,11 +23,6 @@ namespace Hjalpmedelskollen.ViewModels
         public AidsByUnitViewModel()
         {
 
-        }
-
-        public class Category
-        {
-            public string Name { get; set; }
         }
     }
 

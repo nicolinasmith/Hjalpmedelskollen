@@ -17,7 +17,10 @@ namespace Hjalpmedelskollen.Controllers
 		{
 			var viewModel = new SearchViewModel()
 			{
-                Units = await _dbRepository.GetUnits()
+                Units = await _dbRepository.GetUnits(),
+				Sections = await _dbRepository.GetAllSections(),
+				Categories = await _dbRepository.GetCategories(),
+				Patients = await _dbRepository.GetAllPatients()
             };
 			return View(viewModel);
 		}
