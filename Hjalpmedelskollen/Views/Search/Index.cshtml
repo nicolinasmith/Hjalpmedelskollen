@@ -1,0 +1,34 @@
+﻿@model Hjalpmedelskollen.ViewModels.SearchViewModel
+
+@{
+	ViewData["Title"] = "Sök";
+}
+
+<div id="search-container">
+	<h2>Sök efter hjälpmedel</h2>
+	<div>
+		<label for="search-input"><input type="text"id="search-input"/></label>
+		<div id="search-selections">
+			<div>
+				<p>Sök efter:</p>
+				<div id="search-type" class="search-form">
+					<div id="search-type" class="search-form">
+						<label for="searchId"><input type="radio" id="searchId" name="searchType" value="id">Registreringsnummer</label>
+						<label for="searchProductName"><input type="radio" id="searchProductName" name="searchType" value="productName">Produktnamn</label>
+						<label for="searchCategory"><input type="radio" id="searchCategory" name="searchType" value="category">Kategori</label>
+					</div>
+				</div>
+			</div>
+			<div>
+				<p>Enhet:</p>
+				<div id="search-unit" class="search-form">
+					<label for="unitId1"><input type="checkbox" id="unitId1" name="unitId1" value="1">Enhet 1</label>
+					<label for="unitId2"><input type="checkbox" id="unitId2" name="unitId2" value="2">Enhet 2</label>
+				</div>
+			</div>
+		</div>
+		<button id="search-button">Sök</button>
+		<div id="search-result">
+		</div>
+	</div>
+</div>
