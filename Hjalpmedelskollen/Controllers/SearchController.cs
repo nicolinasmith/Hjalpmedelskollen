@@ -19,6 +19,8 @@ namespace Hjalpmedelskollen.Controllers
 			return View(viewModel);
 			//return View();
 		}
+
+		/*
 		public async Task<SearchViewModel> GetSearchViewModel()
 		{
 			var units = await _dbRepository.GetUnits();
