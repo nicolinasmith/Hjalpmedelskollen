@@ -10,6 +10,12 @@ function searchAid() {
     var searchType = document.querySelector('input[name="searchType"]:checked').value;
     var unitId = document.querySelector('input[name="unit"]:checked').value;
 
+    document.querySelectorAll('input[name="unit"]:checked').forEach(function (unit) {
+        selectedUnits.push(unit.value);
+    });
+
+    var unitIds = selectedUnits.join(',');
+
     $.ajax({
         url: '/Search/SearchAidInDatabase',
         type: 'GET',
@@ -19,6 +25,7 @@ function searchAid() {
             unitId: unitId
         },
         success: function (data) {
+            console.log(unitIds);
             console.log(data);
             updateSearchTable(data);
             $('#search-result').show();
@@ -92,7 +99,7 @@ function updateSearchTable(aids) {
                 sortTable(index, tableId);
             });
         });
-    }
+}
 
     addSortEventToHeader('search-table');
 }
