@@ -18,5 +18,4 @@
             menuDisplayed = true;
         }
     });
-
 });
