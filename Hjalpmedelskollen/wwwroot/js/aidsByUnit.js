@@ -259,10 +259,6 @@
     });
 
     document.getElementById('add-aid-button').addEventListener('click', function () {
-        addAid();
-    });
-
-    function addAid() {
 
         var aidId = document.getElementById('add-aid-id').value
         var sectionId = document.getElementById('add-section-list').value;
@@ -289,9 +285,8 @@
             success: function (response) {
                 if (response.success) {
                     document.getElementById('add-aid-popup').style.display = 'none';
-                    //$('#aid-table').load("/Home/Index #aid-table");
                     $('#aid-table').load("/Home/Index #aid-table", function () {
-                        $('#aid-table tbody tr:first-child').css('border', '2px solid #f3a035');
+                        $('#aid-table tbody tr:last-child').addClass('highlight-aid');
                     });
                 } else {
                     alert('Det gick inte att lägga till hjälpmedlet.');
@@ -301,7 +296,16 @@
                 console.error(xhr.responseText);
             }
         });
-    }
+    });
+
+
+    $('#add-section-list').change(function () {
+
+        var sectionId = $(this).val();
+        var patientList = $('#add-patient-list');
+
+    });
+
 
     /*NEW CATEGORY*/
     var categoryList = document.getElementById('add-category-list');
