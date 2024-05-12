@@ -474,12 +474,19 @@ video {
     border: 2px solid #f3a035 !important;
 }
 
+.disabled-aid-row {
+    border: 1px solid #eaebed !important;
+    background-color: #9d9e9f !important;
+    color: #c4bfbf;
+}
+
 /*SEARCH*/
 #search-view {
     display: flex;
     flex-direction: row;
     margin-top: 35px;
     margin-left: 20px;
+    width: 90%;
 }
 
 #search-container {
@@ -493,6 +500,7 @@ video {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 100%;
+    width: 15%;
 }
 
 .search-form {
@@ -511,6 +519,11 @@ video {
 
 #search-result {
     margin-left: 60px;
+    width: 60%;
+}
+
+#search-selections p {
+    font-weight: bold;
 }
 
 #search-table {
