@@ -467,15 +467,18 @@ video {
 }
 
 /*SEARCH*/
+#search-view {
+    display: flex;
+    flex-direction: row;
+    margin-top: 35px;
+}
+
 #search-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 70%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 20px;
+    margin-right: 10px;
     background-color: #eaebed;
     border-radius: 10px;
     padding: 20px;
@@ -494,6 +497,10 @@ video {
 
 .search-form input {
     margin-bottom: 5px;
+}
+
+#search-result {
+    margin-left: 30px;
 }
 
 

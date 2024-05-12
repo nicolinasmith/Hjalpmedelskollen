@@ -3,33 +3,66 @@
 @{
 	ViewData["Title"] = "Sök";
 }
-
-<div id="search-container">
-	<h2>Sök efter hjälpmedel</h2>
-	<div>
-		<label for="search-input"><input type="text"id="search-input"/></label>
-		<div id="search-selections">
-			<div>
-				<p>Sök efter:</p>
-				<div id="search-type" class="search-form">
+<div id="search-view">
+	<div id="search-container">
+		<h3>Sök efter hjälpmedel</h3>
+		<form id="search-form" action="Search/SearchAidInDatabase" method="get">
+			<label for="searchInput"><input type="text" id="search-input" name="searchInput"/></label>
+			<div id="search-selections">
+				<div>
+					<p>Sök baserat på:</p>
 					<div id="search-type" class="search-form">
-						<label for="searchId"><input type="radio" id="searchId" name="searchType" value="id">Registreringsnummer</label>
-						<label for="searchProductName"><input type="radio" id="searchProductName" name="searchType" value="productName">Produktnamn</label>
-						<label for="searchCategory"><input type="radio" id="searchCategory" name="searchType" value="category">Kategori</label>
+							<label for="searchId"><input type="radio" id="searchId" name="searchType" value="id">Registreringsnummer</label>
+							<label for="searchProductName"><input type="radio" id="searchProductName" name="searchType" value="productName">Produktnamn</label>
+							<label for="searchCategory"><input type="radio" id="searchCategory" name="searchType" value="category">Kategori</label>
+					</div>
+				</div>
+				<div>
+					<p>Enhet:</p>
+					<div id="search-unit" class="search-form">
+						@foreach (var unit in Model.Units)
+						{
+							<label for="unitIds">
+								<input type="checkbox" id="unitId@(unit.Id)" name="unitIds" value="@unit.Id">
+								@unit.Name
+							</label>
+						}
 					</div>
 				</div>
 			</div>
-			<div>
-				<p>Enhet:</p>
-				<div id="search-unit" class="search-form">
-					@foreach (var unit in Model.Units)
+			<button id="search-button" type="submit">Sök</button>
+			</form>
+	</div>
+	<div id="search-result">
+		@if (Model.Aids != null && Model.Aids.Any())
+		{
+			<h3>Sökresultat:</h3>
+			<table class="table-style">
+				<thead>
+					<tr>
+						<th>Registreringsnummer</th>
+						<th>Produktnamn</th>
+						<th>Kategori</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var aid in Model.Aids)
 					{
-						<label for="unitId@(unit.Id)"><input type="checkbox" id="unitId@(unit.Id)" name="unitId@(unit.Id)" value="@unit.Id">@unit.Name</label>
+						string inspectionDate = "";
+						if(aid.Inspection != null)
+						{
+							inspectionDate = aid.Inspection.Value.ToString("yyyy-MM");
+						}
+
+						<tr class="aid-row" data-id="@aid.Id" data-category="@aid.Category" data-registered="@aid.Registered" data-product-name="@aid.ProductName"
+							data-patient="@aid.PatientId" data-unit-id="@aid.Section.UnitId" data-section="@aid.SectionId" data-comment="@aid.Comment" data-inspection="@inspectionDate">
+							<td class="m-column">@aid.Id</td>
+							<td class="m-column">@aid.ProductName</td>
+							<td class="m-column">@aid.Category</td>
+						</tr>
 					}
-			</div>
-		</div>
-		<button id="search-button">Sök</button>
-		<div id="search-result">
-		</div>
+				</tbody>
+			</table>
+		}
 	</div>
 </div>

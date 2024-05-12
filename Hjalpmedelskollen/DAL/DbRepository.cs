@@ -128,5 +128,30 @@ namespace Hjalpmedelskollen.DAL
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, List<int> unitIds)
+        {
+			var aids = await _context.Aids
+				.Include(a => a.Section)
+				.Where(a => unitIds.Contains(a.Section.UnitId))
+				.ToListAsync();
+
+			if (!string.IsNullOrEmpty(searchInput))
+            {
+                switch (searchType)
+                {
+					case "id":
+						aids = aids.Where(a => a.Id.ToLower().Contains(searchInput.ToLower())).ToList();
+						break;
+					case "category":
+						aids = aids.Where(a => a.Category.ToLower().Contains(searchInput.ToLower())).ToList();
+						break;
+                    case "productName":
+						aids = aids.Where(a => a.ProductName.ToLower().Contains(searchInput.ToLower())).ToList();
+						break;
+				}
+            }
+
+            return aids;
+        }
     }
 }
