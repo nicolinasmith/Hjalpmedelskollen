@@ -3,20 +3,19 @@
     /*HAMBURGER MENU*/
     var menuDisplayed = false;
 
-    document.querySelector('.hamburger-menu').addEventListener('click', function () {
-        var navList = document.querySelector('.nav-list');
-        var hamburgerMenuContent = document.querySelector('#hamburger-menu-content');
+    $('.hamburger-menu').click(function () {
+        var navList = $('.nav-list');
+        var hamburgerMenuContent = $('#hamburger-menu-content');
 
         if (menuDisplayed) {
-            hamburgerMenuContent.innerHTML = '';
-            hamburgerMenuContent.classList.remove('show');
+            hamburgerMenuContent.html('');
+            hamburgerMenuContent.removeClass('show');
             menuDisplayed = false;
         }
         else {
-            hamburgerMenuContent.innerHTML = navList.innerHTML;
-            hamburgerMenuContent.classList.toggle('show');
+            hamburgerMenuContent.html(navList.html());
+            hamburgerMenuContent.toggleClass('show');
             menuDisplayed = true;
         }
     });
-
 });
