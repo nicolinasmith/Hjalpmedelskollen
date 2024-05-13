@@ -10,9 +10,9 @@ namespace Hjalpmedelskollen.ViewModels
 
         public List<string> Categories { get; set; }
 
-        public IEnumerable<PatientModel> Patients { get; set; }
+        public IEnumerable<PatientModel> AllPatients { get; set; }
 
-        public IEnumerable<SectionModel> Sections { get; set; }
+        public IEnumerable<SectionModel> AllSections { get; set; }
 
         public SearchViewModel()
         {

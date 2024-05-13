@@ -15,7 +15,6 @@ namespace Hjalpmedelskollen.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDbRepository _dbRepository;
         private UnitModel _selectedUnit;
-        private SectionModel _selectedSection;
 
         public HomeController(ILogger<HomeController> logger, IDbRepository dbRepository)
         {
@@ -37,12 +36,14 @@ namespace Hjalpmedelskollen.Controllers
             var units = await _dbRepository.GetUnits();
             var noteBoards = await _dbRepository.GetNotes(unitId);
             var sections = await _dbRepository.GetSections(unitId);
+            var allSections = await _dbRepository.GetAllSections();
 
             var sectionIds = sections.Select(s => s.Id).ToList();
 
             var categories = await _dbRepository.GetCategories();
             var aidsByUnit = await _dbRepository.GetAidsByUnit(unitId);
             var patients = await _dbRepository.GetPatients(unitId);
+            var allPatients = await _dbRepository.GetAllPatients();
 
 
             var viewModel = new AidsByUnitViewModel()
@@ -53,7 +54,9 @@ namespace Hjalpmedelskollen.Controllers
                 Units = units,
                 NoteBoards = noteBoards,
                 Sections = sections,
-                Patients = patients
+                AllSections = allSections,
+                Patients = patients,
+                AllPatients = allPatients
             };
 
             return viewModel;
