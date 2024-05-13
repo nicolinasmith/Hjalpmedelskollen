@@ -86,6 +86,7 @@ footer a, nav a, nav li {
 footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover {
     opacity: 0.5;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 /*AIDS BY UNIT*/
