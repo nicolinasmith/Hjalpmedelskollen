@@ -1,5 +1,8 @@
 ﻿<div id="patients-popup" class="popup-container">
     <div class="l-pop-up">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="patients-popup"></i>
+        </div>
         <h3>Patienter på @Model.SelectedUnit.Name</h3>
         <div class="add-form">
             <label for="section">Avdelning</label>
@@ -38,6 +41,9 @@
 
 <div id="update-patient-popup" class="popup-container">
     <div class="pop-up">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="update-patient-popup"></i>
+        </div>
             <h3>Uppdatera patient</h3>
             <div class="add-form">
                 <label for="update-patient-number">Patientnummer:</label>
@@ -70,6 +76,9 @@
 
 <div id="add-patient-popup" class="popup-container">
     <div class="pop-up">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="add-patient-popup"></i>
+        </div>
             <h3>Lägg till patient på @Model.SelectedUnit.Name</h3>
             <div class="add-form">
                 <label for="add-patient-number">Patientnummer:</label>

@@ -19,11 +19,11 @@
         }
     });
 
+    /*UPDATE SECTION AND PATIENT BASED ON SELECTED UNIT AND SECTION*/
     $('#update-aid-unit, #update-aid-section').change(function () {
         var selectedUnit = $('#update-aid-unit').val();
         var selectedSection = $('#update-aid-section').val();
 
-        // Visa alla avdelningar för vald enhet eller om det inte finns någon enhet vald
         $('#update-aid-section option').each(function () {
             var unitId = $(this).data('unit-id');
             if (unitId == selectedUnit || unitId == "") {
@@ -33,7 +33,6 @@
             }
         });
 
-        // Visa alla patienter för vald enhet och avdelning
         $('#update-patient option').each(function () {
             var sectionId = $(this).data('section-id');
             var unitId = $('#update-aid-section option[value="' + sectionId + '"]').data('unit-id');
@@ -47,5 +46,9 @@
         $('#update-patient').prop('selectedIndex', 0);
     });
 
-
+    /*CLOSE POP-UP*/
+    $('.close-popup-button').click(function () {
+        var popupId = $(this).data('popup-id');
+        document.getElementById(popupId).style.display = 'none';
+    });
 });
