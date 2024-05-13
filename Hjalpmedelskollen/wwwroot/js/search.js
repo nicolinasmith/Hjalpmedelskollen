@@ -207,7 +207,7 @@ function updateSearchTable(aids) {
             },
             success: function (response) {
                 if (response.success) {
-                    alert('Hjälpmedlet har uppdaterats.');
+                    alert('Hjälpmedlet har uppdaterats. Tabellen behöver uppdateras för att ändringarna ska visas.');
                     $('#update-aid-popup').hide();
                 } else {
                     alert('Det gick inte att uppdatera hjälpmedlet.');
