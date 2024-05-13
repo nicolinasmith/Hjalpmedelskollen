@@ -603,7 +603,7 @@ video {
     padding-right: 50px;
     margin-right: 20px;
     background-color: #eaebed40;
-    border-right: 1px solid #454a4f;
+    border-right: 4px solid #eaebed;
 }
 
 #document-aside li {
