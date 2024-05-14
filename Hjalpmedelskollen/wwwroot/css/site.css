@@ -604,32 +604,20 @@ video {
     margin-right: 10px;
 }
 
-#document-displayer h2 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#document-displayer ul {
-    width: 500px;
-}
-
-#document-displayer {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    align-content: center;
+#document-content {
     margin-left: 30px;
 }
 
-#document-displayer li {
-    list-style-type: none;
-    padding: 10px;
-    border: 1px solid #eaebed;
-    width: 500px;
+.document-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
 }
 
-#folder-button {
-    margin-top: 50px;
+.document-menu > div {
+    display: flex;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 1024px) {
