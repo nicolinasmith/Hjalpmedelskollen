@@ -53,9 +53,6 @@ namespace Hjalpmedelskollen.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PatientId");
@@ -63,6 +60,65 @@ namespace Hjalpmedelskollen.Migrations
                     b.HasIndex("SectionId");
 
                     b.ToTable("Aids");
+                });
+
+            modelBuilder.Entity("Hjalpmedelskollen.Models.DocumentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte[]>("File")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("FolderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FolderId");
+
+                    b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("Hjalpmedelskollen.Models.FolderModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
+
+                    b.ToTable("Folders");
                 });
 
             modelBuilder.Entity("Hjalpmedelskollen.Models.InstitutionModel", b =>
@@ -129,6 +185,8 @@ namespace Hjalpmedelskollen.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SectionId");
 
                     b.ToTable("Patients");
                 });
@@ -200,6 +258,28 @@ namespace Hjalpmedelskollen.Migrations
                     b.Navigation("Section");
                 });
 
+            modelBuilder.Entity("Hjalpmedelskollen.Models.DocumentModel", b =>
+                {
+                    b.HasOne("Hjalpmedelskollen.Models.FolderModel", "Folder")
+                        .WithMany()
+                        .HasForeignKey("FolderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Folder");
+                });
+
+            modelBuilder.Entity("Hjalpmedelskollen.Models.FolderModel", b =>
+                {
+                    b.HasOne("Hjalpmedelskollen.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
+                });
+
             modelBuilder.Entity("Hjalpmedelskollen.Models.NoteBoardModel", b =>
                 {
                     b.HasOne("Hjalpmedelskollen.Models.UnitModel", "Unit")
@@ -209,6 +289,17 @@ namespace Hjalpmedelskollen.Migrations
                         .IsRequired();
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Hjalpmedelskollen.Models.PatientModel", b =>
+                {
+                    b.HasOne("Hjalpmedelskollen.Models.SectionModel", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Section");
                 });
 
             modelBuilder.Entity("Hjalpmedelskollen.Models.SectionModel", b =>
