@@ -532,25 +532,28 @@
 
         qrAidMissingPopup.style.display = 'block';
         qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
-        document.getElementById('id').value = decodeText;
-        document.getElementById('qr').value = true;
+        //document.getElementById('id').value = decodeText;
 
         cancelQrAid.addEventListener('click', function () {
             qrAidMissingPopup.style.display = 'none';
         });
 
         addQrAid.addEventListener('click', function () {
+            var addAidPopup = document.getElementById('add-aid-popup');
             addAidPopup.style.display = 'block';
             qrContainer.style.display = 'none';
             qrAidMissingPopup.style.display = 'none';
 
-            var unitId = this.getAttribute('data-selected-unit');
-            var selectElement = document.getElementById('unit-list');
-            var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
+            document.getElementById('add-aid-id').value = decodeText;
+            document.getElementById('add-aid-registered').value = new Date().toLocaleDateString('sv-SE');
 
-            if (unitOption) {
-                selectElement.value = unitId;
-            }
+            //var unitId = this.getAttribute('data-selected-unit');
+            //var selectElement = document.getElementById('unit-list');
+            //var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
+
+            //if (unitOption) {
+            //    selectElement.value = unitId;
+            //}
         });
     }
 

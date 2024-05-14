@@ -1,6 +1,9 @@
 ﻿
 <div id="update-aid-popup" class="popup-container">
     <div class="l-pop-up" id="show-aid">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="update-aid-popup"></i>
+        </div>
             <h3>Uppdatera hjälpmedel</h3>
             <div class="update-aid-row">
                 <div>
@@ -33,16 +36,16 @@
                         <select id="update-aid-unit" name="unitId">
                             @foreach (var unit in Model.Units)
                             {
-                                <option value="@unit.Id">@unit.Name</option>
+                                <option value="@unit.Id" data-unit-id="@unit.Id">@unit.Name</option>
                             }
                         </select>
                     </div>
                         <div class="add-form">
                             <label for="sectionId">Avdelning eller förråd: *</label>
                             <select id="update-aid-section" name="sectionId">
-                                @foreach (var s in Model.Sections)
+                                @foreach (var s in Model.AllSections)
                                 {
-                                    <option value="@s.Id">@s.Name</option>
+                                    <option value="@s.Id" data-unit-id="@s.UnitId" data-section-id="@s.Id">@s.Name</option>
                                 }
                             </select>
                         </div>
@@ -50,9 +53,9 @@
                         <label for="patientId">Patient:</label>
                         <select id="update-patient" name="patientId">
                             <option value="">-</option>
-                            @foreach (var patient in Model.Patients)
+                            @foreach (var patient in Model.AllPatients)
                             {
-                                <option value="@patient.Id">@patient.PatientNumber @patient.Name</option>
+                                <option value="@patient.Id" data-section-id="@patient.SectionId" data-unit-id="@patient.Section.UnitId">@patient.PatientNumber @patient.Name</option>
                             }
                         </select>
                     </div>

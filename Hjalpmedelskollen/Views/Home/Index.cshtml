@@ -13,14 +13,15 @@
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
         <li class="small-li">Avdelningar</li>
-        <li id="display-patients" class="small-li">Hantera patienter</li>
+        <li id="display-patients" class="small-li">Patientlista</li>
         <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
 </div>
 <div id="aids-by-unit">
     <div id="mobile-buttons">
-        <h1>Vald enhet: @Model.SelectedUnit.Name</h1>
+        <h1>@Model.SelectedUnit.Name</h1>
         <button id="mobile-change-unit">Byt enhet</button>
+        <button id="mobile-display-patients">Patientlista</button>
         <button id="mobile-add-new-aid" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</button>
         <button id="qr-button">Skanna QR-kod</button>
         <span class="divider"></span>

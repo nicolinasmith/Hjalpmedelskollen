@@ -1,4 +1,7 @@
 ﻿<div id="add-note-popup" class="popup-container">
+    <div class="close-button-container">
+        <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="add-note-popup"></i>
+    </div>
     <div class="pop-up">
         <h3>Lägg till anteckning på Anslagstavlan</h3>
         <div class="add-form">
@@ -15,6 +18,9 @@
 
 <div id="show-all-notes" class="popup-container">
     <div class="pop-up">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="show-all-notes"></i>
+        </div>
         <h3>Anslagstavlan</h3>
         <div id="all-notes-container">
             @foreach (var note in Model.NoteBoards)
