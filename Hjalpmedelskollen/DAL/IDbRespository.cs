@@ -29,5 +29,6 @@ namespace Hjalpmedelskollen.DAL
         Task AddNote(NoteBoardModel note);
         Task DeleteNote(int noteId);
 
+        Task<IEnumerable<FolderModel>> GetFolders();
     }
 }

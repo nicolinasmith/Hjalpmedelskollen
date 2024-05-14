@@ -1,14 +1,16 @@
-﻿@{
+﻿@model Hjalpmedelskollen.ViewModels.DocumentViewModel;
+
+@{
 	ViewData["Title"] = "Dokument";
 }
 
 <div id="document-container">
 	<div id="document-aside">
 		<h2>Mappar</h2>
-		<h3 class="doc-folder chosen"><i class="fa-solid fa-folder"></i>Manualer</h3>
-			<h3 class="doc-folder"><i class="fa-solid fa-folder"></i>Rutiner</h3>
-			<h3 class="doc-folder"><i class="fa-solid fa-folder"></i>Besiktningsprotokoll</h3>
-			<h3 class="doc-folder"><i class="fa-solid fa-folder"></i>Övrigt</h3>
+		@foreach (var folder in Model.Folders)
+		{
+			<h3 class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</h3>
+		}
 	</div>
 	<div id="document-displayer">
 		<h2>Dokument</h2>

@@ -15,7 +15,8 @@ namespace Hjalpmedelskollen.Models
 		[MaxLength(50)]
 		public string FileName { get; set; }
 
-		public byte[] File { get; set; }
+		[MaxLength(250)]
+		public string FilePath { get; set; }
 
 		public DateTime Created { get; set; }
 
