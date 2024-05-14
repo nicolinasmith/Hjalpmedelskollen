@@ -195,6 +195,11 @@ namespace Hjalpmedelskollen.DAL
 			return await _context.Folders.ToListAsync();
 		}
 
+        public async Task<IEnumerable<DocumentModel>> GetDocuments()
+        {
+            return await _context.Documents.ToListAsync();
+        }
+
        
     }
 }

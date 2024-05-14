@@ -4,27 +4,30 @@
 	ViewData["Title"] = "Dokument";
 }
 
+@section Scripts {
+	<script src="~/js/document.js"></script>
+}
+
 <div id="document-container">
 	<div id="document-aside">
-		<h2>Mappar</h2>
+		<h2>Dokument</h2>
 		@foreach (var folder in Model.Folders)
 		{
-			<h3 class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</h3>
+			<b class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</b>
+
+			<ul class="doc-folder-content">
+			@foreach (var document in Model.Documents)
+				{
+					@if(document.FolderId == folder.Id)
+					{
+						<li class="doc-file" data-document-id="@document.Id" data-file-path="@document.FilePath" data-document-name="@document.Name">@document.Name</li>
+					}
+				}
+			</ul>
 		}
 	</div>
-	<div id="document-displayer">
-		<h2>Dokument</h2>
-		<div>
-			<h3>Manualer</h3>
-			<ul>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Rullstol Cross 6</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Lyftsele Liko</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Mobil golvlyft Uno</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Lyftsele Guldmann</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Komfortrullstol Azalea</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Dyna ROHO</li>
-				<li class="small-li"><i class="fa-solid fa-file-pdf"></i>Mobil hygienstol Swift</li>
-			</ul>
-		</div>
+	<div id="document-content">
+			<h3>Välj ett dokument för att visa innehållet.</h3>
+			<iframe src="" width="1000" height="600" style="border: none;" id="document-viewer"></iframe>
 	</div>
 </div>

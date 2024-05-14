@@ -17,11 +17,12 @@ namespace Hjalpmedelskollen.Controllers
 
 		public async Task <IActionResult> Index()
         {
-
 			var folders = await _dbRepository.GetFolders();
+            var documents = await _dbRepository.GetDocuments();
             var viewModel = new DocumentViewModel()
             {
-                Folders = folders
+                Folders = folders,
+                Documents = documents
             };
             return View(viewModel);
         }
