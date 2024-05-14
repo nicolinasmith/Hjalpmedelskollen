@@ -83,7 +83,7 @@ footer a, nav a, nav li {
     align-content: center;
 }
 
-footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover, .doc-folder:hover, .chosen {
+footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover, .doc-folder:hover, .doc-file:hover {
     opacity: 0.5;
     cursor: pointer;
     text-decoration: underline;
