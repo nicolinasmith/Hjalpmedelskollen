@@ -47,6 +47,10 @@
         document.getElementById('patients-popup').style.display = 'block';
     });
 
+    document.getElementById('mobile-display-patients').addEventListener('click', function () {
+        document.getElementById('patients-popup').style.display = 'block';
+    });
+
     document.getElementById('add-patient-button').addEventListener('click', function () {
         document.getElementById('add-patient-popup').style.display = 'block';
     });
