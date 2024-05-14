@@ -10,6 +10,9 @@ namespace Hjalpmedelskollen.Models
 		[Key]
 		public int Id { get; set; }
 
+		[MaxLength(50)]
+		public string Name { get; set; }
+
 		public DateTime Created { get; set; }
 
 		public DateTime Updated { get; set; }
