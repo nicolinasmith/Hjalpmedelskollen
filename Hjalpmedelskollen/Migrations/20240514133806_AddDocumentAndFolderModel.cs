@@ -57,11 +57,6 @@ namespace Hjalpmedelskollen.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_SectionId",
-                table: "Patients",
-                column: "SectionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Documents_FolderId",
                 table: "Documents",
                 column: "FolderId");
@@ -70,22 +65,11 @@ namespace Hjalpmedelskollen.Migrations
                 name: "IX_Folders_InstitutionId",
                 table: "Folders",
                 column: "InstitutionId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Patients_Sections_SectionId",
-                table: "Patients",
-                column: "SectionId",
-                principalTable: "Sections",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Patients_Sections_SectionId",
-                table: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Documents");
@@ -93,16 +77,7 @@ namespace Hjalpmedelskollen.Migrations
             migrationBuilder.DropTable(
                 name: "Folders");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Patients_SectionId",
-                table: "Patients");
-
-            migrationBuilder.AddColumn<bool>(
-                name: "Status",
-                table: "Aids",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+  
         }
     }
 }
