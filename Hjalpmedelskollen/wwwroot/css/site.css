@@ -609,6 +609,8 @@ video {
 }
 
 #document-content {
+    display: flex;
+    flex-direction: row;
     margin-left: 30px;
 }
 
@@ -624,8 +626,21 @@ video {
     flex-direction: column;
 }
 
+.fa-arrow-up, .fa-trash {
+    margin-right: 5px;
+}
+
+#document-info {
+    padding: 20px;
+    background-color: #eaebed;
+    border-radius: 10px;
+    display: none;
+    margin-left: 40px;
+    margin-top: 60px;
+    height: 140px;
+}
+
 @media only screen and (max-width: 1024px) {
-   
     #unit-aside {
         display: none;
     }

@@ -32,5 +32,8 @@ namespace Hjalpmedelskollen.DAL
 
         Task<IEnumerable<FolderModel>> GetFolders();
         Task<IEnumerable<DocumentModel>> GetDocuments();
+        Task<IEnumerable<DocumentModel>> GetDocument(int documentId);
+        Task AddDocument(DocumentModel document);
+        Task DeleteDocument(int documentId);
     }
 }
