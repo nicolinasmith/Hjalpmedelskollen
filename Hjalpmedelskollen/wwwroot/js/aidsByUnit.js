@@ -130,6 +130,7 @@
             },
             success: function (response) {
                 if (response.success) {
+                    alert('Patienten har uppdaterats.');
                     updatePatient.style.display = 'none';
                     $("#patient-table").load("/Home/Index #patient-table");
                 } else {
@@ -141,6 +142,34 @@
             }
         });
     });
+
+    document.getElementById('delete-patient-button').addEventListener('click', function () {
+
+        var patientId = document.getElementById('update-patient-id').value;
+
+        $.ajax({
+            url: '/Home/DeletePatientFromDatabase',
+            method: 'POST',
+            data: {
+                PatientId: patientId
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Patienten har tagits bort.');
+                    updatePatient.style.display = 'none';
+                    $("#patient-table").load("/Home/Index #patient-table");
+                } else {
+                    alert('Det gick inte att ta bort patienten.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+
+
 
     cancelUpdatePatient.addEventListener('click', function () {
         updatePatient.style.display = 'none';

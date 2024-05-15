@@ -23,6 +23,7 @@ namespace Hjalpmedelskollen.DAL
         Task<IEnumerable<PatientModel>> GetAllPatients();
         Task AddPatient(PatientModel patient);
         Task UpdatePatient(PatientModel patient);
+        Task DeletePatient(int patientId);
 
 
         Task<List<NoteBoardModel>> GetNotes(int unitId);

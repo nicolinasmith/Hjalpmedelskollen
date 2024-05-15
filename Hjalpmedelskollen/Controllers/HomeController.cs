@@ -229,6 +229,22 @@ namespace Hjalpmedelskollen.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DeletePatientFromDatabase(int patientId)
+        {
+			try
+            {
+				await _dbRepository.DeletePatient(patientId);
+				var response = new { success = true };
+				return Json(response);
+			}
+			catch (Exception ex)
+            {
+				_logger.LogError(ex, "Ett fel inträffade när patienter skulle tas bort från databasen.");
+				return BadRequest(new { success = false, error = $"Ett fel inträffade när patienten skulle tas bort från databasen: {ex.Message}." });
+			}
+		}
+
+        [HttpPost]
         public async Task<IActionResult> UpdatePatientToDatabase(PatientModel patient)
         {
             if (ModelState.IsValid)

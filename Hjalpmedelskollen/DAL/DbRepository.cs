@@ -128,6 +128,13 @@ namespace Hjalpmedelskollen.DAL
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeletePatient(int patientId)
+        {
+			var patient = await _context.Patients.FirstOrDefaultAsync(p => p.Id == patientId);
+			_context.Patients.Remove(patient);
+			await _context.SaveChangesAsync();
+		}
+
         public async Task<IEnumerable<SectionModel>> GetSections(int unitId)
         {
             return await _context.Sections
