@@ -22,28 +22,59 @@
 						{
 							@if(document.FolderId == folder.Id)
 							{
-								<li class="doc-file" data-document-id="@document.Id" data-file-path="@document.FilePath" data-document-name="@document.Name">@document.Name</li>
+								<li class="doc-file" data-document-id="@document.Id" data-file-path="@document.FilePath" data-document-name="@document.Name" data-document-created="@document.Created">@document.Name</li>
 							}
 						}
 					</ul>
 				}
 			</div>
 			<div>
-				<button id="upload">Ladda upp dokument</button>
-				<button>Hantera mappar</button>
+				<button id="upload-button"><i class="fa-solid fa-arrow-up"></i>Ladda upp dokument</button>
 			</div>
 		</div>
 	</div>
 	<div id="document-content">
+		<div>
 			<h3>Välj ett dokument för att visa innehållet.</h3>
 			<iframe src="" width="1000" height="600" style="border: none;" id="document-viewer"></iframe>
+		</div>
+		<div id="document-info">
+			<p id="document-name"></p>
+			<p id="document-created"></p>
+			<button id="delete-document"><i class="fa-solid fa-trash"></i>Ta bort dokument</button>
+		</div>
 	</div>
 </div>
 
-<div id="upload-document-popup" class="popup-container">
+
+<div id="upload-popup" class="popup-container">
 	<div class="l-pop-up" id="upload-document">
 		<div class="close-button-container">
-			<i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="upload-document-popup"></i>
+			<i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="upload-popup"></i>
 		</div>
-		</div>
-		</div>
+		<h3>Ladda upp PDF-fil</h3>
+		<form method="post" asp-action="UploadDocumentToDatabase" asp-controller="Document" enctype="multipart/form-data">
+			<div class="add-form">
+				<label for="name">Namn:</label>
+				<input type="text" class="form-control" name="name" required />
+			</div>
+			<div class="add-form">
+				<label for="folderId">Mapp:</label>
+				<select name="folderId">
+					@foreach (var folder in Model.Folders)
+					{
+						<option value="@folder.Id">@folder.Name</option>
+					}
+				</select>
+			</div>
+			<div class="add-form">
+				<label for="file">Välj fil att ladda upp:</label>
+				<input type="file" class="form-control" name="file" required />
+			</div>
+			<div class="popup-buttons">
+				<button type="submit">Ladda upp</button>
+				<button id="cancel-upload">Avbryt</button>
+			</div>
+		</form>
+	</div>
+</div>
