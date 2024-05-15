@@ -8,4 +8,8 @@
         $('#document-viewer').attr('src', filePath);
         $('#document-content h3').text(fileName);
     });
+
+    $('#upload').click(function () {
+        console.log('upload');
+    });
 });

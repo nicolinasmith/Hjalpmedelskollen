@@ -11,23 +11,39 @@
 <div id="document-container">
 	<div id="document-aside">
 		<h2>Dokument</h2>
-		@foreach (var folder in Model.Folders)
-		{
-			<b class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</b>
-
-			<ul class="doc-folder-content">
-			@foreach (var document in Model.Documents)
+		<div class="document-menu">
+			<div>
+				@foreach (var folder in Model.Folders)
 				{
-					@if(document.FolderId == folder.Id)
-					{
-						<li class="doc-file" data-document-id="@document.Id" data-file-path="@document.FilePath" data-document-name="@document.Name">@document.Name</li>
-					}
+					<b class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</b>
+
+					<ul class="doc-folder-content">
+					@foreach (var document in Model.Documents)
+						{
+							@if(document.FolderId == folder.Id)
+							{
+								<li class="doc-file" data-document-id="@document.Id" data-file-path="@document.FilePath" data-document-name="@document.Name">@document.Name</li>
+							}
+						}
+					</ul>
 				}
-			</ul>
-		}
+			</div>
+			<div>
+				<button id="upload">Ladda upp dokument</button>
+				<button>Hantera mappar</button>
+			</div>
+		</div>
 	</div>
 	<div id="document-content">
 			<h3>Välj ett dokument för att visa innehållet.</h3>
 			<iframe src="" width="1000" height="600" style="border: none;" id="document-viewer"></iframe>
 	</div>
 </div>
+
+<div id="upload-document-popup" class="popup-container">
+	<div class="l-pop-up" id="upload-document">
+		<div class="close-button-container">
+			<i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="upload-document-popup"></i>
+		</div>
+		</div>
+		</div>
