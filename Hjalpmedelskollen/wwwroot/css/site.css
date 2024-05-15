@@ -58,6 +58,10 @@ nav {
     display: none;
 }
 
+.nav-list a.active {
+    text-decoration: underline;
+}
+
 /*FOOTER*/
 footer {
     background-color: #eaebed;

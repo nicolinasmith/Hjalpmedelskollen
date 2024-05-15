@@ -20,29 +20,29 @@
                 <div class="nav-list-container">
                     <ul class="nav-list">
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Index" id="li-aidsbyunit">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">
                                 Översikt
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Search" asp-action="Index">
+                            <a asp-area="" asp-controller="Search" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Search" ? "active" : "")">
                                 Sök
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Document" asp-action="Index">
+                            <a asp-area="" asp-controller="Document" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Document" ? "active" : "")">
                                 Dokument
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="" asp-action="">
+                            <a asp-area="" asp-controller="Statistics" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Statistics" ? "active" : "")">
                                 Statistik
                             </a>
                         </li>
                         <li>
-                        <a asp-area="" asp-controller="" asp-action="">
+                            <a asp-area="" asp-controller="Settings" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "active" : "")">
                                 <i class="fa-solid fa-gear"></i>
-							</a>
+                            </a>
                         </li>
                     </ul>
                 </div>
