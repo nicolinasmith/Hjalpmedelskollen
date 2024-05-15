@@ -37,6 +37,17 @@
 
     });
 
+    /*AIDS BY UNIT - DISPLAY SECTION*/
+    document.getElementById('display-sections').addEventListener('click', function () {
+        document.getElementById('sections-popup').style.display = 'block';
+    });
+
+    document.getElementById('close-sections-popup').addEventListener('click', function () {
+        document.getElementById('sections-popup').style.display = 'block';
+    });
+
+
+
     /*AIDS BY UNIT - HANDLE PATIENTS*/
     var patientPopup = document.getElementById('patients-popup');
     var closePatientPopup = document.getElementById('close-patients-popup');
