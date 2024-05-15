@@ -3,6 +3,7 @@ using Hjalpmedelskollen.Data;
 using Hjalpmedelskollen.Models;
 using Hjalpmedelskollen.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Hjalpmedelskollen.Controllers
 {
@@ -33,7 +34,7 @@ namespace Hjalpmedelskollen.Controllers
 			if (file != null && file.Length > 0)
 			{
 				var originalFileName = Path.GetFileName(file.FileName);
-				var fileName = originalFileName.ToLower().Replace(" ", "");
+				var fileName = Regex.Replace(originalFileName.ToLower(), "[^a-zA-Z0-9]+", "");
 				var filePath = Path.Combine("wwwroot/pdf", fileName);
 				using (var stream = new FileStream(filePath, FileMode.Create))
 				{
