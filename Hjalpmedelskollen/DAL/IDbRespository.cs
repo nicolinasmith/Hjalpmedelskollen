@@ -5,6 +5,7 @@ namespace Hjalpmedelskollen.DAL
     public interface IDbRepository
     {
         Task<IEnumerable<AidModel>> GetAidsByUnit(int? unitId);
+        Task<IEnumerable<AidModel>> GetAllAids();
         Task<AidModel> GetAid (string aidId);
         Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId);
         Task AddAid(AidModel aid, int? selectedMonth);
@@ -35,5 +36,7 @@ namespace Hjalpmedelskollen.DAL
         Task<IEnumerable<DocumentModel>> GetDocument(int documentId);
         Task AddDocument(DocumentModel document);
         Task DeleteDocument(int documentId);
+
+        Task<InstitutionModel> GetInstitution();
     }
 }
