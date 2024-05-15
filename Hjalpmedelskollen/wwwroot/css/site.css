@@ -58,6 +58,10 @@ nav {
     display: none;
 }
 
+.nav-list a.active {
+    text-decoration: underline;
+}
+
 /*FOOTER*/
 footer {
     background-color: #eaebed;
@@ -356,7 +360,7 @@ button {
     font-weight: bold;
 }
 
-button:hover {
+button:hover, .close-popup-button:hover {
     opacity: 0.8;
 }
 

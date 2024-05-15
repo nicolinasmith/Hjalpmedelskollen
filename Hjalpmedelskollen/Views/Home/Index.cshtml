@@ -12,7 +12,7 @@
     <ul>
         <li>@Model.SelectedUnit.Name.ToUpper()</li>
         <li id="change-unit" class="small-li">Byt enhet</li>
-        <li class="small-li">Avdelningar</li>
+        <li id="display-sections" class="small-li">Avdelningar</li>
         <li id="display-patients" class="small-li">Patientlista</li>
         <li id="add-new-aid" class="small-li" data-selected-unit="@Model.SelectedUnit.Id">Registrera hjälpmedel</li>
     </ul>
@@ -159,6 +159,31 @@
             </div>
         </div>
     </aside>
+</div>
+
+<div id="sections-popup" class="popup-container">
+    <div class="pop-up">
+        <div class="close-button-container">
+            <i class="fa-solid fa-square-xmark close-popup-button" data-popup-id="sections-popup"></i>
+        </div>
+        <h3>Avdelningar på @Model.SelectedUnit.Name</h3>
+        <table class="table-style" id="section-table">
+            <tr class="table-header">
+                <th>Avdelning</th>
+            </tr>
+            @foreach (var s in Model.Sections)
+            {
+                <tr class="section-row"
+                    data-section-id="@s.Id"
+					data-unit-id="@s.UnitId">
+					<td>@s.Name</td>
+                </tr>
+            }
+        </table>
+        <div class="popup-buttons">
+            <button id="close-sections-popup">Stäng</button>
+        </div>
+    </div>
 </div>
 
 <partial name="_AddAidPopup" model="Model" />
