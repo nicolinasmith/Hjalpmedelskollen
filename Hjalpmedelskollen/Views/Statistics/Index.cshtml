@@ -1,0 +1,40 @@
+﻿@model Hjalpmedelskollen.ViewModels.StatisticsViewModel
+
+@{
+	ViewData["Title"] = "Statistik";
+}
+
+@section Scripts {
+	<script src="~/js/statistics.js"></script>
+}
+
+	<h2>Statistik inom @Model.Institution.Name</h2>
+<div class="statistics-container">
+	<div>
+		<table class="table-style" id="statistics-table">
+			<thead>
+				<tr class="table-header">
+					<th>Hjälpmedelskategori</th>
+					<th>Alla enheter</th>
+					@foreach (var unit in Model.Units)
+					{
+						<th>@unit.Name</th>
+					}
+				</tr>
+			</thead>
+			<tbody>
+					@foreach (var category in Model.Categories)
+					{
+				<tr>
+						<td>@category</td>
+						<td>@Model.Aids.Count(a => a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori -->
+						@foreach (var unit in Model.Units)
+						{
+							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori och enhet -->
+						}
+				</tr>
+					}
+		</table>
+	</div>
+	<canvas id="myPieChart"></canvas>
+</div>

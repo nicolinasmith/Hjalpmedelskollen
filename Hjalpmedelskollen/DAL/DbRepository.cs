@@ -226,6 +226,19 @@ namespace Hjalpmedelskollen.DAL
 			_context.Documents.Remove(document);
 			await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<AidModel>> GetAllAids()
+        {
+            return await _context.Aids
+				.Include(a => a.Section)
+				.ThenInclude(s => s.Unit)
+				.ToListAsync();
+        }
+
+        public async Task<InstitutionModel> GetInstitution()
+        {
+			return await _context.Institutions.FirstOrDefaultAsync();
+		}
        
     }
 }
