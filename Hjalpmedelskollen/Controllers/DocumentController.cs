@@ -28,41 +28,41 @@ namespace Hjalpmedelskollen.Controllers
             return View(viewModel);
         }
 
-		[HttpPost]
-		public async Task<IActionResult> UploadDocumentToDatabase(IFormFile file, string name, int folderId)
+[HttpPost]
+public async Task<IActionResult> UploadDocumentToDatabase(IFormFile file, string name, int folderId)
+{
+	if (file != null && file.Length > 0)
+	{
+		var originalFileName = Path.GetFileName(file.FileName);
+		var fileName = Regex.Replace(originalFileName.ToLower(), "[^a-zA-Z0-9]+", "");
+		var filePath = Path.Combine("wwwroot/pdf", fileName);
+		using (var stream = new FileStream(filePath, FileMode.Create))
 		{
-			if (file != null && file.Length > 0)
-			{
-				var originalFileName = Path.GetFileName(file.FileName);
-				var fileName = Regex.Replace(originalFileName.ToLower(), "[^a-zA-Z0-9]+", "");
-				var filePath = Path.Combine("wwwroot/pdf", fileName);
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					await file.CopyToAsync(stream);
-				}
-
-				var document = new DocumentModel
-				{
-					Name = name,
-					FileName = fileName,
-					FilePath = "/pdf/" + fileName,
-					Created = DateTime.UtcNow,
-					FolderId = folderId
-				};
-
-				try
-				{
-					await _dbRepository.AddDocument(document);
-					return RedirectToAction("Index");
-				}
-				catch (Exception ex)
-				{
-					return Json(new { success = false, error = $"Ett fel inträffade när ett dokument lades till i databasen: {ex.Message}" });
-				}
-			}
-
-			return View("Index");
+			await file.CopyToAsync(stream);
 		}
+
+		var document = new DocumentModel
+		{
+			Name = name,
+			FileName = fileName,
+			FilePath = "/pdf/" + fileName,
+			Created = DateTime.UtcNow,
+			FolderId = folderId
+		};
+
+		try
+		{
+			await _dbRepository.AddDocument(document);
+			return RedirectToAction("Index");
+		}
+		catch (Exception ex)
+		{
+			return Json(new { success = false, error = $"Ett fel inträffade när ett dokument lades till i databasen: {ex.Message}" });
+		}
+	}
+
+	return View("Index");
+}
 
 		[HttpPost]
 		public async Task<IActionResult> DeleteDocumentFromDatabase(int documentId, string documentPath)

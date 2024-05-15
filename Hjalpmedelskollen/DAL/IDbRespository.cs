@@ -38,5 +38,6 @@ namespace Hjalpmedelskollen.DAL
         Task DeleteDocument(int documentId);
 
         Task<InstitutionModel> GetInstitution();
+
     }
 }
