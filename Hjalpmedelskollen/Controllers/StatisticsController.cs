@@ -35,6 +35,15 @@ namespace Hjalpmedelskollen.Controllers
 			viewModel.TotalAidsCount = viewModel.Aids.Count();
 			viewModel.AidsWithPatientId = viewModel.Aids.Count(a => a.PatientId.HasValue);
 
+			foreach (var unit in viewModel.Units)
+			{
+				viewModel.CountAidsByUnit.Add(new StatisticsViewModel.AidsByUnit
+				{
+					Name = unit.Name,
+					Count = viewModel.Aids.Count(a => a.Section.UnitId == unit.Id)
+				});
+			}
+
 			return View(viewModel);
 		}
 	}

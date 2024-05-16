@@ -8,11 +8,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="~/js/statistics.js"></script>
 }
-<main id="statistics">
-	<h2>Statistik över hjälpmedel i @Model.Institution.Name</h2>
-	<h3>Totalt antal hjälpmedel: @Model.TotalAidsCount</h3>
 	<div class="statistics-container">
 		<div id="statistics-table-container">
+	<h2>Statistik över hjälpmedel i @Model.Institution.Name</h2>
+	<h3>Totalt antal hjälpmedel: @Model.TotalAidsCount</h3>
 			<table class="table-style" id="statistics-table">
 				<thead>
 					<tr class="table-header">
@@ -25,8 +24,8 @@
 					</tr>
 				</thead>
 				<tbody>
-						@foreach (var category in Model.Categories)
-						{
+					@foreach (var category in Model.Categories)
+					{
 					<tr>
 							<td>@category</td>
 							<td>@Model.Aids.Count(a => a.Category == category)</td>
@@ -35,13 +34,21 @@
 								<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td>
 							}
 					</tr>
+					}
+					<tr>
+						<td>Totalt</td>
+						<td>@Model.TotalAidsCount</td>
+						@foreach (var unit in Model.Units)
+						{
+							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id)</td>
 						}
+					</tr>
 			</table>
 		</div>
 		<div id="chart-container">
 			<h4>Hur många hjälpmedel används idag?</h4>
-			<canvas data-aids-count="@Model.TotalAidsCount" data-aids-patient-count="@Model.AidsWithPatientId" id="myPieChart"></canvas>
+			<canvas data-aids-count="@Model.TotalAidsCount" data-aids-patient-count="@Model.AidsWithPatientId" id="myPieChart" class="chart-design"></canvas>
+			<h4>Hur fördelas hjälpmedel idag?</h4>
+			<canvas data-aidsbyunit-count='@Html.Raw(Json.Serialize(Model.CountAidsByUnit))' id="myPieChart-units" class="chart-design"></canvas>
 		</div>
 	</div>
-
-</main>
