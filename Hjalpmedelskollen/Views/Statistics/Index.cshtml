@@ -8,39 +8,40 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="~/js/statistics.js"></script>
 }
-
-<h2>Statistik</h2>
-<h3>Över hjälpmedel i @Model.Institution.Name</h3>
-<p>Totalt antal hjälpmedel: @Model.TotalAidsCount</p>
-<div class="statistics-container">
-	<div id="statistics-table-container">
-		<table class="table-style" id="statistics-table">
-			<thead>
-				<tr class="table-header">
-					<th>Hjälpmedelskategori</th>
-					<th>Alla enheter</th>
-					@foreach (var unit in Model.Units)
-					{
-						<th>@unit.Name</th>
-					}
-				</tr>
-			</thead>
-			<tbody>
-					@foreach (var category in Model.Categories)
-					{
-				<tr>
-						<td>@category</td>
-						<td>@Model.Aids.Count(a => a.Category == category)</td>
+<main id="statistics">
+	<h2>Statistik över hjälpmedel i @Model.Institution.Name</h2>
+	<h3>Totalt antal hjälpmedel: @Model.TotalAidsCount</h3>
+	<div class="statistics-container">
+		<div id="statistics-table-container">
+			<table class="table-style" id="statistics-table">
+				<thead>
+					<tr class="table-header">
+						<th>Hjälpmedelskategori</th>
+						<th>Alla enheter</th>
 						@foreach (var unit in Model.Units)
 						{
-							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td>
+							<th>@unit.Name</th>
 						}
-				</tr>
-					}
-		</table>
+					</tr>
+				</thead>
+				<tbody>
+						@foreach (var category in Model.Categories)
+						{
+					<tr>
+							<td>@category</td>
+							<td>@Model.Aids.Count(a => a.Category == category)</td>
+							@foreach (var unit in Model.Units)
+							{
+								<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td>
+							}
+					</tr>
+						}
+			</table>
+		</div>
+		<div id="chart-container">
+			<h4>Hur många hjälpmedel används idag?</h4>
+			<canvas data-aids-count="@Model.TotalAidsCount" data-aids-patient-count="@Model.AidsWithPatientId" id="myPieChart"></canvas>
+		</div>
 	</div>
-	<div id="chart-container">
-		<b>Hur många hjälpmedel används idag?</b>
-		<canvas data-aids-count="@Model.TotalAidsCount" data-aids-patient-count="@Model.AidsWithPatientId" id="myPieChart"></canvas>
-	</div>
-</div>
+
+</main>

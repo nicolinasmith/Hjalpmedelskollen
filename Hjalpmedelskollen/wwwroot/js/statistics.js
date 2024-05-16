@@ -5,6 +5,9 @@
     var aidsWithPatientCount = parseInt(canvas.getAttribute('data-aids-patient-count'));
     var aidsWithoutPatientCount = totalAidsCount - aidsWithPatientCount;
 
+    var blue = '#81a7e6';
+    var orange = '#fcb56f';
+
     var ctx = document.getElementById('myPieChart').getContext('2d');
     var myPieChart = new Chart(ctx, {
         type: 'pie',
@@ -12,7 +15,7 @@
             labels: ['Lediga', 'Upptagna'],
             datasets: [{
                 data: [aidsWithoutPatientCount, aidsWithPatientCount],
-                backgroundColor: ['orange', 'purple']
+                backgroundColor: [orange, blue]
             }]
         },
         options: {
