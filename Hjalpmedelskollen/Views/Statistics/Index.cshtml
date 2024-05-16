@@ -5,12 +5,15 @@
 }
 
 @section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="~/js/statistics.js"></script>
 }
 
-	<h2>Statistik inom @Model.Institution.Name</h2>
+<h2>Statistik</h2>
+<h3>Över hjälpmedel i @Model.Institution.Name</h3>
+<p>Totalt antal hjälpmedel: @Model.TotalAidsCount</p>
 <div class="statistics-container">
-	<div>
+	<div id="statistics-table-container">
 		<table class="table-style" id="statistics-table">
 			<thead>
 				<tr class="table-header">
@@ -27,14 +30,17 @@
 					{
 				<tr>
 						<td>@category</td>
-						<td>@Model.Aids.Count(a => a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori -->
+						<td>@Model.Aids.Count(a => a.Category == category)</td>
 						@foreach (var unit in Model.Units)
 						{
-							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori och enhet -->
+							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td>
 						}
 				</tr>
 					}
 		</table>
 	</div>
-	<canvas id="myPieChart"></canvas>
+	<div id="chart-container">
+		<b>Hur många hjälpmedel används idag?</b>
+		<canvas data-aids-count="@Model.TotalAidsCount" data-aids-patient-count="@Model.AidsWithPatientId" id="myPieChart"></canvas>
+	</div>
 </div>
