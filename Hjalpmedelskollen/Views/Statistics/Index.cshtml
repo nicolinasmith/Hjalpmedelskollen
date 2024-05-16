@@ -8,9 +8,9 @@
 	<script src="~/js/statistics.js"></script>
 }
 
-	<h2>Statistik inom @Model.Institution.Name</h2>
+	<h2>Statistik över hur hjälpmedels används i @Model.Institution.Name</h2>
 <div class="statistics-container">
-	<div>
+	<div id="statistics-table-container">
 		<table class="table-style" id="statistics-table">
 			<thead>
 				<tr class="table-header">
@@ -27,14 +27,16 @@
 					{
 				<tr>
 						<td>@category</td>
-						<td>@Model.Aids.Count(a => a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori -->
+						<td>@Model.Aids.Count(a => a.Category == category)</td>
 						@foreach (var unit in Model.Units)
 						{
-							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td> <!-- Antal hjälpmedel inom aktuell kategori och enhet -->
+							<td>@Model.Aids.Count(a => a.Section.UnitId == unit.Id && a.Category == category)</td>
 						}
 				</tr>
 					}
 		</table>
 	</div>
-	<canvas id="myPieChart"></canvas>
+	<div id="chart-container">
+		<canvas id="myPieChart"></canvas>
+	</div>
 </div>

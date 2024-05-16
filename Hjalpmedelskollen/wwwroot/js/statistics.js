@@ -1,16 +1,15 @@
 ﻿var ctx = document.getElementById('myPieChart').getContext('2d');
 
-// Skapa cirkeldiagrammet med Chart.js
 var myPieChart = new Chart(ctx, {
-    type: 'pie', // Typ av diagram är cirkeldiagram
+    type: 'pie',
     data: {
-        labels: ['Red', 'Blue', 'Yellow'], // Etiketter för varje del av cirkeldiagrammet
+        labels: ['Lediga', 'Upptagna'],
         datasets: [{
-            data: [10, 20, 30], // Datavärden för varje del av cirkeldiagrammet
-            backgroundColor: ['red', 'blue', 'yellow'] // Färger för varje del av cirkeldiagrammet
+            data: [40, 60],
+            backgroundColor: ['green', 'red']
         }]
     },
     options: {
-        // Ytterligare alternativ och anpassningar kan läggas till här
+
     }
 });
