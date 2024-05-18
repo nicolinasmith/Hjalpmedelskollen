@@ -1,6 +1,7 @@
 ﻿using Hjalpmedelskollen.DAL;
 using Hjalpmedelskollen.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hjalpmedelskollen.Controllers
 {
@@ -30,6 +31,18 @@ namespace Hjalpmedelskollen.Controllers
 				Sections = sections,
 				Aids = aids
 			};
+
+			viewModel.TotalAidsCount = viewModel.Aids.Count();
+			viewModel.AidsWithPatientId = viewModel.Aids.Count(a => a.PatientId.HasValue);
+
+			foreach (var unit in viewModel.Units)
+			{
+				viewModel.CountAidsByUnit.Add(new StatisticsViewModel.AidsByUnit
+				{
+					Name = unit.Name,
+					Count = viewModel.Aids.Count(a => a.Section.UnitId == unit.Id)
+				});
+			}
 
 			return View(viewModel);
 		}
