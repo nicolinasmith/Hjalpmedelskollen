@@ -132,72 +132,74 @@
 
         document.getElementById('update-aid-button').addEventListener('click', function () {
 
-            var id = document.getElementById('update-id').value;
-            var unitId = document.getElementById('update-aid-unit').value;
-            var sectionId = document.getElementById('update-aid-section').value;
-            var category = document.getElementById('update-category-list').value;
-            var productName = document.getElementById('update-product-name').value;
-            var registered = document.getElementById('update-registered').value;
-            var inspection = document.getElementById('update-inspection').value;
-            var patient = document.getElementById('update-patient').value;
-            var comment = document.getElementById('update-comment').value;
+            if (confirm('Är du säker på att du vill uppdatera detta hjälpmedel?')) {
+                var id = document.getElementById('update-id').value;
+                var unitId = document.getElementById('update-aid-unit').value;
+                var sectionId = document.getElementById('update-aid-section').value;
+                var category = document.getElementById('update-category-list').value;
+                var productName = document.getElementById('update-product-name').value;
+                var registered = document.getElementById('update-registered').value;
+                var inspection = document.getElementById('update-inspection').value;
+                var patient = document.getElementById('update-patient').value;
+                var comment = document.getElementById('update-comment').value;
 
-            console.log(productName);
-
-            $.ajax({
-                url: '/Home/UpdateAidToDatabase',
-                method: 'POST',
-                data: {
-                    Id: id,
-                    UnitId: unitId,
-                    SectionId: sectionId,
-                    Category: category,
-                    ProductName: productName,
-                    Registered: registered,
-                    Inspection: inspection,
-                    PatientId: patient,
-                    Comment: comment,
-                    FormAction: 'update'
-                },
-                success: function (response) {
-                    if (response.success) {
-                        searchAid();
-                        $('#update-aid-popup').hide();
-                        alert('Hjälpmedlet har uppdaterats.');
-                    } else {
-                        alert('Det gick inte att uppdatera hjälpmedlet.');
+                $.ajax({
+                    url: '/Home/UpdateAidToDatabase',
+                    method: 'POST',
+                    data: {
+                        Id: id,
+                        UnitId: unitId,
+                        SectionId: sectionId,
+                        Category: category,
+                        ProductName: productName,
+                        Registered: registered,
+                        Inspection: inspection,
+                        PatientId: patient,
+                        Comment: comment,
+                        FormAction: 'update'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#update-aid-popup').hide();
+                            searchAid();
+                            alert('Hjälpmedlet har uppdaterats.');
+                        } else {
+                            alert('Det gick inte att uppdatera hjälpmedlet.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+                });
+            }
         });
 
         document.getElementById('delete-aid-button').addEventListener('click', function () {
 
-            var id = document.getElementById('update-id').value;
+            if (confirm('Är du säker på att du vill ta bort detta hjälpmedel?')) {
+                var id = document.getElementById('update-id').value;
 
-            $.ajax({
-                url: '/Home/UpdateAidToDatabase',
-                method: 'POST',
-                data: {
-                    Id: id,
-                    FormAction: 'delete'
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#update-aid-popup').hide();
-                        searchAid();
-                        alert('Hjälpmedlet har tagits bort.');
-                    } else {
-                        alert('Det gick inte att ta bort hjälpmedlet.');
+                $.ajax({
+                    url: '/Home/UpdateAidToDatabase',
+                    method: 'POST',
+                    data: {
+                        Id: id,
+                        FormAction: 'delete'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#update-aid-popup').hide();
+                            searchAid();
+                            alert('Hjälpmedlet har tagits bort.');
+                        } else {
+                            alert('Det gick inte att ta bort hjälpmedlet.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+                });
+            }
         });
     }
 });
