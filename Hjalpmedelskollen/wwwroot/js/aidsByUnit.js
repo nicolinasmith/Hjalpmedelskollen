@@ -238,57 +238,6 @@
         });
     }
 
-    ///*AIDS BY UNIT - SORT TABLE*/
-    ///*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
-    //function sortTable(n, selectedTable) {
-    //    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    //    table = document.getElementById(selectedTable);
-    //    switching = true;
-    //    dir = "asc";
-    //    while (switching) {
-    //        switching = false;
-    //        rows = table.rows;
-    //        for (i = 1; i < (rows.length - 1); i++) {
-    //            shouldSwitch = false;
-    //            x = rows[i].getElementsByTagName("TD")[n];
-    //            y = rows[i + 1].getElementsByTagName("TD")[n];
-    //            if (dir == "asc") {
-    //                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-    //                    shouldSwitch = true;
-    //                    break;
-    //                }
-    //            } else if (dir == "desc") {
-    //                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-    //                    shouldSwitch = true;
-    //                    break;
-    //                }
-    //            }
-    //        }
-    //        if (shouldSwitch) {
-    //            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-    //            switching = true;
-    //            switchcount++;
-    //        } else {
-    //            if (switchcount == 0 && dir == "asc") {
-    //                dir = "desc";
-    //                switching = true;
-    //            }
-    //        }
-    //    }
-    //}
-
-    //function addSortEventToHeader(tableId) {
-    //    var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
-    //    headers.forEach(function (header, index) {
-    //        header.addEventListener('click', function () {
-    //            sortTable(index, tableId);
-    //        });
-    //    });
-    //}
-
-    //addSortEventToHeader('aid-table');
-    //addSortEventToHeader('patient-table');
-
     /*AIDS BY UNIT - ADD AID*/
     function handleAddAidClick() {
         document.getElementById('add-aid-popup').style.display = 'block';
@@ -304,50 +253,45 @@
 
     document.getElementById('add-aid-button').addEventListener('click', function () {
 
-        var aidId = document.getElementById('add-aid-id').value
-        var sectionId = document.getElementById('add-section-list').value;
-        var category = document.getElementById('add-category-list').value;
-        var productName = document.getElementById('add-product-name').value;
-        var registered = document.getElementById('add-aid-registered').value;
-        var inspection = document.getElementById('add-inspection').value;
-        var patient = document.getElementById('add-patient-list').value;
-        var comment = document.getElementById('add-comment').value;
+        if (confirm('Är du säker på att du vill registrera detta hjälpmedel?')) {
 
-        $.ajax({
-            url: '/Home/AddAidToDatabase',
-            method: 'POST',
-            data: {
-                Id: aidId,
-                SectionId: sectionId,
-                Category: category,
-                ProductName: productName,
-                Registered: registered,
-                Inspection: inspection,
-                PatientId: patient,
-                Comment: comment
-            },
-            success: function (response) {
-                if (response.success) {
-                    document.getElementById('add-aid-popup').style.display = 'none';
-                    $('#aid-table').load("/Home/Index #aid-table", function () {
-                        $('#aid-table tbody tr.aid-row:first').addClass('highlight-aid');
-                    });
-                } else {
-                    alert('Det gick inte att lägga till hjälpmedlet.');
+            var aidId = document.getElementById('add-aid-id').value
+            var sectionId = document.getElementById('add-section-list').value;
+            var category = document.getElementById('add-category-list').value;
+            var productName = document.getElementById('add-product-name').value;
+            var registered = document.getElementById('add-aid-registered').value;
+            var inspection = document.getElementById('add-inspection').value;
+            var patient = document.getElementById('add-patient-list').value;
+            var comment = document.getElementById('add-comment').value;
+
+            $.ajax({
+                url: '/Home/AddAidToDatabase',
+                method: 'POST',
+                data: {
+                    Id: aidId,
+                    SectionId: sectionId,
+                    Category: category,
+                    ProductName: productName,
+                    Registered: registered,
+                    Inspection: inspection,
+                    PatientId: patient,
+                    Comment: comment
+                },
+                success: function (response) {
+                    if (response.success) {
+                        document.getElementById('add-aid-popup').style.display = 'none';
+                        $('#aid-table').load("/Home/Index #aid-table", function () {
+                            $('#aid-table tbody tr.aid-row:first').addClass('highlight-aid');
+                        });
+                    } else {
+                        alert('Det gick inte att lägga till hjälpmedlet.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-
-
-    $('#add-section-list').change(function () {
-
-        var sectionId = $(this).val();
-        var patientList = $('#add-patient-list');
-
+            });
+        }
     });
 
 
@@ -427,74 +371,81 @@
 
     document.getElementById('update-aid-button').addEventListener('click', function () {
 
-        var id = document.getElementById('update-id').value;
-        var unitId = document.getElementById('update-aid-unit').value;
-        var sectionId = document.getElementById('update-aid-section').value;
-        var category = document.getElementById('update-category-list').value;
-        var productName = document.getElementById('update-product-name').value;
-        var registered = document.getElementById('update-registered').value;
-        var inspection = document.getElementById('update-inspection').value;
-        var patient = document.getElementById('update-patient').value;
-        var comment = document.getElementById('update-comment').value;
+        if (confirm('Är du säker på att du vill spara ändringarna?')) {
 
-        console.log(productName);
+            var id = document.getElementById('update-id').value;
+            var unitId = document.getElementById('update-aid-unit').value;
+            var sectionId = document.getElementById('update-aid-section').value;
+            var category = document.getElementById('update-category-list').value;
+            var productName = document.getElementById('update-product-name').value;
+            var registered = document.getElementById('update-registered').value;
+            var inspection = document.getElementById('update-inspection').value;
+            var patient = document.getElementById('update-patient').value;
+            var comment = document.getElementById('update-comment').value;
 
-        $.ajax({
-            url: '/Home/UpdateAidToDatabase',
-            method: 'POST',
-            data: {
-                Id: id,
-                UnitId: unitId,
-                SectionId: sectionId,
-                Category: category,
-                ProductName: productName,
-                Registered: registered,
-                Inspection: inspection,
-                PatientId: patient,
-                Comment: comment,
-                FormAction: 'update'
-            },
-            success: function (response) {
-                if (response.success) {
-                    $('#update-aid-popup').hide();
-                    $('#aid-table').load("/Home/Index #aid-table", function () {
-                        $('.aid-row[data-id="' + id + '"]').addClass('highlight-aid');
-                    });
-                    alert('Hjälpmedlet har uppdaterats.');
-                } else {
-                    alert('Det gick inte att uppdatera hjälpmedlet.');
+            console.log(productName);
+
+            $.ajax({
+                url: '/Home/UpdateAidToDatabase',
+                method: 'POST',
+                data: {
+                    Id: id,
+                    UnitId: unitId,
+                    SectionId: sectionId,
+                    Category: category,
+                    ProductName: productName,
+                    Registered: registered,
+                    Inspection: inspection,
+                    PatientId: patient,
+                    Comment: comment,
+                    FormAction: 'update'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#update-aid-popup').hide();
+                        $('#aid-table').load("/Home/Index #aid-table", function () {
+                            $('.aid-row[data-id="' + id + '"]').addClass('highlight-aid');
+                        });
+                        alert('Hjälpmedlet har uppdaterats.');
+                    } else {
+                        alert('Det gick inte att uppdatera hjälpmedlet.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     });
 
     document.getElementById('delete-aid-button').addEventListener('click', function () {
-        var id = document.getElementById('update-id').value;
 
-        $.ajax({
-            url: '/Home/UpdateAidToDatabase',
-            method: 'POST',
-            data: {
-                Id: id,
-                FormAction: 'delete'
-            },
-            success: function (response) {
-                if (response.success) {
-                    $('#update-aid-popup').hide();
-                    $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
-                    $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
-                    alert('Hjälpmedlet har tagits bort.');
-                } else {
-                    alert('Det gick inte att ta bort hjälpmedlet.');
+        if (confirm('Är du säker på att du vill ta bort hjälpmedlet?')) {
+
+            var id = document.getElementById('update-id').value;
+
+            $.ajax({
+                url: '/Home/UpdateAidToDatabase',
+                method: 'POST',
+                data: {
+                    Id: id,
+                    FormAction: 'delete'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#update-aid-popup').hide();
+                        $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
+                        $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
+                        alert('Hjälpmedlet har tagits bort.');
+                    } else {
+                        alert('Det gick inte att ta bort hjälpmedlet.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     });
 
     /*SCAN QR*/
@@ -576,7 +527,6 @@
 
         qrAidMissingPopup.style.display = 'block';
         qrAidMissingText.textContent = `Det finns inget hjälpmedel med registreringsnummer "${decodeText}". Vill du registrera det?`;
-        //document.getElementById('id').value = decodeText;
 
         cancelQrAid.addEventListener('click', function () {
             qrAidMissingPopup.style.display = 'none';
@@ -590,14 +540,6 @@
 
             document.getElementById('add-aid-id').value = decodeText;
             document.getElementById('add-aid-registered').value = new Date().toLocaleDateString('sv-SE');
-
-            //var unitId = this.getAttribute('data-selected-unit');
-            //var selectElement = document.getElementById('unit-list');
-            //var unitOption = selectElement.querySelector('#unit-list option[value="' + unitId + '"]');
-
-            //if (unitOption) {
-            //    selectElement.value = unitId;
-            //}
         });
     }
 
@@ -691,26 +633,30 @@
     });
 
     $('#all-notes-container').on('click', '.delete-note', function () {
-        var noteId = $(this).data('note-id');
 
-        $.ajax({
-            url: '/Home/DeleteNoteFromDatabase',
-            method: 'POST',
-            data: {
-                noteId
-            },
-            success: function (response) {
-                if (response.success) {
-                    $(`[data-note-id=${noteId}]`).remove();
-                    $("#note-aside").load("/Home/Index #note-aside");
-                    $("#all-notes-container").load("/Home/Index #all-notes-container");
-                } else {
-                    alert("Det gick inte att ta bort anteckningen.");
+        if (confirm('Är du säker på att du vill ta bort den här anteckningen?')) {
+
+            var noteId = $(this).data('note-id');
+
+            $.ajax({
+                url: '/Home/DeleteNoteFromDatabase',
+                method: 'POST',
+                data: {
+                    noteId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $(`[data-note-id=${noteId}]`).remove();
+                        $("#note-aside").load("/Home/Index #note-aside");
+                        $("#all-notes-container").load("/Home/Index #all-notes-container");
+                    } else {
+                        alert("Det gick inte att ta bort anteckningen.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     });
 });
