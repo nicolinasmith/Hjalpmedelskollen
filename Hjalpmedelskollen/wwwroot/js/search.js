@@ -51,13 +51,14 @@
             tr.setAttribute("data-comment", comment);
             tr.setAttribute("data-inspection", inspectionDate);
             var patientName = aid.patient ? aid.patient.name : '';
+            var circleColor = aid.patient ? '<i class="fa-solid fa-circle red-circle"></i>' : '<i class="fa-solid fa-circle green-circle"></i>';
 
             tr.innerHTML = `
             <td>${aid.id}</td>
             <td>${aid.productName}</td>
             <td>${aid.category}</td>
             <td>${aid.section.unit.name}</td>
-            <td>${aid.section.name} ${patientName}</td>
+            <td>${circleColor} ${aid.section.name} ${patientName}</td>
         `;
             tableBody.appendChild(tr);
         });
