@@ -156,7 +156,7 @@ namespace Hjalpmedelskollen.DAL
 		}
 
 
-        public async Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId)
+        public async Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId, string status)
         {
 			List<AidModel> aids = new List<AidModel>();
 
@@ -194,7 +194,21 @@ namespace Hjalpmedelskollen.DAL
 				}
             }
 
-            return aids;
+			if (status == "taken")
+			{
+				aids = aids.Where(a => a.PatientId.HasValue).ToList();
+			}
+			else if (status == "free")
+			{
+				aids = aids.Where(a => !a.PatientId.HasValue).ToList();
+			}
+			else if (status == "all")
+			{
+				aids = aids.ToList();
+			}
+
+
+			return aids;
         }
 
         public async Task<IEnumerable<FolderModel>> GetFolders()

@@ -10,6 +10,7 @@
         var searchInput = document.getElementById("search-input").value;
         var searchType = document.querySelector('input[name="searchType"]:checked').value;
         var unitId = document.querySelector('input[name="unit"]:checked').value;
+        var status = document.querySelector('input[name="status"]:checked').value;
 
         $.ajax({
             url: '/Search/SearchAidInDatabase',
@@ -17,7 +18,8 @@
             data: {
                 searchInput: searchInput,
                 searchType: searchType,
-                unitId: unitId
+                unitId: unitId,
+                status: status
             },
             success: function (data) {
                 updateSearchTable(data);

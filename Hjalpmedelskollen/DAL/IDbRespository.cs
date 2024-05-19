@@ -7,7 +7,7 @@ namespace Hjalpmedelskollen.DAL
         Task<IEnumerable<AidModel>> GetAidsByUnit(int? unitId);
         Task<IEnumerable<AidModel>> GetAllAids();
         Task<AidModel> GetAid (string aidId);
-        Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId);
+        Task<IEnumerable<AidModel>> GetAidsBySearch(string searchInput, string searchType, string unitId, string status);
         Task AddAid(AidModel aid, int? selectedMonth);
         Task UpdateAid(AidModel aid);
         Task DeleteAid(AidModel aid);
