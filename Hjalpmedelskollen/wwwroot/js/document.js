@@ -47,27 +47,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('#delete-document').click(function () {
 
-        $.ajax({
-            url: '/Document/DeleteDocumentFromDatabase',
-            type: 'POST',
-            data: {
-                documentId: selectedFile,
-                documentPath: selectedPath
-            },
-            success: function () {
-                alert('Dokumentet har tagits bort.');
-                $('#upload-popup').hide();
-                $('.doc-file[data-document-id="' + selectedFile + '"]').remove();
-                $('#document-viewer').attr('src', '');
-                $('#document-content h3').text('Välj ett dokument för att visa innehållet.');
-                $('#document-info').hide();
+        if (confirm('Är du säker på att du vill ta bort dokumentet?')) {
 
-            },
-            error: function (xhr, status, error) {
-                alert('Ett fel uppstod: ' + error);
-            }
-        });
+            $.ajax({
+                url: '/Document/DeleteDocumentFromDatabase',
+                type: 'POST',
+                data: {
+                    documentId: selectedFile,
+                    documentPath: selectedPath
+                },
+                success: function () {
+                    alert('Dokumentet har tagits bort.');
+                    $('#upload-popup').hide();
+                    $('.doc-file[data-document-id="' + selectedFile + '"]').remove();
+                    $('#document-viewer').attr('src', '');
+                    $('#document-content h3').text('Välj ett dokument för att visa innehållet.');
+                    $('#document-info').hide();
 
+                },
+                error: function (xhr, status, error) {
+                    alert('Ett fel uppstod: ' + error);
+                }
+            });
+        }
     });
-
 });
