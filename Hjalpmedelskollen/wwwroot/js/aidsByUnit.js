@@ -72,31 +72,34 @@
 
     function addPatient() {
 
-        var patientNumber = document.getElementById('add-patient-number').value;
-        var patientName = document.getElementById('add-patient-name').value;
-        var sectionId = document.getElementById('add-patient-section').value;
-        var unitId = document.getElementById('add-patient-unit-id').value;
+        if (confirm('Är du säker på att du vill lägga till patienten?')) {
 
-        $.ajax({
-            url: '/Home/AddPatientToDatabase',
-            method: 'POST',
-            data: {
-                PatientNumber: patientNumber,
-                Name: patientName,
-                SectionId: sectionId,
-            },
-            success: function (response) {
-                if (response.success) {
-                    document.getElementById('add-patient-popup').style.display = 'none';
-                    $("#patient-table").load("/Home/Index?unitId=" + unitId + " #patient-table");
-                } else {
-                    alert('Det gick inte att lägga till patienten.');
+            var patientNumber = document.getElementById('add-patient-number').value;
+            var patientName = document.getElementById('add-patient-name').value;
+            var sectionId = document.getElementById('add-patient-section').value;
+            var unitId = document.getElementById('add-patient-unit-id').value;
+
+            $.ajax({
+                url: '/Home/AddPatientToDatabase',
+                method: 'POST',
+                data: {
+                    PatientNumber: patientNumber,
+                    Name: patientName,
+                    SectionId: sectionId,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        document.getElementById('add-patient-popup').style.display = 'none';
+                        $("#patient-table").load("/Home/Index?unitId=" + unitId + " #patient-table");
+                    } else {
+                        alert('Det gick inte att lägga till patienten.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     }
 
     document.getElementById('cancel-add-patient').addEventListener('click', function () {
@@ -125,62 +128,63 @@
 
     document.getElementById('update-patient-button').addEventListener('click', function () {
 
-        var patientId = document.getElementById('update-patient-id').value;
-        var patientNumber = document.getElementById('update-patient-number').value;
-        var name = document.getElementById('update-patient-name').value;
-        var section = document.getElementById('update-patient-section').value;
+        if (confirm('Är du säker på att du vill uppdatera patienten?')) {
 
-        $.ajax({
-            url: '/Home/UpdatePatientToDatabase',
-            method: 'POST',
-            data: {
-                PatientNumber: patientNumber,
-                Name: name,
-                SectionId: section,
-                Id: patientId
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('Patienten har uppdaterats.');
-                    updatePatient.style.display = 'none';
-                    $("#patient-table").load("/Home/Index #patient-table");
-                } else {
-                    alert('Det gick inte att uppdatera patienten.');
+            var patientId = document.getElementById('update-patient-id').value;
+            var patientNumber = document.getElementById('update-patient-number').value;
+            var name = document.getElementById('update-patient-name').value;
+            var section = document.getElementById('update-patient-section').value;
+
+            $.ajax({
+                url: '/Home/UpdatePatientToDatabase',
+                method: 'POST',
+                data: {
+                    PatientNumber: patientNumber,
+                    Name: name,
+                    SectionId: section,
+                    Id: patientId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        alert('Patienten har uppdaterats.');
+                        updatePatient.style.display = 'none';
+                        $("#patient-table").load("/Home/Index #patient-table");
+                    } else {
+                        alert('Det gick inte att uppdatera patienten.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     });
 
     document.getElementById('delete-patient-button').addEventListener('click', function () {
 
-        var patientId = document.getElementById('update-patient-id').value;
+        if (confirm('Är du säker på att du vill ta bort patienten?')) {
+            var patientId = document.getElementById('update-patient-id').value;
 
-        $.ajax({
-            url: '/Home/DeletePatientFromDatabase',
-            method: 'POST',
-            data: {
-                PatientId: patientId
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('Patienten har tagits bort.');
-                    updatePatient.style.display = 'none';
-                    $("#patient-table").load("/Home/Index #patient-table");
-                } else {
-                    alert('Det gick inte att ta bort patienten.');
+            $.ajax({
+                url: '/Home/DeletePatientFromDatabase',
+                method: 'POST',
+                data: {
+                    PatientId: patientId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        updatePatient.style.display = 'none';
+                        $("#patient-table").load("/Home/Index #patient-table");
+                    } else {
+                        alert('Det gick inte att ta bort patienten.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        }
     });
-
-
-
 
     cancelUpdatePatient.addEventListener('click', function () {
         updatePatient.style.display = 'none';
@@ -406,7 +410,6 @@
                         $('#aid-table').load("/Home/Index #aid-table", function () {
                             $('.aid-row[data-id="' + id + '"]').addClass('highlight-aid');
                         });
-                        alert('Hjälpmedlet har uppdaterats.');
                     } else {
                         alert('Det gick inte att uppdatera hjälpmedlet.');
                     }
@@ -434,8 +437,7 @@
                 success: function (response) {
                     if (response.success) {
                         $('#update-aid-popup').hide();
-                        $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
-                        $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
+                        $('"aid-row[data-id="' + id + '"]').remove();
                         alert('Hjälpmedlet har tagits bort.');
                     } else {
                         alert('Det gick inte att ta bort hjälpmedlet.');
