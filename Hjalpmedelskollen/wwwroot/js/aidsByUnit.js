@@ -122,6 +122,41 @@
             document.getElementById('update-patient-number').value = patientNumber;
             document.getElementById('update-patient-name').value = name;
 
+            $.ajax({
+                url: '/Home/GetAidsByPatientFromDatabase',
+                method: 'GET',
+                data: {
+                    patientId
+                },
+                success: function (response) {
+                    if (response) {
+                        var container = document.getElementById('patient-aid-container');
+                        container.innerHTML = '';
+
+                        if (response.length === 0) {
+
+                            var noAids = document.createElement('li');
+                            noAids.textContent = 'Patienten har inga kopplade hjälpmedel.';
+                            container.appendChild(noAids);
+
+                        } else {
+                            response.forEach(function (aid) {
+
+                                var aidInformation = document.createElement('li');
+                                aidInformation.textContent = `${aid.id} ${aid.category} ${aid.productName}`;
+                                container.appendChild(aidInformation);
+                            });
+                        }
+
+                    } else {
+                        alert('Det gick inte att hämta vilka hjälpmedel som patienten har.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+
             updatePatient.style.display = 'block';
         });
     });

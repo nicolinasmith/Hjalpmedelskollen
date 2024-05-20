@@ -249,7 +249,12 @@ namespace Hjalpmedelskollen.DAL
 				.ToListAsync();
         }
 
-        public async Task<InstitutionModel> GetInstitution()
+		public async Task<IEnumerable<AidModel>> GetAidsByPatient(int patientId)
+		{
+			return await _context.Aids.Where(a => a.PatientId == patientId).ToListAsync();
+		}
+
+		public async Task<InstitutionModel> GetInstitution()
         {
 			return await _context.Institutions.FirstOrDefaultAsync();
 		}
