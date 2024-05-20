@@ -34,8 +34,8 @@ public async Task<IActionResult> UploadDocumentToDatabase(IFormFile file, string
 	if (file != null && file.Length > 0)
 	{
 		var originalFileName = Path.GetFileName(file.FileName);
-		var fileName = Regex.Replace(originalFileName.ToLower(), "[^a-zA-Z0-9]+", "");
-		var filePath = Path.Combine("wwwroot/pdf", fileName);
+        var fileName = Regex.Replace(originalFileName.ToLower(), "[^a-zA-Z0-9.]+", "");
+        var filePath = Path.Combine("wwwroot/pdf", fileName);
 		using (var stream = new FileStream(filePath, FileMode.Create))
 		{
 			await file.CopyToAsync(stream);
