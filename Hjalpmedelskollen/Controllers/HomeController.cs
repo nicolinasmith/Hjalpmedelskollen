@@ -45,7 +45,6 @@ namespace Hjalpmedelskollen.Controllers
             var patients = await _dbRepository.GetPatients(unitId);
             var allPatients = await _dbRepository.GetAllPatients();
 
-
             var viewModel = new AidsByUnitViewModel()
             {
                 SelectedUnit = selectedUnit,
@@ -266,6 +265,21 @@ namespace Hjalpmedelskollen.Controllers
                 return BadRequest(ModelState);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAidsByPatientFromDatabase(int patientId)
+        {
+			try
+            {
+				var aids = await _dbRepository.GetAidsByPatient(patientId);
+				return Json(aids);
+			}
+			catch (Exception ex)
+            {
+				_logger.LogError(ex, "Ett fel inträffade när hjälpmedel skulle hämtas från databasen.");
+				return BadRequest($"Ett fel inträffade när hjälpmedel skulle hämtas från databasen: {ex.Message}.");
+			}
+		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -10,6 +10,7 @@
         var searchInput = document.getElementById("search-input").value;
         var searchType = document.querySelector('input[name="searchType"]:checked').value;
         var unitId = document.querySelector('input[name="unit"]:checked').value;
+        var status = document.querySelector('input[name="status"]:checked').value;
 
         $.ajax({
             url: '/Search/SearchAidInDatabase',
@@ -17,7 +18,8 @@
             data: {
                 searchInput: searchInput,
                 searchType: searchType,
-                unitId: unitId
+                unitId: unitId,
+                status: status
             },
             success: function (data) {
                 updateSearchTable(data);
@@ -49,66 +51,17 @@
             tr.setAttribute("data-comment", comment);
             tr.setAttribute("data-inspection", inspectionDate);
             var patientName = aid.patient ? aid.patient.name : '';
+            var circleColor = aid.patient ? '<i class="fa-solid fa-circle red-circle"></i>' : '<i class="fa-solid fa-circle green-circle"></i>';
 
             tr.innerHTML = `
             <td>${aid.id}</td>
             <td>${aid.productName}</td>
             <td>${aid.category}</td>
             <td>${aid.section.unit.name}</td>
-            <td>${aid.section.name} ${patientName}</td>
+            <td>${circleColor} ${aid.section.name} ${patientName}</td>
         `;
             tableBody.appendChild(tr);
         });
-
-        /*AIDS BY UNIT - SORT TABLE*/
-        /*SOURCE: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
-        function sortTable(n, selectedTable) {
-            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            table = document.getElementById(selectedTable);
-            switching = true;
-            dir = "asc";
-            while (switching) {
-                switching = false;
-                rows = table.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[n];
-                    y = rows[i + 1].getElementsByTagName("TD")[n];
-                    if (dir == "asc") {
-                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    } else if (dir == "desc") {
-                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                }
-                if (shouldSwitch) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                    switchcount++;
-                } else {
-                    if (switchcount == 0 && dir == "asc") {
-                        dir = "desc";
-                        switching = true;
-                    }
-                }
-            }
-        }
-
-        function addSortEventToHeader(tableId) {
-            var headers = document.querySelectorAll('#' + tableId + ' .table-header th');
-            headers.forEach(function (header, index) {
-                header.addEventListener('click', function () {
-                    sortTable(index, tableId);
-                });
-            });
-        }
-
-        addSortEventToHeader('search-table');
 
         /*UPDATE AID*/
         var aidRows = document.querySelectorAll('.aid-row');
@@ -179,72 +132,74 @@
 
         document.getElementById('update-aid-button').addEventListener('click', function () {
 
-            var id = document.getElementById('update-id').value;
-            var unitId = document.getElementById('update-aid-unit').value;
-            var sectionId = document.getElementById('update-aid-section').value;
-            var category = document.getElementById('update-category-list').value;
-            var productName = document.getElementById('update-product-name').value;
-            var registered = document.getElementById('update-registered').value;
-            var inspection = document.getElementById('update-inspection').value;
-            var patient = document.getElementById('update-patient').value;
-            var comment = document.getElementById('update-comment').value;
+            if (confirm('Är du säker på att du vill uppdatera detta hjälpmedel?')) {
+                var id = document.getElementById('update-id').value;
+                var unitId = document.getElementById('update-aid-unit').value;
+                var sectionId = document.getElementById('update-aid-section').value;
+                var category = document.getElementById('update-category-list').value;
+                var productName = document.getElementById('update-product-name').value;
+                var registered = document.getElementById('update-registered').value;
+                var inspection = document.getElementById('update-inspection').value;
+                var patient = document.getElementById('update-patient').value;
+                var comment = document.getElementById('update-comment').value;
 
-            console.log(productName);
-
-            $.ajax({
-                url: '/Home/UpdateAidToDatabase',
-                method: 'POST',
-                data: {
-                    Id: id,
-                    UnitId: unitId,
-                    SectionId: sectionId,
-                    Category: category,
-                    ProductName: productName,
-                    Registered: registered,
-                    Inspection: inspection,
-                    PatientId: patient,
-                    Comment: comment,
-                    FormAction: 'update'
-                },
-                success: function (response) {
-                    if (response.success) {
-                        alert('Hjälpmedlet har uppdaterats. Tabellen behöver uppdateras för att ändringarna ska visas.');
-                        $('#update-aid-popup').hide();
-                    } else {
-                        alert('Det gick inte att uppdatera hjälpmedlet.');
+                $.ajax({
+                    url: '/Home/UpdateAidToDatabase',
+                    method: 'POST',
+                    data: {
+                        Id: id,
+                        UnitId: unitId,
+                        SectionId: sectionId,
+                        Category: category,
+                        ProductName: productName,
+                        Registered: registered,
+                        Inspection: inspection,
+                        PatientId: patient,
+                        Comment: comment,
+                        FormAction: 'update'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#update-aid-popup').hide();
+                            searchAid();
+                            alert('Hjälpmedlet har uppdaterats.');
+                        } else {
+                            alert('Det gick inte att uppdatera hjälpmedlet.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+                });
+            }
         });
 
         document.getElementById('delete-aid-button').addEventListener('click', function () {
 
-            var id = document.getElementById('update-id').value;
+            if (confirm('Är du säker på att du vill ta bort detta hjälpmedel?')) {
+                var id = document.getElementById('update-id').value;
 
-            $.ajax({
-                url: '/Home/UpdateAidToDatabase',
-                method: 'POST',
-                data: {
-                    Id: id,
-                    FormAction: 'delete'
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#update-aid-popup').hide();
-                        $('.aid-row[data-id="' + id + '"]').addClass('disabled-aid-row');
-                        $('.aid-row[data-id="' + id + '"]').removeClass('aid-row');
-                        alert('Hjälpmedlet har tagits bort.');
-                    } else {
-                        alert('Det gick inte att ta bort hjälpmedlet.');
+                $.ajax({
+                    url: '/Home/UpdateAidToDatabase',
+                    method: 'POST',
+                    data: {
+                        Id: id,
+                        FormAction: 'delete'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#update-aid-popup').hide();
+                            searchAid();
+                            alert('Hjälpmedlet har tagits bort.');
+                        } else {
+                            alert('Det gick inte att ta bort hjälpmedlet.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+                });
+            }
         });
     }
 });

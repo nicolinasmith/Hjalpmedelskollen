@@ -26,11 +26,11 @@ namespace Hjalpmedelskollen.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> SearchAidInDatabase(string searchInput, string searchType, string unitId)
+		public async Task<IActionResult> SearchAidInDatabase(string searchInput, string searchType, string unitId, string status)
 		{
 			try
 			{
-				var aids = await _dbRepository.GetAidsBySearch(searchInput, searchType, unitId);
+				var aids = await _dbRepository.GetAidsBySearch(searchInput, searchType, unitId, status);
 				return Json(aids);
 			}
 			catch (Exception ex)

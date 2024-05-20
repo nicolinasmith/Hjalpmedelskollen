@@ -37,7 +37,7 @@
             labels: unitNames,
             datasets: [{
                 data: unitCounts,
-                backgroundColor: [blue, orange, '#4caf50', '#ffeb3b', '#ff5722', '#9c27b0', '#00bcd4']
+                backgroundColor: [orange, blue, '#4caf50', '#ffeb3b', '#ff5722', '#9c27b0', '#00bcd4']
             }]
         },
         options: {

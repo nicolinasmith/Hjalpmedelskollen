@@ -16,7 +16,7 @@
 				<div>
 					<p>Sök baserat på:</p>
 					<div id="search-type" class="search-form">
-							<label for="searchId"><input type="radio" id="searchId" name="searchType" value="id">Registreringsnummer</label>
+							<label for="searchId"><input type="radio" id="searchId" name="searchType" value="id" checked>Registreringsnummer</label>
 							<label for="searchProductName"><input type="radio" id="searchProductName" name="searchType" value="productName">Produktnamn</label>
 							<label for="searchCategory"><input type="radio" id="searchCategory" name="searchType" value="category">Kategori</label>
 					</div>
@@ -24,7 +24,7 @@
 				<div>
 					<p>Enhet:</p>
 					<div id="search-unit" class="search-form">
-						<label for="unit"><input type="radio" id="unitIdAll" name="unit" value="all">Alla</label>
+						<label for="unit"><input type="radio" id="unitIdAll" name="unit" value="all" checked>Alla</label>
 						@foreach (var unit in Model.Units)
 						{
 							<label for="unit">
@@ -32,6 +32,14 @@
 								@unit.Name
 							</label>
 						}
+					</div>
+				</div>
+				<div>
+					<p>Status:</p>
+					<div id="search-status" class="search-form">
+						<label for="status"><input type="radio" id="statusAll" name="status" value="all" checked>Alla</label>
+						<label for="status"><input type="radio" id="statusTaken" name="status" value="taken">Upptagna</label>
+						<label for="status"><input type="radio" id="statusFree" name="status" value="free">Lediga</label>
 					</div>
 				</div>
 			</div>
