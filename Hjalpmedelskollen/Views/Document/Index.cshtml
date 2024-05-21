@@ -15,7 +15,7 @@
 			<div>
 				@foreach (var folder in Model.Folders)
 				{
-					<b class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</b>
+					<h3 class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name</h3>
 
 					<ul class="doc-folder-content">
 					@foreach (var document in Model.Documents)

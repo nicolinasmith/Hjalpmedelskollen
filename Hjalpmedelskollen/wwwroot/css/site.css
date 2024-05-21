@@ -87,7 +87,7 @@ footer a, nav a, nav li {
     align-content: center;
 }
 
-footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover, .doc-file:hover {
+footer a:hover, nav a:hover, .small-nav a:hover, .small-li:hover, .doc-file:hover, .doc-folder:hover {
     opacity: 0.5;
     cursor: pointer;
     text-decoration: underline;
@@ -606,6 +606,7 @@ video {
 #document-content {
     display: flex;
     flex-direction: row;
+    margin-top: 20px;
     margin-left: 30px;
     width: 70%;
 }
@@ -614,6 +615,7 @@ video {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: left;
     height: 70%;
 }
 
@@ -634,6 +636,14 @@ video {
     margin-left: 40px;
     margin-top: 60px;
     height: 140px;
+}
+
+.doc-folder-content {
+    display: none;
+}
+
+.doc-folder.active + .doc-folder-content {
+    display: block;
 }
 
 /*STATISTICS*/
