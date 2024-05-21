@@ -1,5 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    const folders = document.querySelectorAll('.doc-folder');
+
+    folders.forEach(folder => {
+        folder.addEventListener('click', function () {
+            // Hämta det associerade doc-folder-content elementet
+            const content = folder.nextElementSibling;
+
+            if (content && content.classList.contains('doc-folder-content')) {
+                // Toggla 'active' klass på den klickade mappen
+                folder.classList.toggle('active');
+
+                // Toggla visningen av innehållet
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            }
+        });
+    });
+
+
     var selectedFile = null;
     var selectedPath = null;
 
