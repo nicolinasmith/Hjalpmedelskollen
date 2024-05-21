@@ -170,6 +170,7 @@
         <table class="table-style" id="section-table">
             <tr class="table-header">
                 <th>Avdelning</th>
+                <th>Antal hjälpmedel</th>
             </tr>
             @foreach (var s in Model.Sections)
             {
@@ -177,6 +178,7 @@
                     data-section-id="@s.Id"
 					data-unit-id="@s.UnitId">
 					<td>@s.Name</td>
+                    <td>@Model.Aids.Count(a => a.SectionId == s.Id)</td>
                 </tr>
             }
         </table>

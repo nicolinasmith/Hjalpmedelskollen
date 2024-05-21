@@ -587,10 +587,8 @@ video {
 #document-aside {
     display: flex;
     flex-direction: column;
-    align-content: start;
-    justify-content: left;
     padding: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     background-color: #eaebed40;
     border-right: 4px solid #eaebed;
     height: 100vh;
@@ -619,9 +617,10 @@ video {
     height: 70%;
 }
 
-.document-menu > div {
+.upload-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .fa-arrow-up, .fa-trash {
