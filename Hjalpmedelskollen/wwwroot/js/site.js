@@ -21,6 +21,10 @@
 
     /*UPDATE SECTION AND PATIENT BASED ON SELECTED UNIT AND SECTION*/
     $('#update-aid-unit, #update-aid-section').change(function () {
+        filterSelection();
+    });
+
+    function filterSelection() {
         var selectedUnit = $('#update-aid-unit').val();
         var selectedSection = $('#update-aid-section').val();
 
@@ -44,7 +48,10 @@
         });
 
         $('#update-patient').prop('selectedIndex', 0);
-    });
+    }
+
+    filterSelection();
+
 
     /*CLOSE POP-UP*/
     $('.close-popup-button').click(function () {

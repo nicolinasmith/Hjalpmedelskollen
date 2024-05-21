@@ -16,7 +16,7 @@
 				@foreach (var folder in Model.Folders)
 				{
 					var documentCount = Model.Documents.Count(d => d.FolderId == folder.Id);
-					<h3 class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name (@documentCount)</h3>
+					<h4 class="doc-folder"><i class="fa-solid fa-folder" data-folder-id="@folder.Id"></i>@folder.Name (@documentCount)</h4>
 
 					<ul class="doc-folder-content">
 					@foreach (var document in Model.Documents)
