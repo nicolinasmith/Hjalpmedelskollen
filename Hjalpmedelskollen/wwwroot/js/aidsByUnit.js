@@ -13,26 +13,24 @@
         document.getElementById('unit-popup').style.display = 'none';
     });
 
-    document.getElementById('select-unit-button').addEventListener('change', function () {
+    document.getElementById('select-unit-button').addEventListener('click', function () {
 
         var unitId = document.getElementById('select-unit-list').value;
 
         $.ajax({
-            url: '/Home/DisplayAidsByUnit',
-            method: 'POST',
+            url: '/Home/Index',
+            method: 'GET',
             data: {
                 unitId
             },
             success: function (response) {
-                if (response.success) {
-
+                if (response) {
+                    document.getElementById('unit-popup').style.display = 'none';
+                    location.href = '/Home/Index?unitId=' + unitId;
                 } else {
                     alert('Det gick inte att byta enhet.');
                 }
             },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
         });
 
     });
@@ -319,8 +317,8 @@
                 success: function (response) {
                     if (response.success) {
                         document.getElementById('add-aid-popup').style.display = 'none';
-                        $('#aid-table').load("/Home/Index #aid-table", function () {
-                            $('#aid-table tbody tr.aid-row:first').addClass('highlight-aid');
+                        $('#aid-table').load(`/Home/Index?unitId=${unitId} #aid-table`, function () {
+                            $('.aid-row[data-id="' + aidId + '"]').addClass('highlight-aid');
                         });
                     } else {
                         alert('Det gick inte att lägga till hjälpmedlet.');
