@@ -44,6 +44,9 @@
         document.getElementById('sections-popup').style.display = 'block';
     });
 
+    document.getElementById('close-sections-popup').addEventListener('click', function () {
+        document.getElementById('sections-popup').style.display = 'none';
+    });
 
 
     /*AIDS BY UNIT - HANDLE PATIENTS*/
