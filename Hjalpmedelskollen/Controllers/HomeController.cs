@@ -22,6 +22,7 @@ namespace Hjalpmedelskollen.Controllers
             _dbRepository = dbRepository;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(int? unitId)
         {
             int defaultUnitId = unitId ?? 1;
@@ -61,13 +62,14 @@ namespace Hjalpmedelskollen.Controllers
             return viewModel;
         }
 
+        /*
         [HttpPost]
         public async Task<IActionResult> DisplayAidsByUnit(int unitId)
         {
             _selectedUnit = await _dbRepository.GetUnit(unitId);
             var viewModel = await GetAidsByUnitViewModel(unitId);
             return View("Index", viewModel);
-        }
+        }*/
 
         [HttpPost]
         public async Task<IActionResult> AddAidToDatabase(AidModel aid)

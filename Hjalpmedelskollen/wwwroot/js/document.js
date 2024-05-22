@@ -4,14 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     folders.forEach(folder => {
         folder.addEventListener('click', function () {
-            // Hämta det associerade doc-folder-content elementet
             const content = folder.nextElementSibling;
 
             if (content && content.classList.contains('doc-folder-content')) {
-                // Toggla 'active' klass på den klickade mappen
                 folder.classList.toggle('active');
 
-                // Toggla visningen av innehållet
                 if (content.style.display === 'block') {
                     content.style.display = 'none';
                 } else {
@@ -85,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     $('#document-viewer').attr('src', '');
                     $('#document-content h3').text('Välj ett dokument för att visa innehållet.');
                     $('#document-info').hide();
-
                 },
                 error: function (xhr, status, error) {
                     alert('Ett fel uppstod: ' + error);
