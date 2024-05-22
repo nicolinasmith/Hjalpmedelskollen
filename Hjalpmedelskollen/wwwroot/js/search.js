@@ -1,7 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     /*SEARCH*/
-    $('#search-result').hide();
-
     document.getElementById('search-button').addEventListener('click', function () {
         searchAid();
     });

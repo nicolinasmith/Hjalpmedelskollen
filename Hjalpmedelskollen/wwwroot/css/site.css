@@ -528,7 +528,9 @@ video {
 }
 
 #search-result {
+    display: none;
     margin-left: 60px;
+    margin-bottom: 80px;
     width: 60%;
 }
 
@@ -907,7 +909,7 @@ video {
     }
 
     #search-container {
-        width: 90%;
+        width: 85%;
         margin-left: 0;
         margin-right: 0;
     }
