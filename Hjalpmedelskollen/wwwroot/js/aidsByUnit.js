@@ -304,6 +304,8 @@
             var patient = document.getElementById('add-patient-list').value;
             var comment = document.getElementById('add-comment').value;
 
+            var unitId = document.getElementById('add-aid-unit-id').value;
+
             $.ajax({
                 url: '/Home/AddAidToDatabase',
                 method: 'POST',
@@ -443,7 +445,7 @@
                 success: function (response) {
                     if (response.success) {
                         $('#update-aid-popup').hide();
-                        $('#aid-table').load("/Home/Index #aid-table", function () {
+                        $('#aid-table').load(`/Home/Index?unitId=${unitId} #aid-table`, function () {
                             $('.aid-row[data-id="' + id + '"]').addClass('highlight-aid');
                         });
                     } else {
@@ -461,6 +463,7 @@
 
         if (confirm('Är du säker på att du vill ta bort hjälpmedlet?')) {
 
+            var unitId = document.getElementById('update-aid-unit').value;
             var id = document.getElementById('update-id').value;
 
             $.ajax({
@@ -473,8 +476,7 @@
                 success: function (response) {
                     if (response.success) {
                         $('#update-aid-popup').hide();
-                        $('"aid-row[data-id="' + id + '"]').remove();
-                        alert('Hjälpmedlet har tagits bort.');
+                        $('#aid-table').load(`/Home/Index?unitId=${unitId} #aid-table`);
                     } else {
                         alert('Det gick inte att ta bort hjälpmedlet.');
                     }
